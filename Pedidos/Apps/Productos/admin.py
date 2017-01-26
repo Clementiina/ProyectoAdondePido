@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Presentacion
 
-# Register your models here.
+class PresentacionAdmin(admin.ModelAdmin):
+    list_display = ("capacidad", )
+
+admin.site.register(Presentacion, PresentacionAdmin)
