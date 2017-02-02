@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Anuncio, Permiso_Distribuidora
+from .models import Anuncio, Permiso_Distribuidora, Ruta
 
 
 class AnuncioAdmin(admin.ModelAdmin):
