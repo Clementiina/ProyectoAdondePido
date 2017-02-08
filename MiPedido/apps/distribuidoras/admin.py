@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Anuncio, Permiso_Distribuidora, Ruta, Distribuidora, Usuario_Distribuidora
+from .models import Anuncio, Permiso_Distribuidora, Distribuidora, Usuario_Distribuidora
+
+
 
 
 class AnuncioAdmin(admin.ModelAdmin):
@@ -12,10 +14,6 @@ class Permiso_DistribuidoraAdmin(admin.ModelAdmin):
     list_display = ("nombre", 'descripcion')
 
 
-class RutaAdmin(admin.ModelAdmin):
-    list_display = ('id_distribudora', 'nombre', 'recorrido', 'dia' )
-    search_fields = ('id_distribudora', 'nombre', 'recorrido', 'dia' )
-
 class DistribuidoraAdmin(admin.ModelAdmin):
     list_display = ("nombre", 'descripcion')
 
@@ -23,4 +21,4 @@ admin.site.register(Anuncio, AnuncioAdmin)
 admin.site.register(Permiso_Distribuidora, Permiso_DistribuidoraAdmin)
 admin.site.register(Distribuidora, DistribuidoraAdmin)
 admin.site.register(Usuario_Distribuidora)
-admin.site.register(Ruta, RutaAdmin)
+# Register your models here.
