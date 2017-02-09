@@ -1,9 +1,6 @@
 from django.contrib import admin
 from .models import Anuncio, Permiso_Distribuidora, Distribuidora, Usuario_Distribuidora
 
-
-
-
 class AnuncioAdmin(admin.ModelAdmin):
     list_display = ('id', 'titulo', 'fecha_creacion', 'fecha_inicio', 'fecha_fin', 'estado')
     search_fields = ['titulo']
