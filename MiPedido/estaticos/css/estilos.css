@@ -1,1 +1,12 @@
-/* AQUI VAN LOS CSS PROPIOS */
+header {
+	background: #e0e0e0;
+}
+
+footer {
+	width: 100%;
+	background: #e0e0e0;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	position: absolute;
+	bottom: 0;
+}

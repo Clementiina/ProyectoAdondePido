@@ -59,12 +59,16 @@ class Kiosko_Distribuidora (models.Model):  # Socio
 
 
 class Anuncio (models.Model):
+
+    def url(self, filename):
+        ruta = "ImagenesAnuncios/%s" % (str(filename))
+        return ruta
+
     id_distribuidora = models.ForeignKey(Distribuidora)
-    imagen = models.ImageField()
+    imagen = models.ImageField(blank=True, null=True, upload_to=url)
     titulo = models.CharField(max_length=50)
     descripcion = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    fecha_inicio = models.DateTimeField()
-    fecha_fin = models.DateTimeField()
-    estado = models.CharField(max_length=3)  # vigente, listo, finalizado
-
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
+    estado = models.CharField(max_length=1, choices=(("l","Listo" ),("v","vigente"),("f","finalizado")))

@@ -12,6 +12,12 @@ class DepartamentoAdmin(admin.ModelAdmin):
 	search_fields = ['nombre']
 	raw_id_fields = ['id_provincia']
 
+class LocalidadAdmin(admin.ModelAdmin):
+	list_display = ['nombre', 'estado']
+	ordering = ['nombre']
+	search_fields = ['nombre']
+
+
 admin.site.register(Provincia, ProvinciaAdmin)
 admin.site.register(Departamento, DepartamentoAdmin)
-
+admin.site.register(Localidad, LocalidadAdmin)
