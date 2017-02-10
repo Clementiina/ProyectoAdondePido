@@ -1,3 +1,4 @@
+# -*- conding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
 from apps.localidades.models import Localidad
@@ -8,11 +9,11 @@ from apps.kioskos.models import Kiosko
 
 class Distribuidora (models.Model):
     nombre = models.CharField(max_length=50)
-    descripcion = models.TextField()
-    numero_contacto = models.PositiveIntegerField()
-    id_localidad = models.ForeignKey(Localidad)
-    direccion = models.CharField(max_length=50)
-    persona_cargo = models.ForeignKey(User)
+    descripcion = models.TextField(verbose_name=u"Descripcion")
+    numero_contacto = models.PositiveIntegerField(verbose_name=u"Numero de contacto")
+    id_localidad = models.ForeignKey(Localidad, verbose_name=u"Localidad")
+    direccion = models.CharField(max_length=50, verbose_name=u"Direccion")
+    persona_cargo = models.ForeignKey(User, verbose_name=u"Persona a cargo")
     estado = models.BooleanField(default=True)
 
 
@@ -23,9 +24,9 @@ class Permiso_Distribuidora (models.Model):
 
 
 class Usuario_Distribuidora (models.Model):
-    id_distribuidora = models.ForeignKey(Distribuidora)
-    id_usuario = models.ForeignKey(User)
-    id_permiso = models.ForeignKey(Permiso_Distribuidora)
+    id_distribuidora = models.ForeignKey(Distribuidora, verbose_name=u"Distribuidora")
+    id_usuario = models.ForeignKey(User, verbose_name=u"Usuario")
+    id_permiso = models.ForeignKey(Permiso_Distribuidora, verbose_name=u"Permiso")
     estado = models.BooleanField(default=True)
 
 
@@ -59,16 +60,12 @@ class Kiosko_Distribuidora (models.Model):  # Socio
 
 
 class Anuncio (models.Model):
-
-    def url(self, filename):
-        ruta = "ImagenesAnuncios/%s" % (str(filename))
-        return ruta
-
     id_distribuidora = models.ForeignKey(Distribuidora)
-    imagen = models.ImageField(blank=True, null=True, upload_to=url)
+    imagen = models.ImageField()
     titulo = models.CharField(max_length=50)
     descripcion = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    fecha_inicio = models.DateField()
-    fecha_fin = models.DateField()
-    estado = models.CharField(max_length=1, choices=(("l","Listo" ),("v","vigente"),("f","finalizado")))
+    fecha_inicio = models.DateTimeField()
+    fecha_fin = models.DateTimeField()
+    estado = models.CharField(max_length=3)  # vigente, listo, finalizado
+
