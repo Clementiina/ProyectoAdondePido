@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 from .views import CrearAnuncio, ListaAnuncios, DetalleAnuncio
@@ -12,3 +13,11 @@ urlpatterns = patterns('',
     )
 
  #url(r'^$', Home.as_view(), name='home')
+=======
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^anuncios/$', views.Anuncios.as_view(), name='anuncios'),
+]
+>>>>>>> leo

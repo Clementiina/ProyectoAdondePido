@@ -3,9 +3,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.views.generic.detail import DetailView
 from django.http import HttpResponseRedirect
-from apps.distribuidoras.models import Distribuidora, Usuario_Distribuidora
-from apps.distribuidoras.models import Anuncio
-
+from .models import Distribuidora, Usuario_Distribuidora, Anuncio
 
 
 class FormatoFecha():
@@ -18,13 +16,6 @@ class FormatoFecha():
         fecha = str(vec[2]) + '-' + str(vec[1]) + '-' + str(vec[0])
         return fecha
 
-
-class ListaAnuncios(ListView):
-    template_name = "listar_anuncios.html"
-    queryset = Anuncio.objects.all().order_by('-fecha_creacion')
-    context_object_name = 'lista_de_anuncios'
-
-
 class DetalleAnuncio(DetailView):
     model = Anuncio
     context_object_name = 'anuncio'
@@ -36,7 +27,6 @@ class DetalleAnuncio(DetailView):
 
 
 class CrearAnuncio(TemplateView):
-
     template_name = "crear_anuncio.html"
 
     def post(self, request):
@@ -56,4 +46,9 @@ class CrearAnuncio(TemplateView):
         u.estado = "l"
         u.save()
         return HttpResponseRedirect("/distribuidora/listar_anuncios")
+
+class Anuncios(ListView):
+	model = Anuncio
+	template_name = 'anuncios.html'
+	context_object_name = "anuncios"
 
