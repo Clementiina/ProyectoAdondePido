@@ -65,7 +65,6 @@ class Anuncio (models.Model):
     titulo = models.CharField(max_length=50)
     descripcion = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-<<<<<<< HEAD
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
     estado = models.CharField(max_length=1, choices=(
@@ -75,9 +74,3 @@ class Anuncio (models.Model):
 
     def __str__(self):
         return self.titulo
-=======
-    fecha_inicio = models.DateTimeField()
-    fecha_fin = models.DateTimeField()
-    estado = models.CharField(max_length=3)  # vigente, listo, finalizado
-
->>>>>>> leo
