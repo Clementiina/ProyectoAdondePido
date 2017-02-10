@@ -6,3 +6,4 @@ from .models import Anuncio
 class Anuncios(ListView):
 	model = Anuncio
 	template_name = 'anuncios.html'
+	context_object_name = "anuncios"

@@ -14,7 +14,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for anuncio in objects %}
+			{% for anuncio in anuncios %}
 				<tr>
 					<td>{{anuncio.titulo}}</td>
 					<td>{{anuncio.descripcion | truncatechars:100}}</td>
