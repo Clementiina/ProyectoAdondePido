@@ -20,3 +20,9 @@ admin.site.register(Permiso_Kiosko, Permiso_KioskoAdmin)
 #admin.site.register(Usuario_Kiosko, Usuario_KioskoAdmin)
 
 # Register your models here.
+
+
+##default
+from .models import Kiosko, Usuario_Kiosko
+admin.site.register(Kiosko)
+admin.site.register(Usuario_Kiosko)
