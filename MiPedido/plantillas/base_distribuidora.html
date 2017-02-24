@@ -31,8 +31,24 @@
 		</nav>
 	</header>
 	
-	{% block contenido %}
-	{% endblock %}
+	<div class="container-fluid">
+		<div class="row">
+			<section class="col-md-2">
+				<div class="panel panel-default">
+					<div class="panel-heading">Menú</div>
+					<div class="list-group">
+						{% block menu%}
+						{% endblock%}
+					</div>
+				</div>
+			</section>
+
+			<section class="col-md-10">
+				{% block contenido %}
+				{% endblock %}
+			</section>
+		</div>	
+	</div>
 
 	<footer>
 		<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
