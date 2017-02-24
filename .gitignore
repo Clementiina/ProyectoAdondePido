@@ -1,5 +1,6 @@
-*.pyc
+MiPedido/MiPedido/settings.pyc
 MiPedido/db.sqlite3
 env/
 __pycache__/
 
+*.pyc
