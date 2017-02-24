@@ -1,4 +1,5 @@
 import datetime
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.views.generic.detail import DetailView
@@ -58,5 +59,19 @@ class VistaAnuncio(ListView):
 	model = Anuncio
 	template_name = 'anuncios.html'
 	context_object_name = "anuncios"
+
+    def get(self, request):
+        listado = Anuncio.objects.all()
+        paginador = Paginator(listado, 5) # 5 problemas x pagina
+        pagina = request.GET.get('pag')
+        try:
+            anuncios = paginador.page(pagina)
+        except PageNotAnInteger:
+            anuncios = paginador.page(1)
+        except EmptyPage:
+            anuncios = paginador.page(paginador.num_pages)
+
+        contexto = {'anuncios', anuncios}
+        return render(request, "anuncios.html", contexto)
 
 
