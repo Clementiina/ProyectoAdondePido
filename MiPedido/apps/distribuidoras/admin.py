@@ -27,3 +27,10 @@ admin.site.register(Anuncio, AnuncioAdmin)
 admin.site.register(Permiso_Distribuidora, Permiso_DistribuidoraAdmin)
 admin.site.register(Distribuidora, DistribuidoraAdmin)
 admin.site.register(Usuario_Distribuidora, Usuario_DistribuidoraAdmin)
+
+from .models import TipoProducto_Distribuidora,Producto_Distribudora, Ruta, Kiosko_Distribuidora
+admin.site.register(TipoProducto_Distribuidora)
+admin.site.register(Producto_Distribudora)
+admin.site.register(Ruta)
+admin.site.register(Kiosko_Distribuidora)
+

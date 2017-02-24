@@ -18,4 +18,3 @@ class Usuario_KioskoAdmin (admin.ModelAdmin):
 admin.site.register(Permiso_Kiosko, Permiso_KioskoAdmin)
 admin.site.register(Kiosko, KioskoAdmin)
 admin.site.register(Usuario_Kiosko, Usuario_KioskoAdmin)
-
