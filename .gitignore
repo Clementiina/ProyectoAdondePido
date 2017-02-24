@@ -1,2 +1,3 @@
 *.pyc
-*.sqlite3
+MiPedido/db.sqlite3
+env/
