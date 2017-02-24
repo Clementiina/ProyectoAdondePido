@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
-from .views import CrearAnuncio, CrearRuta
+from . import views
 
 urlpatterns = patterns('',
 
-    url(r'^crear_anuncio/$', CrearAnuncio.as_view(), name="crear_anuncio"),
-	url(r'^crear_ruta/$', CrearRuta.as_view(), name="crear_ruta"),
+    url(r'^crear_anuncio/$', views.CrearAnuncio.as_view(), name="crear_anuncio"),
+	url(r'^crear_ruta/$', views.CrearRuta.as_view(), name="crear_ruta"),
 
     )
 
