@@ -20,8 +20,4 @@ class LocalidadAdmin(admin.ModelAdmin):
 
 admin.site.register(Provincia, ProvinciaAdmin)
 admin.site.register(Departamento, DepartamentoAdmin)
-
-##default
-from .models import Localidad
-#admin.site.register(Localidad)
 admin.site.register(Localidad, LocalidadAdmin)

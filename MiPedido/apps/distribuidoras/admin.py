@@ -1,25 +1,16 @@
 from django.contrib import admin
 from .models import Anuncio, Permiso_Distribuidora, Distribuidora, Usuario_Distribuidora
 
+
 class AnuncioAdmin(admin.ModelAdmin):
     list_display = ('id', 'titulo', 'fecha_creacion', 'fecha_inicio', 'fecha_fin')
     search_fields = ['titulo']
     raw_id_fields = ['id_distribuidora']
 
+
 class Permiso_DistribuidoraAdmin(admin.ModelAdmin):
     list_display = ("nombre", 'descripcion')
 
-admin.site.register(Anuncio, AnuncioAdmin)
-admin.site.register(Permiso_Distribuidora, Permiso_DistribuidoraAdmin)
-
-##default
-from .models import Distribuidora, Usuario_Distribuidora, TipoProducto_Distribuidora, Producto_Distribudora, Ruta, Kiosko_Distribuidora
-#admin.site.register(Distribuidora)
-#admin.site.register(Usuario_Distribuidora)
-admin.site.register(TipoProducto_Distribuidora)
-admin.site.register(Producto_Distribudora)
-admin.site.register(Ruta)
-admin.site.register(Kiosko_Distribuidora)
 
 class DistribuidoraAdmin(admin.ModelAdmin):
 	list_display = ['nombre', 'descripcion', 'numero_contacto', 'id_localidad', 'direccion', 'persona_cargo', 'estado']
@@ -32,5 +23,7 @@ class Usuario_DistribuidoraAdmin(admin.ModelAdmin):
 	search_fields = ['id_usuario', 'id_distribuidora']
 	raw_id_fields = ['id_distribuidora', 'id_usuario']
 
+admin.site.register(Anuncio, AnuncioAdmin)
+admin.site.register(Permiso_Distribuidora, Permiso_DistribuidoraAdmin)
 admin.site.register(Distribuidora, DistribuidoraAdmin)
 admin.site.register(Usuario_Distribuidora, Usuario_DistribuidoraAdmin)

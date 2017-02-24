@@ -31,26 +31,8 @@
 		</nav>
 	</header>
 	
-	<div class="container-fluid">
-		<div class="row">
-			<section class="col-md-2">
-				<div class="panel panel-default">
-					<div class="panel-heading">Menú</div>
-					<div class="list-group">
-						<a href="{%url 'anuncios'%}" class="list-group-item">Anuncios</a>
-						<a href="#" class="list-group-item">Socios</a>
-						<a href="#" class="list-group-item">Rutas</a>
-						<a href="#" class="list-group-item">Productos</a>
-					</div>
-				</div>
-			</section>
-
-			<section class="col-md-10">
-				{% block contenido %}
-				{% endblock %}
-			</section>
-		</div>	
-	</div>
+	{% block contenido %}
+	{% endblock %}
 
 	<footer>
 		<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

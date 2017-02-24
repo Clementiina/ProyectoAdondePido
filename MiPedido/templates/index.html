@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block contenido %}
+	<div class="container">
+		{% if distribuidoras %}
+			<h3>Distribuidoras asociadas a la cuenta</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Domicilio</th>
+						<th>Pedidos pendientes</th>
+						<th>Acción</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for dist in distribuidoras %}
+						<tr>
+							<td>{{dist.nombre|capfirst}}</td>
+							<td>{{dist.direccion|capfirst}}</td>
+							<td>-</td>
+							<td><a href="{% url 'distribuidora' pk=dist.id %} " class="btn btn-default">Seleccionar</a></td>
+						</tr>
+					{% endfor %}
+					
+				</tbody>
+			</table>
+		{% endif%}
+		
+		{% if kioskos %}
+			<h3>Kioskos asociados a la cuenta</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Domicilio</th>
+						<th>Acción</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for kiosko in kioskos %}
+						<tr>
+							<td>{{ kiosko.nombre|capfirst }}</td>
+							<td>{{ kiosko.direccion|capfirst }}</td>
+							<td><a href="" class="btn btn-default">Seleccionar</a></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+{% endblock %}

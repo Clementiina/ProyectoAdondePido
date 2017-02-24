@@ -1,10 +1,18 @@
 import datetime
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.views.generic.detail import DetailView
 from django.http import HttpResponseRedirect
 from .models import Distribuidora, Usuario_Distribuidora, Anuncio
 
+class VistaDistribuidora(TemplateView):
+    template_name = 'distribuidora.html'
+
+    def get_context_data(self, **kwargs):
+        contexto = super(VistaDistribuidora, self).get_context_data(**kwargs)
+        contexto['distribuidora'] = Distribuidora.objects.get(id=kwargs['pk'])
+        return contexto
 
 class FormatoFecha():
 
@@ -47,8 +55,9 @@ class CrearAnuncio(TemplateView):
         u.save()
         return HttpResponseRedirect("/distribuidora/listar_anuncios")
 
-class Anuncios(ListView):
-	model = Anuncio
-	template_name = 'anuncios.html'
-	context_object_name = "anuncios"
+class VistaAnuncio(ListView):
+    model = Anuncio
+    template_name = 'anuncios.html'
+    context_object_name = "anuncios"
+
 

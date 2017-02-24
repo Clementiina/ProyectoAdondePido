@@ -5,7 +5,3 @@ class PresentacionAdmin(admin.ModelAdmin):
     list_display = ("capacidad", )
 
 admin.site.register(Presentacion, PresentacionAdmin)
-
-from .models import Tipo_Producto, Producto
-admin.site.register(Tipo_Producto)
-admin.site.register(Producto)
