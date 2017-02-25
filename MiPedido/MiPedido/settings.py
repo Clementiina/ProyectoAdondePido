@@ -82,13 +82,26 @@ WSGI_APPLICATION = 'MiPedido.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+# DATABASES = {
+    # 'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'temp',
+        'USER': 'sa',
+        'PASSWORD': 'n4t6z3r5!',
+        'HOST': '198.50.153.52',
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'SQL Server Native Client 10.0',
+            }
+    },
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
