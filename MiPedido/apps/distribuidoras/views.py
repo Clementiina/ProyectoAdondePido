@@ -10,8 +10,10 @@ class VistaDistribuidora(TemplateView):
     template_name = 'distribuidora.html'
 
     def get_context_data(self, **kwargs):
+        uname = self.request.GET['user']
+        dist = self.request.GET['dist']
         contexto = super(VistaDistribuidora, self).get_context_data(**kwargs)
-        contexto['distribuidora'] = Distribuidora.objects.get(id=kwargs['pk'])
+        contexto['distribuidora'] = Distribuidora.objects.get(persona_cargo__username=uname, id=dist)
         return contexto
 
 class FormatoFecha():

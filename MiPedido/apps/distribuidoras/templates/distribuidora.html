@@ -1,6 +1,6 @@
 {% extends 'base_distribuidora.html'%}
 {% block menu%}
-	<a href="{%url 'anuncios' pk=distribuidora.id%}" class="list-group-item">Anuncios</a>
+	<a href="{%url 'anuncios' %}?dist={{distribuidora.id}}" class="list-group-item">Anuncios</a>
 	<a href="#" class="list-group-item">Socios</a>
 	<a href="#" class="list-group-item">Rutas</a>
 	<a href="#" class="list-group-item">Productos</a>
