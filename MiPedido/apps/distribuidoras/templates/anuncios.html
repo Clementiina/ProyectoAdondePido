@@ -1,0 +1,55 @@
+{% extends 'base_distribuidora.html' %}
+{% block menu%}
+	<a class="list-group-item active">Anuncios</a>
+	<a href="#" class="list-group-item">Socios</a>
+	<a href="#" class="list-group-item">Rutas</a>
+	<a href="#" class="list-group-item">Productos</a>
+{% endblock %}
+{% block contenido %}
+	<h4>Listado de Anuncios</h4>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Título</th>
+				<th>Descripción</th>
+				<th>Creado</th>
+				<th>Inicio</th>
+				<th>Fin</th>
+				<th>Estado</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for anuncio in anuncios %}
+				<tr>
+					<td>{{anuncio.titulo}}</td>
+					<td>{{anuncio.descripcion | truncatechars:100}}</td>
+					<td>{{anuncio.fecha_creacion}}</td>
+					<td>{{anuncio.fecha_ini}}</td>
+					<td>{{anuncio.fecha_fin}}</td>
+					<td>{{anuncio.estado}}</td>
+					<td> 	
+						<a href="#"><span class="acciones glyphicon glyphicon-search"></span></a>
+				 		<a href="#"><span class="acciones glyphicon glyphicon-edit"></span></a>
+						<a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{%if anuncios %}
+	<div class="text-center">
+		{% if anuncios.has_previous %}
+			<a href="?dist={{dis}}&pag{{anuncios.previous_page_number}}" class="tbn btn-default">Anterior</a>
+		{% endif %}
+		<strong>
+			Página {{anuncios.number}} de {{anuncios.paginator.num_pages}}
+		</strong>
+		{% if anuncios.has_next %}
+			<a href="?dist={{dis}}&pag{{anuncios.next_page_number}}" class="tbn btn-default">Siguiente</a>
+		{% endif %}
+	</div>	
+	{%endif%}
+{% endblock %}
+{% block aside %}
+{% endblock %}
