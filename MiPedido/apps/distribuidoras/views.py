@@ -10,8 +10,8 @@ class VistaDistribuidora(TemplateView):
     template_name = 'distribuidora.html'
 
     def get(self, request):
-        uname = self.request.user.username
-        dist = self.request.GET['dist']
+        uname = request.user.username
+        dist = request.GET['dist']
         distribuidora = Distribuidora.objects.get(persona_cargo__username=uname, id=dist)
         return render(request, 'distribuidora.html', {'distribuidora': distribuidora})
 
@@ -63,8 +63,8 @@ class VistaAnuncio(ListView):
     context_object_name = "anuncios"
 
     def get(self, request):
-        uname = self.request.user.username
-        dist = self.request.GET['dist']
+        uname = request.user.username
+        dist = request.GET['dist']
         listado = Anuncio.objects.filter(id_distribuidora__persona_cargo__username=uname, id_distribuidora__id=dist)
         paginador = Paginator(listado, 5)
         pagina = request.GET['pag']
@@ -75,7 +75,9 @@ class VistaAnuncio(ListView):
         except EmptyPage:
             anuncios = paginador.page(paginador.num_pages)
 
-        contexto = {'anuncios':anuncios}
+        contexto = {}
+        contexto['anuncios'] = anuncios
+        contexto['dist'] = dist
         return render(request, 'anuncios.html', contexto)
 
 
