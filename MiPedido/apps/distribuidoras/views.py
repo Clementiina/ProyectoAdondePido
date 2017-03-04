@@ -13,7 +13,7 @@ class VistaDistribuidora(TemplateView):
         uname = request.user.username
         dist = request.GET['dist']
         distribuidora = Distribuidora.objects.get(persona_cargo__username=uname, id=dist)
-        return render(request, 'distribuidora.html', {'distribuidora': distribuidora})
+        return render(request, 'distribuidora.html', {'dist': distribuidora})
 
 
 class FormatoFecha():
