@@ -23,9 +23,9 @@
 			{% for anuncio in anuncios %}
 				<tr>
 					<td>{{anuncio.titulo}}</td>
-					<td>{{anuncio.descripcion | truncatechars:100}}</td>
-					<td>{{anuncio.fecha_creación}}</td>
-					<td>{{anuncio.fecha_ini}}</td>
+					<td>{{anuncio.descripcion | truncatechars:70}}</td>
+					<td>{{anuncio.fecha_creacion}}</td>
+					<td>{{anuncio.fecha_inicio}}</td>
 					<td>{{anuncio.fecha_fin}}</td>
 					<td>{{anuncio.estado}}</td>
 					<td> 	
@@ -37,7 +37,19 @@
 			{% endfor %}
 		</tbody>
 	</table>
-
+	{%if anuncios %}
+	<div class="text-center">
+		{% if anuncios.has_previous %}
+			<a href="?dist={{dist}}&pag={{anuncios.previous_page_number}}" class="tbn btn-default">Anterior</a>
+		{% endif %}
+		<strong>
+			Página {{anuncios.number}} de {{anuncios.paginator.num_pages}}
+		</strong>
+		{% if anuncios.has_next %}
+			<a href="?dist={{dist}}&pag={{anuncios.next_page_number}}" class="tbn btn-default">Siguiente</a>
+		{% endif %}
+	</div>	
+	{%endif%}
 {% endblock %}
 {% block aside %}
-{% endblock %}
+{% endblock %} 
