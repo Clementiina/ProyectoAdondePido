@@ -18,7 +18,7 @@
 							<td>{{dist.nombre|capfirst}}</td>
 							<td>{{dist.direccion|capfirst}}</td>
 							<td>-</td>
-							<td><a href="{% url 'distribuidora' pk=dist.id %} " class="btn btn-default">Seleccionar</a></td>
+							<td><a href="{% url 'distribuidora' %}?dist={{dist.id}}" class="btn btn-default">Seleccionar</a></td>
 						</tr>
 					{% endfor %}
 					
