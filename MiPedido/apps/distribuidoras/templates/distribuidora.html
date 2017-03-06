@@ -2,7 +2,7 @@
 {% block menu%}
 	<a href="{%url 'anuncios' pk=distribuidora.id%}" class="list-group-item">Anuncios</a>
 	<a href="#" class="list-group-item">Socios</a>
-	<a href="#" class="list-group-item">Rutas</a>
+	<a href="{% url 'rutas'%}?dist={{dist}}" class="list-group-item">Rutas</a>
 	<a href="#" class="list-group-item">Productos</a>
 {% endblock %}
 {% block contenido %}

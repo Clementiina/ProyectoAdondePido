@@ -1,0 +1,41 @@
+{% extends 'base_distribuidora.html' %}
+{% block menu%}
+    <a href="#" class="list-group-item">Anuncios</a>
+    <a href="#" class="list-group-item">Socios</a>
+    <a class="list-group-item active">Rutas</a>
+    <a href="#" class="list-group-item">Productos</a>
+{% endblock %}
+{% block contenido %}
+    <p  align="right">
+		<a class="btn btn-primary" href="{% url 'crear_ruta'%}?dist={{dist}}">Crear Ruta</a>
+	</p>
+    <h4>Listado de Rutas</h4>   
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Recorrido</th>
+                <th>Dia</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ruta in rutas %}
+                <tr>
+                    <td>{{ruta.nombre}}</td>
+                    <td>{{ruta.recorrido | truncatechars:100}}</td>
+                    <td>{{ruta.dia}}</td>
+                    <td>{{ruta.estado}}</td>
+                    <td>    
+                        <a href="{% url 'detalle_ruta'%}?dist={{dist}}&ruta={{ruta.id}}"><span class="acciones glyphicon glyphicon-search"></span></a>
+                        <a href="{% url 'actualizar_ruta'%}?dist={{dist}}&ruta={{ruta.id}}"><span class="acciones glyphicon glyphicon-edit"></span></a>  
+                        <a href="{% url 'eliminar_ruta'%}?dist={{dist}}&ruta={{ruta.id}}"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block aside %}
+{% endblock %}
