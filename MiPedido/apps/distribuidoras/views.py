@@ -9,10 +9,15 @@ from .models import Distribuidora, Usuario_Distribuidora, Anuncio, Ruta , DiasTy
 class VistaDistribuidora(TemplateView):
     template_name = 'distribuidora.html'
 
-    def get_context_data(self, **kwargs):
-        contexto = super(VistaDistribuidora, self).get_context_data(**kwargs)
-        contexto['distribuidora'] = Distribuidora.objects.get(id=kwargs['pk'])
-        return contexto
+    def get(self, request):
+        contexto = dict()
+        uname = request.user.username
+        dist = request.GET['dist']
+        contexto['distribuidoras'] = Distribuidora.objects.filter(persona_cargo__username = self.request.user.username)
+        #contexto['kioskos'] = Kiosko.objects.filter(persona_cargo__username = self.request.user.username)
+        contexto['dist'] = Distribuidora.objects.get(persona_cargo__username=uname, id=dist)
+        return render(request, 'distribuidora.html', contexto)
+
 
 class FormatoFecha():
 
