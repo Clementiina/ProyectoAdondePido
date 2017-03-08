@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^logout/', Logout.as_view(), name='logout'),
     url(r'^$', Index.as_view(), name='index'),
     url(r'^distribuidoras/', include('apps.distribuidoras.urls')),
+	url(r'^solicitud/', include('apps.solicitudes.urls')),
 ]
