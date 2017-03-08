@@ -7,19 +7,19 @@ from apps.productos.models import Tipo_Producto
 from apps.kioskos.models import Kiosko
 
 DiasType = (
-	("lu","Lunes" ),
-	("ma","Martes"),
-	("mi","Miercoles"),
-	("ju","Jueves" ),
-	("vi","Viernes"),
-	("sa","Sabado"),
-	("do","Domingo")
+    ("lu","Lunes" ),
+    ("ma","Martes"),
+    ("mi","Miercoles"),
+    ("ju","Jueves" ),
+    ("vi","Viernes"),
+    ("sa","Sabado"),
+    ("do","Domingo")
 )
 
 EstadoType = (
-	("l","Listo" ),
-	("v","vigente"),
-	("f","finalizado")
+    ("l","Listo" ),
+    ("v","vigente"),
+    ("f","finalizado")
 )
 
 class Distribuidora (models.Model):
@@ -57,15 +57,15 @@ class Producto_Distribudora (models.Model):
     stock = models.PositiveIntegerField()
     estado = models.BooleanField(default=True)
 
-	
+    
 class Ruta (models.Model):
-	id_distribuidora = models.ForeignKey(Distribuidora)
-	nombre = models.CharField(max_length=50)
-	recorrido = models.TextField()
-	dia = models.CharField(max_length=2, choices=(DiasType))
-	estado = models.BooleanField(default=True)
+    id_distribuidora = models.ForeignKey(Distribuidora)
+    nombre = models.CharField(max_length=50)
+    recorrido = models.TextField()
+    dia = models.CharField(max_length=2, choices=(DiasType))
+    estado = models.BooleanField(default=True)
 
-	
+    
 class Kiosko_Distribuidora (models.Model):  # Socio
     id_ruta = models.ForeignKey(Ruta)
     id_kiosko = models.ForeignKey(Kiosko)

@@ -20,8 +20,9 @@
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Dia:</label>
         <div class="col-sm-3">		
-		<input readonly type="text" class="form-control" id="dia" name="dia" value='{{dia}}'>
+			<input readonly type="text" class="form-control" id="dia" name="dia" value='{{ruta.get_dia_display}}'>
         </div>
+		<a class="btn btn-primary" href="{% url 'rutas'%}?dist={{dist}}">Volver</a>
     </div>
 
 </form>

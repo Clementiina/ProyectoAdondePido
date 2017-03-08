@@ -9,12 +9,10 @@ from .models import Distribuidora, Usuario_Distribuidora, Anuncio, Ruta , DiasTy
 class VistaDistribuidora(TemplateView):
     template_name = 'distribuidora.html'
 
-    def get(self, request):
-        uname = request.user.username
-        dist = request.GET['dist']
-        distribuidora = Distribuidora.objects.get(persona_cargo__username=uname, id=dist)
-        return render(request, 'distribuidora.html', {'dist': distribuidora})
-
+    def get_context_data(self, **kwargs):
+        contexto = super(VistaDistribuidora, self).get_context_data(**kwargs)
+        contexto['distribuidora'] = Distribuidora.objects.get(id=kwargs['pk'])
+        return contexto
 
 class FormatoFecha():
 
@@ -106,11 +104,7 @@ class DetalleRuta(DetailView):
         contexto = {}
         r = Ruta.objects.get(id=request.GET['ruta'] )
         contexto['dist'] = request.GET['dist']
-        contexto['ruta'] = r
-        for x,y in DiasType:
-            if x == r.dia: 
-                contexto['dia'] = y
-                break       
+        contexto['ruta'] = r   
         return render(request, 'detalle_ruta.html', contexto)
 
 class VistaRuta(ListView):

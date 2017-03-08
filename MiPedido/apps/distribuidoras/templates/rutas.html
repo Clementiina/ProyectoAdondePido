@@ -25,8 +25,12 @@
                 <tr>
                     <td>{{ruta.nombre}}</td>
                     <td>{{ruta.recorrido | truncatechars:100}}</td>
-                    <td>{{ruta.dia}}</td>
-                    <td>{{ruta.estado}}</td>
+                    <td>{{ruta.get_dia_display}}</td>
+                    {%if ruta.estado%}
+						<td>Activada</td>
+					{%else%}
+						<td>Desactivada</td>
+					{%endif%}
                     <td>    
                         <a href="{% url 'detalle_ruta'%}?dist={{dist}}&ruta={{ruta.id}}"><span class="acciones glyphicon glyphicon-search"></span></a>
                         <a href="{% url 'actualizar_ruta'%}?dist={{dist}}&ruta={{ruta.id}}"><span class="acciones glyphicon glyphicon-edit"></span></a>  
