@@ -2,17 +2,22 @@ import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, UpdateView
+from django.views.generic.detail import DetailView
 from django.http import HttpResponseRedirect
-from .models import Distribuidora, Usuario_Distribuidora, Anuncio, EstadoType
+from .models import Distribuidora, Usuario_Distribuidora, Anuncio, Ruta , DiasType, EstadoType
+
 
 class VistaDistribuidora(TemplateView):
     template_name = 'distribuidora.html'
 
     def get(self, request):
+        contexto = dict()
         uname = request.user.username
         dist = request.GET['dist']
-        distribuidora = Distribuidora.objects.get(persona_cargo__username=uname, id=dist)
-        return render(request, 'distribuidora.html', {'dist': distribuidora})
+        contexto['distribuidoras'] = Distribuidora.objects.filter(persona_cargo__username = self.request.user.username)
+        #contexto['kioskos'] = Kiosko.objects.filter(persona_cargo__username = self.request.user.username)
+        contexto['dist'] = Distribuidora.objects.get(persona_cargo__username=uname, id=dist)
+        return render(request, 'distribuidora.html', contexto)
 
 class FormatoFecha():
 
@@ -84,7 +89,6 @@ class VistaAnuncio(ListView):
     model = Anuncio
     template_name = 'anuncios.html'
     context_object_name = "anuncios"
-
     def get(self, request):
         uname = request.user.username
         dist = request.GET['dist']
@@ -105,16 +109,79 @@ class VistaAnuncio(ListView):
 
 
 class CrearRuta(TemplateView):
-
-    template_name = "crear_ruta.html"
+    template_name = 'adm_ruta.html'
+    def get(self, request ):
+        contexto = {}
+        contexto['dist'] = request.GET['dist']
+        contexto['DiasType'] = DiasType
+        return render(request, 'adm_ruta.html', contexto)
 
     def post(self, request):
-        p = (Usuario_Distribuidora.objects.get(id_usuario=request.user.id, estado=True))
         r = Ruta()
-        r.id_distribuidora_id = p.id_distribuidora.id
+        r.id_distribuidora_id = request.GET['dist']
         r.nombre = request.POST['nombre']
         r.recorrido = request.POST['recorrido']
         r.dia = request.POST['dia']
         r.estado = True  # activa
         r.save()
-        return HttpResponseRedirect("/distribuidora/crear_ruta")
+        return HttpResponseRedirect('/distribuidoras/rutas?dist='+request.GET['dist'] )
+
+class DetalleRuta(DetailView):
+    model = Ruta
+    context_object_name = 'ruta'
+    template_name = "detalle_ruta.html"
+    def get(self, request):
+        contexto = {}
+        r = Ruta.objects.get(id=request.GET['ruta'] )
+        contexto['dist'] = request.GET['dist']
+        contexto['ruta'] = r
+        for x,y in DiasType:
+            if x == r.dia:
+                contexto['dia'] = y
+                break
+        return render(request, 'detalle_ruta.html', contexto)
+
+class VistaRuta(ListView):
+    model = Ruta
+    template_name = 'rutas.html'
+    context_object_name = 'rutas'
+    def get(self, request):
+        contexto = {}
+        contexto['dist'] = request.GET['dist']
+        contexto['rutas'] = Ruta.objects.filter(id_distribuidora__id=request.GET['dist'])
+        return render(request, 'rutas.html', contexto)
+
+
+class EliminaRuta(ListView):
+    model = Ruta
+    template_name = 'rutas.html'
+    context_object_name = 'rutas'
+    def get(self, request):
+        contexto = {}
+        r = Ruta.objects.get(id=request.GET['ruta'])
+        r.estado = False
+        r.save()
+        contexto['dist'] = request.GET['dist']
+        contexto['ruta'] = request.GET['ruta']
+        contexto['rutas'] = Ruta.objects.filter(id_distribuidora__id=request.GET['dist'])
+        return HttpResponseRedirect('/distribuidoras/rutas/?dist='+request.GET['dist'])
+
+
+class ActualizarRuta(TemplateView):
+    template_name = 'adm_ruta.html'
+    def get(self, request ):
+        contexto = {}
+        contexto['dist'] = request.GET['dist']
+        contexto['ruta'] = Ruta.objects.get(id=request.GET['ruta'])
+        contexto['DiasType'] = DiasType
+        return render(request, 'adm_ruta.html', contexto)
+
+    def post(self, request):
+        r = Ruta.objects.get(id=request.GET['ruta'] )
+        r.id_distribuidora_id = request.GET['dist']
+        r.nombre = request.POST['nombre']
+        r.recorrido = request.POST['recorrido']
+        r.dia = request.POST['dia']
+        r.estado = request.POST['estado']
+        r.save()
+        return HttpResponseRedirect('/distribuidoras/rutas?dist='+request.GET['dist'])
