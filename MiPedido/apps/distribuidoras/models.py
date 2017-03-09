@@ -18,8 +18,8 @@ DiasType = (
 
 EstadoType = (
 	("l","Listo" ),
-	("v","vigente"),
-	("f","finalizado")
+	("v","Vigente"),
+	("f","Finalizado")
 )
 
 class Distribuidora (models.Model):
@@ -57,7 +57,7 @@ class Producto_Distribudora (models.Model):
     stock = models.PositiveIntegerField()
     estado = models.BooleanField(default=True)
 
-	
+
 class Ruta (models.Model):
 	id_distribuidora = models.ForeignKey(Distribuidora)
 	nombre = models.CharField(max_length=50)
@@ -65,7 +65,7 @@ class Ruta (models.Model):
 	dia = models.CharField(max_length=2, choices=(DiasType))
 	estado = models.BooleanField(default=True)
 
-	
+
 class Kiosko_Distribuidora (models.Model):  # Socio
     id_ruta = models.ForeignKey(Ruta)
     id_kiosko = models.ForeignKey(Kiosko)
@@ -75,15 +75,19 @@ class Kiosko_Distribuidora (models.Model):  # Socio
 
 
 class Anuncio (models.Model):
-    id_distribuidora = models.ForeignKey(Distribuidora)
-    imagen = models.ImageField()
-    titulo = models.CharField(max_length=50)
-    descripcion = models.TextField()
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
-    fecha_inicio = models.DateField()
-    fecha_fin = models.DateField()
-    estado = models.CharField(max_length=1, choices=(EstadoType))
-    
-    def __str__(self):
-        return self.titulo
-    
+
+	def url(self,nombreArchivo):
+		ruta = "imagenesAunicios/%s/%s" %(self.id_distribuidora.nombre,str(nombreArchivo))
+		return ruta
+
+	id_distribuidora = models.ForeignKey(Distribuidora)
+	imagen = models.ImageField(upload_to=url, blank=True, null=True)
+	titulo = models.CharField(max_length=50)
+	descripcion = models.TextField()
+	fecha_creacion = models.DateTimeField(auto_now_add=True)
+	fecha_inicio = models.DateField()
+	fecha_fin = models.DateField()
+	estado = models.CharField(max_length=1, choices=(EstadoType))
+
+	def __str__(self):
+		return self.titulo

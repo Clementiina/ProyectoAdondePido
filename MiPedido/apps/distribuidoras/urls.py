@@ -6,8 +6,7 @@ urlpatterns = [
     url(r'^$', views.VistaDistribuidora.as_view(), name='distribuidora'),
     url(r'^anuncios/$', views.VistaAnuncio.as_view(), name='anuncios'),
     url(r'^crear_anuncio/$', views.CrearAnuncio.as_view(), name="crear_anuncio"),
-    url(r'^detalle_anuncio/(?P<pk>\d+)/$', views.DetalleAnuncio.as_view(), name='detalle'),
+     url(r'^actualizar_anuncio/$', views.ActualizarAnuncio.as_view(),
+                             name='actualizar_anuncio'),
 	url(r'^crear_ruta/$', views.CrearRuta.as_view(), name="crear_ruta"),
 ]
-
- 

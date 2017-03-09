@@ -2,26 +2,36 @@
 {% load staticfiles %}
 
 {% block contenido %}
-<form method="post" action="" enctype="multipart/form-data" class="form-horizontal"> 
+<form method="post" action="" enctype="multipart/form-data" class="form-horizontal">
     {% csrf_token %}
-
+    <div class="form-group">
+        <label for="" class="col-sm-2 control-label">Empresa:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" value="{{dist.nombre}}" readonly="True">
+          <input type="hidden" value="{{dist.id}}" name="distribuidora" readonly="True">
+        </div>
+    </div>
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Título:</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ingrese el título del Anuncio">
+          <input type="text" class="form-control" id="id_titulo" name="titulo" placeholder="Ingrese el título del Anuncio">
+          <div id="errorTitulo">Falta poner el Titulo</div>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Fecha de Início</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" name="fecha_inicio" id="fecha_inicio" placeholder="Ingresar Fecha de Inicio del Anuncio">
+          <input type="text" class="form-control" name="fecha_inicio" id="id_fecha_inicio" placeholder="Ingresar Fecha de Inicio del Anuncio">
+          <div id="errorInicio">Falta indicar una fecha de Inicio</div>
         </div>
     </div>
 
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Fecha de Finalización</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" name="fecha_fin" id="fecha_fin" placeholder="Ingresar Fecha de Finalizacion o Fin del Anuncio">
+          <input type="text" class="form-control" name="fecha_fin" id="id_fecha_fin" placeholder="Ingresar Fecha de Finalizacion o Fin del Anuncio">
+          <div id="errorFin">Falta indicar una fecha de Finalización</div>
+          <div id="errorFecha">La Fecha de Inicio es posterior a la de Fin</div>
         </div>
     </div>
 
@@ -38,22 +48,22 @@
           <input type="file" name="img"/>
         </div>
     </div>
-      
+
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-primary" id="guardar">Guardar Anuncio</button>
+          <button type="submit" class="btn btn-primary" id="btn_guardar_anuncio">Guardar Anuncio</button>
         </div>
     </div>
 
 </form>
-                
+
 {% endblock %}
 
 {% block js%}
-  
+
   <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/javascripts.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/anuncio.js' %}"></script>
 
 
 {% endblock %}

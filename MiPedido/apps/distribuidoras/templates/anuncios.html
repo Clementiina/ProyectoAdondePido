@@ -6,7 +6,18 @@
 	<a href="#" class="list-group-item">Productos</a>
 {% endblock %}
 {% block contenido %}
-	<h4>Listado de Anuncios</h4>
+
+<div class="row">
+					<div class="col-md-4">
+							<h4>Listado de Anuncios</h4>
+					</div>
+					<div class="col-md-7">
+
+							<a href="{% url 'crear_anuncio'%}?dist={{dist}}" class="btn btn-default pull-right" >Crear Anuncio</a>
+
+
+					</div>
+			</div>
 	<table class="table">
 		<thead>
 			<tr>
@@ -27,10 +38,10 @@
 					<td>{{anuncio.fecha_creacion}}</td>
 					<td>{{anuncio.fecha_inicio}}</td>
 					<td>{{anuncio.fecha_fin}}</td>
-					<td>{{anuncio.estado}}</td>
-					<td> 	
-						<a href="#"><span class="acciones glyphicon glyphicon-search"></span></a>
-				 		<a href="#"><span class="acciones glyphicon glyphicon-edit"></span></a>
+					<td>{{anuncio.get_estado_display}}</td>
+					<td>
+						<a href="{% url 'actualizar_anuncio'%}?dist={{dist}}&anuncio={{anuncio.id}}"><span class="acciones glyphicon glyphicon-search"></span></a>
+				 		
 						<a href="#"><span class="glyphicon glyphicon-remove"></span></a>
 					</td>
 				</tr>
@@ -48,8 +59,8 @@
 		{% if anuncios.has_next %}
 			<a href="?dist={{dist}}&pag={{anuncios.next_page_number}}" class="tbn btn-default">Siguiente</a>
 		{% endif %}
-	</div>	
+	</div>
 	{%endif%}
 {% endblock %}
 {% block aside %}
-{% endblock %} 
+{% endblock %}
