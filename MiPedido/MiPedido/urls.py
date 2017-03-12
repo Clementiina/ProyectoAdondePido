@@ -14,15 +14,16 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from .views import Index, Login, Salir, Logout
+from .views import Index, Login, Salir, Logout, SinActivar
 from apps.distribuidoras import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', Login.as_view(), name='login'),
+	url(r'^sin_activar/', SinActivar.as_view(), name='sin_activar'),
     url(r'^salir/', Salir.as_view(), name='salir'),
     url(r'^logout/', Logout.as_view(), name='logout'),
     url(r'^$', Index.as_view(), name='index'),
     url(r'^distribuidoras/', include('apps.distribuidoras.urls')),
-	url(r'^solicitud/', include('apps.solicitudes.urls')),
+	url(r'^solicitudes/', include('apps.solicitudes.urls')),
 ]

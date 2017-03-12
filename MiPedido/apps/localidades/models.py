@@ -11,7 +11,7 @@ class Provincia (models.Model):
 
 class Departamento (models.Model):
     nombre = models.CharField(max_length=50)
-    id_provincia = models.ForeignKey(Provincia, verbose_name="Provincia")
+    provincia = models.ForeignKey(Provincia, verbose_name="Provincia")
     estado = models.BooleanField(default=True)
 
     def __str__(self):
@@ -21,7 +21,7 @@ class Departamento (models.Model):
 class Localidad (models.Model):
     nombre = models.CharField(max_length=50)
     codigo_postal = models.CharField(max_length=10, verbose_name="Codigo postal")
-    id_departamento = models.ForeignKey(Departamento, verbose_name="Departamento")
+    departamento = models.ForeignKey(Departamento, verbose_name="Departamento")
     estado = models.BooleanField(default=True)
 
     def __str__(self):

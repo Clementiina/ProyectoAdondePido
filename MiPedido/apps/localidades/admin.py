@@ -7,16 +7,16 @@ class ProvinciaAdmin(admin.ModelAdmin):
 	search_fields = ['nombre']
 
 class DepartamentoAdmin(admin.ModelAdmin):
-	list_display = ['nombre', 'id_provincia', 'estado']
-	ordering = ['nombre', 'id_provincia']
+	list_display = ['nombre', 'provincia', 'estado']
+	ordering = ['nombre', 'provincia']
 	search_fields = ['nombre']
-	raw_id_fields = ['id_provincia']
+	raw_fields = ['provincia']
 
 class LocalidadAdmin(admin.ModelAdmin):
-	list_display = ['nombre', 'codigo_postal', 'id_departamento', 'estado']
+	list_display = ['nombre', 'codigo_postal', 'departamento', 'estado']
 	ordering = ['nombre']
 	search_fields = ['nombre']
-	raw_id_fields = ['id_departamento']
+	raw_fields = ['departamento']
 
 admin.site.register(Provincia, ProvinciaAdmin)
 admin.site.register(Departamento, DepartamentoAdmin)

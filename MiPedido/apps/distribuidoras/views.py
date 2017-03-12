@@ -5,17 +5,18 @@ from django.views.generic import TemplateView, ListView, UpdateView
 from django.views.generic.detail import DetailView
 from django.http import HttpResponseRedirect
 from .models import Distribuidora, Usuario_Distribuidora, Anuncio, Ruta , DiasType
+from apps.negocios.models import Usuario_Negocio
+from apps.solicitudes.models import Distribuidora_Solicitud
 
 class VistaDistribuidora(TemplateView):
     template_name = 'distribuidora.html'
 
     def get(self, request):
         contexto = dict()
-        uname = request.user.username
-        dist = request.GET['dist']
-        contexto['distribuidoras'] = Distribuidora.objects.filter(persona_cargo__username = self.request.user.username)
-        #contexto['kioskos'] = Kiosko.objects.filter(persona_cargo__username = self.request.user.username)
-        contexto['dist'] = Distribuidora.objects.get(persona_cargo__username=uname, id=dist)
+        contexto['distribuidoras'] = Usuario_Distribuidora.objects.filter(usuario = self.request.user.id)
+        contexto['negocios'] = Usuario_Negocio.objects.filter(usuario = self.request.user.id)
+        contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+        contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist']))
         return render(request, 'distribuidora.html', contexto)
 
 
@@ -67,7 +68,7 @@ class VistaAnuncio(ListView):
     def get(self, request):
         uname = request.user.username
         dist = request.GET['dist']
-        listado = Anuncio.objects.filter(id_distribuidora__persona_cargo__username=uname, id_distribuidora__id=dist)
+        listado = Anuncio.objects.filter(id_distribuidora__id=dist)
         paginador = Paginator(listado, 5)
         pagina = request.GET['pag']
         try:
@@ -107,9 +108,8 @@ class DetalleRuta(DetailView):
     template_name = "detalle_ruta.html"
     def get(self, request):
         contexto = {}
-        r = Ruta.objects.get(id=request.GET['ruta'] )
         contexto['dist'] = request.GET['dist']
-        contexto['ruta'] = r   
+        contexto['ruta'] = Ruta.objects.get(id=request.GET['ruta'] )   
         return render(request, 'detalle_ruta.html', contexto)
 
 class VistaRuta(ListView):
@@ -132,9 +132,6 @@ class EliminaRuta(ListView):
         r = Ruta.objects.get(id=request.GET['ruta'])
         r.estado = False
         r.save()
-        contexto['dist'] = request.GET['dist']
-        contexto['ruta'] = request.GET['ruta']
-        contexto['rutas'] = Ruta.objects.filter(id_distribuidora__id=request.GET['dist'])
         return HttpResponseRedirect('/distribuidoras/rutas/?dist='+request.GET['dist'])
     
 
@@ -156,3 +153,4 @@ class ActualizarRuta(TemplateView):
         r.estado = request.POST['estado']
         r.save()
         return HttpResponseRedirect('/distribuidoras/rutas?dist='+request.GET['dist'])
+        

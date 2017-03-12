@@ -18,25 +18,25 @@
 				</h4>
 			</div>
 			<div id="collapse1" class="panel-collapse collapse">
-				{% for dist in distribuidoras %}
-					<a href="{% url 'distribuidora'%}?dist={{dist.id}}" class="list-group-item">{{dist.nombre|capfirst}}</a>
+				{% for d in distribuidoras %}
+					<a href="{% url 'distribuidora'%}?dist={{d.distribuidora.id}}" class="list-group-item">{{d.distribuidora.nombre|capfirst}}</a>
 				{% endfor %}
 			</div>
 			</div>
 		{% endif %}
-		{% if kioskos %}
+		{% if negocios %}
 			<div class="panel panel-default">
-			<div class="panel-heading" role="tab" id="Heading2">
+			<div class="panel-heading" role="tab" id="Heading1">
 				<h4 class="panel-title">
 					<a href="#collapse2" data-toggle="collapse" data-parent="#accordion">
-						Kioskos
+						Negocios
 					</a>
 				</h4>
 			</div>
-			<div id="collapse2" class="panel-collapse collapse">
-				<div class="panel-body">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-				</div>
+			<div id="collapse1" class="panel-collapse collapse">
+				{% for n in negocios %}
+					<a href="{% url 'negocio'%}?dist={{n.negocio.id}}" class="list-group-item">{{n.negocio.nombre|capfirst}}</a>
+				{% endfor %}
 			</div>
 			</div>
 		{% endif %}

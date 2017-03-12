@@ -4,10 +4,11 @@
 {% block contenido %}
 <form method="post" action="" enctype="multipart/form-data" class="form-horizontal"> 
     {% csrf_token %}
+	<h3>Datos de Usuario:</h3>
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Usuario:</label>
         <div class="col-sm-10">
-			<input type="text" class="form-control" name="unico" placeholder="Ingrese nombre de usuario">			
+			<input type="text" class="form-control" id="user" name="user" placeholder="Ingrese nombre de usuario">			
         </div>
     </div>
     <div class="form-group">
@@ -17,17 +18,19 @@
         </div>
     </div>
 	<div class="form-group">
-        <label for="" class="col-sm-2 control-label">Email:</label>
-        <div class="col-sm-10">
-			<input type="email" class="form-control" id="email" name="email" placeholder="Ingrese correo electronico">			
-        </div>
-    </div>
-	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Repita Contraseña:</label>
         <div class="col-sm-10">
 			<input type="password" class="form-control" id="r-contraseña" name="r-contraseña" placeholder="Repita contraseña">			
         </div>
     </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Email:</label>
+        <div class="col-sm-10">
+			<input type="email" class="form-control" id="email" name="email" placeholder="Ingrese correo electronico">			
+        </div>
+    </div>
+	<h3>Datos del Negocio:</h3>
+	<h4>Persona a cargo:</h4>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Apellido:</label>
         <div class="col-sm-10">
@@ -49,15 +52,16 @@
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Telefono:</label>
         <div class="col-sm-10">
-			<input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingrese numero de Telefono">			
+			<input type="number" class="form-control" id="telefono" name="telefono" placeholder="Ingrese numero de Telefono">			
         </div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Celular:</label>
         <div class="col-sm-10">
-			<input type="tel" class="form-control" id="celular" name="celular" placeholder="Ingrese numero de celular">			
+			<input type="number" class="form-control" id="celular" name="celular" placeholder="Ingrese numero de celular">			
         </div>
     </div>
+	<h4>Datos del Negocio:</h4>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Localidad:</label>
         <div class="col-sm-10">
@@ -65,12 +69,44 @@
         </div>
     </div>
 	<div class="form-group">
-        <label for="" class="col-sm-2 control-label">Direccion:</label>
+        <label for="" class="col-sm-2 control-label">Nombre del Negocio:</label>
         <div class="col-sm-10">
-			<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese direccion">			
+			<input type="text" class="form-control" id="n-nombre" name="n-nombre" placeholder="Ingrese Nombre del Negocio">			
         </div>
     </div>
-    	
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Descripcion:</label>
+        <div class="col-sm-10">
+			<textarea class="form-control"  name="n-descripcion" rows="3" placeholder="Descripcion del Negocio"></textarea>		
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Numero de contacto:</label>
+        <div class="col-sm-10">
+			<input type="number" class="form-control" id="n-contacto" name="n-contacto" placeholder="Ingrese numero de contacto">		
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Direccion:</label>
+        <div class="col-sm-10">
+			<input type="text" class="form-control" id="n-direccion" name="n-direccion" placeholder="Ingrese direccion">			
+        </div>
+    </div>
+	<h4>Distribuidoras:</h4>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">
+			Selecciona las distribuidoras que decees. 
+			(manten precionada la tecla contlol <ctrl> para seleccionar mas de una):
+		</label>
+        <div class="col-sm-10">
+			<select name='lista' multiple='True'>
+				{% for dist in distribuidoras %}
+					<option id="{{dist.id}}" value="{{dist.id}}">{{dist.nombre|capfirst}}</option>
+				{% endfor %}					
+			</select>
+        </div>
+    </div>
+	
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
           <button type="submit" class="btn btn-primary" id="guardar">Enviar Solicitud</button>

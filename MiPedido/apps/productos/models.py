@@ -13,11 +13,11 @@ class Presentacion (models.Model):
 
 
 class Producto (models.Model):
-    id_marcaSubCategoria = models.ForeignKey(Marca_SubCategoria)
-    id_tipo_producto = models.ForeignKey(Tipo_Producto)
+    marcaSubCategoria = models.ForeignKey(Marca_SubCategoria)
+    tipo_producto = models.ForeignKey(Tipo_Producto)
     nombre = models.CharField(max_length=50)
     descripsiom = models.TextField()
-    id_presentacion = models.ForeignKey(Presentacion)
+    presentacion = models.ForeignKey(Presentacion)
     precio_unitario = models.FloatField()
     estado = models.BooleanField(default=True)
 

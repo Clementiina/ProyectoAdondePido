@@ -13,12 +13,12 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for dist in distribuidoras %}
+					{% for d in distribuidoras %}
 						<tr>
-							<td>{{dist.nombre|capfirst}}</td>
-							<td>{{dist.direccion|capfirst}}</td>
+							<td>{{d.distribuidora.nombre|capfirst}}</td>
+							<td>{{d.distribuidora.direccion|capfirst}}</td>
 							<td>-</td>
-							<td><a href="{% url 'distribuidora' %}?dist={{dist.id}}" class="btn btn-default">Seleccionar</a></td>
+							<td><a href="{% url 'distribuidora' %}?dist={{d.distribuidora.id}}" class="btn btn-default">Seleccionar</a></td>
 						</tr>
 					{% endfor %}
 					
@@ -26,8 +26,8 @@
 			</table>
 		{% endif%}
 		
-		{% if kioskos %}
-			<h3>Kioskos asociados a la cuenta</h3>
+		{% if negocios %}
+			<h3>Negocios asociados a la cuenta</h3>
 			<table class="table">
 				<thead>
 					<tr>
@@ -37,10 +37,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for kiosko in kioskos %}
+					{% for n in negocios %}
 						<tr>
-							<td>{{ kiosko.nombre|capfirst }}</td>
-							<td>{{ kiosko.direccion|capfirst }}</td>
+							<td>{{ n.negocio.nombre|capfirst }}</td>
+							<td>{{ n.negocio.direccion|capfirst }}</td>
 							<td><a href="" class="btn btn-default">Seleccionar</a></td>
 						</tr>
 					{% endfor %}

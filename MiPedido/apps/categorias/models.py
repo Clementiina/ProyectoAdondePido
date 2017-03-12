@@ -6,7 +6,7 @@ class Categoria (models.Model):
 
 class SubCategoria (models.Model):
     nombre = models.CharField(max_length=50)
-    id_categoria = models.ForeignKey(Categoria)
+    categoria = models.ForeignKey(Categoria)
     estado = models.BooleanField(default=True)
 
 
@@ -16,6 +16,6 @@ class Marca (models.Model):
 
 
 class Marca_SubCategoria (models.Model):
-    id_subCategoria = models.ForeignKey(SubCategoria)
-    id_marca = models.ForeignKey(Marca)
+    subCategoria = models.ForeignKey(SubCategoria)
+    marca = models.ForeignKey(Marca)
     estado = models.BooleanField(default=True)
