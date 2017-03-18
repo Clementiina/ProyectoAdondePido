@@ -11,9 +11,9 @@
 					<div class="col-md-4">
 							<h4>Listado de Anuncios</h4>
 					</div>
-					<div class="col-md-7">
+					<div class="col-md-0">
 
-							<a href="{% url 'crear_anuncio'%}?dist={{dist}}" class="btn btn-default pull-right" >Crear Anuncio</a>
+							<a href="{% url 'crear_anuncio'%}?dist={{dist}}" class="btn btn-primary pull-right" >Crear Anuncio</a>
 
 
 					</div>
@@ -26,7 +26,6 @@
 				<th>Creado</th>
 				<th>Inicio</th>
 				<th>Fin</th>
-				<th>Estado</th>
 				<th>Acciones</th>
 			</tr>
 		</thead>
@@ -38,11 +37,9 @@
 					<td>{{anuncio.fecha_creacion}}</td>
 					<td>{{anuncio.fecha_inicio}}</td>
 					<td>{{anuncio.fecha_fin}}</td>
-					<td>{{anuncio.get_estado_display}}</td>
 					<td>
 						<a href="{% url 'actualizar_anuncio'%}?dist={{dist}}&anuncio={{anuncio.id}}"><span class="acciones glyphicon glyphicon-search"></span></a>
-				 		
-						<a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+						<a href="{% url 'eliminar_anuncio'%}?dist={{dist}}&anuncio={{anuncio.id}}"><span class="glyphicon glyphicon-remove"></span></a>
 					</td>
 				</tr>
 			{% endfor %}

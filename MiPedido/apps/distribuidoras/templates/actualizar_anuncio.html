@@ -7,13 +7,13 @@
 
 <form method="post" action="" enctype="multipart/form-data" class="form-horizontal">
     {% csrf_token %}
-
-
-
-
-          <input type="hidden" value="{{dist}}" name="distribuidora" readonly="True">
-          <input type="hidden" name="id" value="{{anuncio.id}}" readonly="True">
-
+      <div class="form-group">
+              <div class="pull-right col-md-0">
+              <input type="button" value="Activa Edición" class="btn btn-default" id="btn_activa_guardar"/>
+              </div>
+      </div>
+      <input type="hidden" value="{{dist}}" name="distribuidora" readonly="True">
+      <input type="hidden" name="id" value="{{anuncio.id}}" readonly="True">
 
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Título:</label>
@@ -45,22 +45,6 @@
           <textarea id="id_descripcion" class="form-control"  name="descripcion" rows="2" disabled="True">{{anuncio.descripcion}}</textarea>
         </div>
     </div>
-    <div class="form-group">
-      <label for="" class="col-sm-2 control-label">Dia:</label>
-        <div class="col-sm-3">
-
-		<select class="form-control" name="estado" disabled="True" id="id_estado">
-		{% for e in estado %}
-        {% if e.0 == anuncio.estado %}
-          <option value="{{e.0}}" selected>{{e.1}}</option>
-        {% else %}
-          <option value="{{e.0}}">{{e.1}}</option>
-        {% endif %}
-		{% endfor %}
-		</select>
-</div>
-
-    </div>
 
     <div class="form-group">
       <label for="" class="col-sm-2 control-label">Ímagen</label>
@@ -74,13 +58,11 @@
     </div>
 
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-
-          <input type="button" value="Activa Edición" class="btn btn-primary" id="btn_activa_guardar"/>
-          <input type="submit" value="Guardar Anuncio" class="btn btn-default" id="btn_guardar_anuncio" disabled="true" />
+        <div class="pull-right col-md-0">
+          <input type="submit" value="Guardar Anuncio" class="btn btn-primary" id="btn_guardar_anuncio" disabled="true" />
+          <a href="{%url 'anuncios' %}?dist={{dist}}&pag=1" class="btn btn-default">Cancelar</a>
         </div>
     </div>
-
 </form>
 
 {% endblock %}

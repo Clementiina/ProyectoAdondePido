@@ -1,27 +1,33 @@
-{% extends "base_distribuidora.html" %}
+{% extends 'base_distribuidora.html' %}
 {% load staticfiles %}
+{% load static %}
+{% load static from staticfiles  %}
 
 {% block contenido %}
+
 <form method="post" action="" enctype="multipart/form-data" class="form-horizontal">
     {% csrf_token %}
-    <div class="form-group">
-        <label for="" class="col-sm-2 control-label">Empresa:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" value="{{dist.nombre}}" readonly="True">
-          <input type="hidden" value="{{dist.id}}" name="distribuidora" readonly="True">
-        </div>
-    </div>
+<div class="form-group">
+        
+</div>
+
+
+
+          <input type="hidden" value="{{dist}}" name="distribuidora" readonly="True">
+          <input type="hidden" name="id" value="{{anuncio.id}}" readonly="True">
+
+
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Título:</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="id_titulo" name="titulo" placeholder="Ingrese el título del Anuncio">
-          <p id="errorTitulo" class="text-danger">Falta poner el Titulo</p>
+          <input type="text" class="form-control" id="id_titulo" name="titulo" value="{{anuncio.titulo}}" disabled="True">
+          <div id="errorTitulo">Falta poner el Titulo</div>
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Fecha de Início</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" name="fecha_inicio" id="id_fecha_inicio" placeholder="Ingresar Fecha de Inicio del Anuncio">
+          <input type="text" class="form-control" name="fecha_inicio" id="id_fecha_inicio" value="{{anuncio.fecha_inicio|date:"d/m/Y"}}" disabled="True">
           <div id="errorInicio">Falta indicar una fecha de Inicio</div>
         </div>
     </div>
@@ -29,7 +35,7 @@
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Fecha de Finalización</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" name="fecha_fin" id="id_fecha_fin" placeholder="Ingresar Fecha de Finalizacion o Fin del Anuncio">
+          <input type="text" class="form-control" name="fecha_fin" id="id_fecha_fin" value="{{anuncio.fecha_fin|date:"d/m/Y"}}" disabled="True">
           <div id="errorFin">Falta indicar una fecha de Finalización</div>
           <div id="errorFecha">La Fecha de Inicio es posterior a la de Fin</div>
         </div>
@@ -38,21 +44,25 @@
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Descripción</label>
         <div class="col-sm-10">
-          <textarea class="form-control"  name="descripcion" rows="3" placeholder="Ingrese ls Descripción del Anuncio"></textarea>
+          <textarea id="id_descripcion" class="form-control"  name="descripcion" rows="2" disabled="True">{{anuncio.descripcion}}</textarea>
         </div>
     </div>
-
+    
     <div class="form-group">
-        <label for="" class="col-sm-2 control-label">Ímagen</label>
-        <div class="col-sm-10">
-          <input type="file" name="img"/>
+      <label for="" class="col-sm-2 control-label">Ímagen</label>
+      <div class="col-sm-1">
+        <img src="/media/{{anuncio.imagen}}" width=100px heigth=100px>
+      </div>
+        <label for="" class="col-sm-3 control-label">Elegir Otra Ímagen</label>
+        <div class="col-sm-5">
+          <input id="id_imagen" type="file" name="img"/ disabled="True">
         </div>
     </div>
 
     <div class="form-group">
         <div class="pull-right col-md-0">
-          <input type="submit" value="Guardar Anuncio" class="btn btn-primary" id="btn_guardar_anuncio"/>
-          <a href="{%url 'anuncios' %}?dist={{dist.id}}&pag=1" class="btn btn-default">Cancelar</a>
+          <input type="submit" value="Eliminar Anuncio" class="btn btn-primary"/>
+          <a href="{%url 'anuncios' %}?dist={{dist}}&pag=1" class="btn btn-default">Cancelar</a>
         </div>
     </div>
 
