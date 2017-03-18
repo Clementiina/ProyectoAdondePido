@@ -3,13 +3,13 @@ from .models import Anuncio, Permiso_Distribuidora, Distribuidora, Usuario_Distr
 
 
 class AnuncioAdmin(admin.ModelAdmin):
-    list_display = ('id', 'titulo', 'fecha_creacion', 'fecha_inicio', 'fecha_fin')
-    search_fields = ['titulo']
-    raw_fields = ['distribuidora']
+	list_display = ('id', 'titulo', 'fecha_creacion', 'fecha_inicio', 'fecha_fin')
+	search_fields = ['titulo']
+	raw_fields = ['distribuidora']
 
 
 class Permiso_DistribuidoraAdmin(admin.ModelAdmin):
-    list_display = ("nombre", 'descripcion')
+	list_display = ("nombre", 'descripcion')
 
 
 class DistribuidoraAdmin(admin.ModelAdmin):

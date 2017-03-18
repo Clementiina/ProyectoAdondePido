@@ -4,15 +4,15 @@ from .models import Permiso_Negocio, Usuario_Negocio, Negocio
 
 
 class  Permiso_NegocioAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "descripcion")
+	list_display = ("nombre", "descripcion")
 
 
 class NegocioAdmin (admin.ModelAdmin):
-    list_display = ("nombre", "numero_contacto", "direccion")
+	list_display = ("nombre", "numero_contacto", "direccion")
 
 
 class Usuario_NegocioAdmin (admin.ModelAdmin):
-    list_display = ('negocio', 'usuario', 'permiso')
+	list_display = ('negocio', 'usuario', 'permiso')
 
 
 admin.site.register(Permiso_Negocio, Permiso_NegocioAdmin)
