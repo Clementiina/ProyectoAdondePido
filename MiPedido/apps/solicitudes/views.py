@@ -15,47 +15,64 @@ class VistaSolicitud(TemplateView):
     
     def get(self, request):
         contexto={}
-        contexto['distribuidoras'] = Distribuidora.objects.all()
+        contexto['distribuidoras'] = Distribuidora.objects.all()        
         return render(request, self.template_name, contexto)
 
-
+    def validar(user):
+        return HttpResponseRedirect('/sin_activar/')
+    
     def post(self, request):
-        u = User()
-        u.username = request.POST['user']
-        u.set_password(request.POST['contraseña'])
-        u.email = request.POST['email']
-        u.last_name = request.POST['apellido']
-        u.first_name = request.POST['nombre']   
-        u.save()
-        login(request, u) #auto login
-        
-        s = Solicitud()
-        s.fecha = datetime.datetime.now()
-        s.usuario_id = u.id
-        s.code = (str(hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest())[:20])
-        s.dni = request.POST['DNI']
-        s.telefono = request.POST['telefono']
-        s.celular = request.POST['celular']
-        #s.id_localidad = 3935 #int(request.POST['localidad']) #ya esta por defecto
-        s.nombre = request.POST['n-nombre']
-        s.descripcion = request.POST['n-descripcion']
-        s.numero_contacto = request.POST['n-contacto']
-        s.direccion = request.POST['n-direccion']
-        s.estado = 'p' #Pendiente
-        s.save()
-        
-        distribuidoras = request.POST['lista']
-        
-        print("\n\n")
-        print(request.POST['lista'])
-        print("\n\n")
-        
-        for dist in distribuidoras:
-            ds = Distribuidora_Solicitud()
-            ds.solicitud_id = s.id
-            ds.distribuidora_id = dist
-            ds.save()
-        return HttpResponseRedirect('/activar/')
+        try:
+                nu = User.objects.get(username = request.POST['user'])
+        except User.DoesNotExist:
+                nu = None               
+        if nu is None :
+            u = User()
+            u.username = request.POST['user']
+            u.set_password(request.POST['contraseña'])
+            u.email = request.POST['email']
+            u.last_name = request.POST['apellido']
+            u.first_name = request.POST['nombre']   
+            u.save()
+            login(request, u) #auto login
+            
+            s = Solicitud()
+            s.fecha = datetime.datetime.now()
+            s.usuario_id = u.id
+            s.code = (str(hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest())[:20])
+            s.dni = request.POST['DNI']
+            s.telefono = request.POST['telefono']
+            s.celular = request.POST['celular']
+            s.id_localidad = 3935 #int(request.POST['localidad']) #ya esta por defecto
+            s.nombre = request.POST['n_nombre']
+            s.descripcion = request.POST['n_descripcion']
+            s.numero_contacto = request.POST['n_contacto']
+            s.direccion = request.POST['n_direccion']
+            s.estado = 'p' #Pendiente
+            s.save()        
+            distribuidoras = request.POST.getlist('lista')        
+            for dist in distribuidoras:
+                ds = Distribuidora_Solicitud()
+                ds.solicitud_id = s.id
+                ds.distribuidora_id = dist
+                ds.save()
+                return HttpResponseRedirect('/sin_activar/')
+        contexto = {}
+        contexto['error'] = 'El usuario ya existe'
+        contexto['user'] = request.POST['user']
+        contexto['email'] = request.POST['email']
+        contexto['apellido'] = request.POST['apellido']
+        contexto['nombre'] = request.POST['nombre']
+        contexto['DNI'] = request.POST['DNI']
+        contexto['telefono'] = request.POST['telefono']
+        contexto['celular'] = request.POST['celular']
+        contexto['localidad'] = request.POST['localidad']
+        contexto['n_nombre'] = request.POST['n_nombre']
+        contexto['n_descripcion'] = request.POST['n_descripcion']
+        contexto['n_contacto'] = request.POST['n_contacto']
+        contexto['n_direccion'] = request.POST['n_direccion']       
+        contexto['distribuidoras'] = Distribuidora.objects.all()
+        return render(request, self.template_name, contexto)
 
 class VistaSolicitudes(TemplateView):
     template_name = 'solicitudes.html'
@@ -80,32 +97,39 @@ class VistaActivar(TemplateView):
         
     def post(self, request):
         s = Solicitud.objects.get(usuario_id=request.GET['user'] )
-        s.estado = 'a'
-        s.save()
-        p = Persona()
-        p.usuario_id = request.GET['user']
-        p.dni = s.dni
-        p.telefono = s.telefono
-        p.celular = s.celular
-        p.localidad_id = s.localidad_id
-        p.direccion = s.direccion
-        p.estado = True
-        p.save()
-        n = Negocio()
-        n.nombre = s.nombre
-        n.descripcion = s.descripcion
-        n.numero_contacto = s.numero_contacto
-        n.localidad_id = s.localidad_id
-        n.direccion = s.direccion
-        n.persona_cargo_id = p.id
-        n.save()
-        u = Usuario_Negocio()
-        u.permiso_id = 1 # PERMISO DE ADMINISTRADOR
-        u.negocio_id = n.id
-        u.usuario_id = request.GET['user']
-        u.estado = True
-        u.save()
-        return HttpResponseRedirect('/solicitudes/?dist='+request.GET['dist'])
+        if (request.POST['code'] == s.code ):
+            s.estado = 'a'
+            s.save()
+            p = Persona()
+            p.usuario_id = request.GET['user']
+            p.dni = s.dni
+            p.telefono = s.telefono
+            p.celular = s.celular
+            p.localidad_id = s.localidad_id
+            p.direccion = s.direccion
+            p.estado = True
+            p.save()
+            n = Negocio()
+            n.nombre = s.nombre
+            n.descripcion = s.descripcion
+            n.numero_contacto = s.numero_contacto
+            n.localidad_id = s.localidad_id
+            n.direccion = s.direccion
+            n.persona_cargo_id = p.id
+            n.save()
+            u = Usuario_Negocio()
+            u.permiso_id = 1 # PERMISO DE ADMINISTRADOR
+            u.negocio_id = n.id
+            u.usuario_id = request.GET['user']
+            u.estado = True
+            u.save()
+            return HttpResponseRedirect('/solicitudes/?dist='+request.GET['dist'])
+        contexto = {}
+        contexto['error'] =  'Codigo incorrecto'
+        contexto['dist'] = request.GET['dist']
+        contexto['solicitud'] = s
+        contexto['code'] = request.POST['code']
+        return render(request, self.template_name, contexto)
         
 class VistaAsociar(TemplateView):
     template_name = 'solicitudes.html'
