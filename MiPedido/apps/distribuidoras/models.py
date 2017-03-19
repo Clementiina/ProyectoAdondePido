@@ -85,7 +85,7 @@ class Anuncio (models.Model):
 	fecha_creacion = models.DateTimeField(auto_now_add=True)
 	fecha_inicio = models.DateField()
 	fecha_fin = models.DateField()
-	estado = models.CharField(max_length=1, choices=(EstadoType))
+	estado = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.titulo
