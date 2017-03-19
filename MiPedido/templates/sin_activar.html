@@ -18,6 +18,9 @@
 				</div>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
+						<a href=""><span class="glyphicon glyphicon-bell"></span></a>
+					</li>
+					<li>
 						<a href=""><span class="glyphicon glyphicon-user"></span> {{user.username|capfirst}}</a>
 					</li>
 					<li>
@@ -29,6 +32,14 @@
 	</header>
 
 	{% block contenido %}
+	
+		<h1 class="text-center"> <br><br>
+			Por el momento, tu cuenta no esta activada. <br>
+			Necesitas que un representante de la distribuidora te active<br>
+			Te solisitara tu codigo de activacion <br><br> 
+			<b>{{codigo}}</b>
+		</h1>
+
 	{% endblock %}
 
 	<footer>
@@ -38,6 +49,6 @@
 
 	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script tupe="text/javascript" src="{% static 'js/anuncio.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/javascripts.js' %}"></script>
 </body>
 </html>

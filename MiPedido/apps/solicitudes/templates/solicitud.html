@@ -1,0 +1,269 @@
+{% extends "base_solicitud.html" %}
+{% load staticfiles %}
+
+{% block contenido %}
+{{users}}
+
+<script type="text/javascript">
+	
+	function mostrarError(nombre){
+		document.getElementById("e_"+nombre).hidden = '';
+		document.getElementById(nombre).focus();
+		document.getElementById(nombre).style.background='#FF4747';
+	}
+	
+	function borrarError(nombre){
+		document.getElementById("e_"+nombre).hidden = "hidden";
+		document.getElementById(nombre).style.background='#FFFFFF';
+	}
+	
+	function validar(){
+		
+		noVacios();
+		
+		c1 = validarContaseña() ;
+		c2 = validarEmail();
+		c3 = validarNombres('apellido');
+		c4 = validarNombres('nombre');
+		c5 = validarNumero('DNI');
+		c6 = validarNumero('telefono');
+		c7 = validarNumero('celular');
+		c8 = validarNombres('n_nombre');
+		c9 = validarNumero('n_contacto')
+		
+		r = (c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8 && c9);
+		
+		return r
+	}	
+	
+	function noVacios(){
+		result = true;
+		var p01 = document.getElementById("user").value;
+		if (p01 == null) {mostrarError("user");};
+		var p02 = document.getElementById("email").value;
+		if (p02 == null) {mostrarError("email");};
+		var p03 = document.getElementById("contraseña").value;
+		if (p03 == null) {mostrarError("contraseña");};
+		var p04 = document.getElementById("email").value;
+		if (p04 == null) {mostrarError("email");};
+		var p05 = document.getElementById("apellido").value;
+		if (p05 == null) {mostrarError("apellido");};
+		var p06 = document.getElementById("nombre").value;
+		if (p06 == null) {mostrarError("nombre");};
+		var p07 = document.getElementById("DNI").value;
+		if (p07 == null) {mostrarError("DNI");};
+		var p08 = document.getElementById("telefono").value;
+		if (p08 == null) {mostrarError("telefono");};
+		var p09 = document.getElementById("celular").value;
+		if (p09 == null) {mostrarError("celular");};
+		var p10 = document.getElementById("localidad").value;
+		if (p10 == null) {mostrarError("localidad");};
+		var p11 = document.getElementById("n_nombre").value;
+		if (p11 == null) {mostrarError("n_nombre");};
+		var p12 = document.getElementById("n_descripcion").value;
+		if (p12 == null) {mostrarError("n_descripcion");};
+		var p13 = document.getElementById("n_contacto").value;
+		if (p13 == null) {mostrarError("n_contacto");};
+		var p14 = document.getElementById("n_direccion").value;
+		if (p14 == null) {mostrarError("n_direccion");};
+		
+	}
+	
+	function validarEmail(){
+		var mail = /^[a-zA-Z0-9_\.\-]+@+[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+		if (!mail.test$("email")){
+		  mostrarError("email");
+		  return false;
+		} 
+		else {
+		  borrarError("email");
+		  return true; 
+		}
+	}
+	
+	function validarNombres(nombre){
+		var n = /^[a-zA-Z ]+/;
+		if (!n.test$(nombre)){
+		  mostrarError(nombre);
+		  return false;
+		} 
+		else {
+		  borrarError(nombre);
+		  return true; 
+		}
+	}
+	
+	function validarNumero(nombre){
+		var num = /^[0-9]+$/;
+		if (!num.test$(nombre)){
+		  mostrarError(nombre);
+		  return false;
+		} 
+		else {
+		  borrarError(nombre);
+		  return true; 
+		}
+	}
+	
+	function validarContaseña(){
+		var a1 = document.getElementById("contraseña").value;
+		var a2 = document.getElementById("r_contraseña").value;
+		
+		if (((a1 != "") && (a2 != "")) && (a1 != a2) ){
+		  
+		  mostrarError("contraseña");
+		  document.getElementById("r_contraseña").style.background='#FF4747';
+		  return false;
+		} else {
+		  borrarError("contraseña");
+		  document.getElementById("r_contraseña").style.background='#FFFFFF';
+		  return true; 
+		}
+	}
+	
+	
+</script>
+
+<form method="post" enctype="multipart/form-data" onsubmit="validar()" class="form-horizontal"> 
+    {% csrf_token %}
+	{{usuarios}}
+	<h3>Datos de Usuario:</h3>
+    <div class="form-group">
+        <label for="" class="col-sm-2 control-label">Usuario:</label>
+        <div class="col-sm-3">
+			<div> {{error}} </div>
+			{%if error%}
+				<div  hidden="hidden" id='e_user'> Usuario no puede estar vacio </div>
+				<input type="text" class="form-control" id="user" name="user" value='{{user}}' style="border: 2px solid red;" placeholder="Ingrese nombre de usuario">	
+			{%else%}
+				<input type="text" class="form-control" id="user" name="user" placeholder="Ingrese nombre de usuario">	
+			{%endif%}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-2 control-label">Contraseña:</label>
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_contraseña'> Las contaseñas no coinciden </div>
+			<input type="password" class="form-control" id="contraseña" name="contraseña" onchange="validarContaseña()" placeholder="Ingrese contraseña">	
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Repita Contraseña:</label>
+        <div class="col-sm-3">
+			<input type="password" class="form-control" id="r_contraseña" name="r_contraseña" onchange="validarContaseña()" placeholder="Repita contraseña">			
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Email:</label>
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_email'> Email incorrecto </div>
+			<input type="email" class="form-control" id="email" name="email" value='{{email}}' onchange="validarEmail()" placeholder="Ingrese correo electronico">			
+        </div>
+    </div>
+	<h3>Datos del Negocio:</h3>
+	<h4>Persona a cargo:</h4>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Apellido:</label>
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_apellido'> Apellido incorrecto </div>
+			<input type="text" class="form-control" id="apellido" name="apellido" value='{{apellido}}' onchange="validarNombres('apellido')" placeholder="Ingrese Apellido">			
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Nombre:</label>
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_nombre'> Nombre incorrecto </div>
+			<input type="text" class="form-control" id="nombre" name="nombre" value='{{nombre}}' onchange="validarNombres('nombre')" placeholder="Ingrese Nombre">			
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">DNI:</label> 
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_DNI'> DNI incorrecto </div>
+			<input type="number" class="form-control" id="DNI" name="DNI" value='{{DNI}}' onchange="validarNumero('DNI')" placeholder="Ingrese numero DNI">			
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Telefono:</label>
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_telefono'> Telefono incorrecto </div>
+			<input type="number" class="form-control" id="telefono" name="telefono" value='{{telefono}}' onchange="validarNumero('telefono')" placeholder="Ingrese numero de Telefono">			
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Celular:</label>
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_celular'> Celular incorrecto </div>
+			<input type="number" class="form-control" id="celular" name="celular" value='{{celular}}' onchange="validarNumero('celular')" placeholder="Ingrese numero de celular">			
+        </div>
+    </div>
+	<h4>Datos del Negocio:</h4>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Localidad:</label>
+        <div class="col-sm-3">
+			<input readonly value='Salta' type="number " class="form-control" id="localidad" name="localidad" value='{{localidad}}' placeholder="Ingrese Localidad">			
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Nombre del Negocio:</label>
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_n_nombre'> Nombre del Negocio incorrecto </div>
+			<input type="text" class="form-control" id="n_nombre" name="n_nombre" value='{{n_nombre}}' onchange="validarNombres('n_nombre')" placeholder="Ingrese Nombre del Negocio">			
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Descripcion:</label>
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_n_descripcion'> Descripcion incorrecta </div>
+			<textarea class="form-control"  name="n_descripcion" rows="3" placeholder="Descripcion del Negocio">{{descripcion}}</textarea>		
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Numero de contacto:</label>
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_n_contacto'> Numero de contacto incorrecto </div>			
+			<input type="number" class="form-control" id="n_contacto" name="n_contacto" value='{{n_contacto}}' onchange="validarNumero('n_contacto')" placeholder="Ingrese numero de contacto">		
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Direccion:</label>
+        <div class="col-sm-3">
+			<div  hidden="hidden" id='e_n_direccion'> Direccion incorrecta </div>			
+			<input type="text" class="form-control" id="n_direccion" name="n_direccion" value='{{n_direccion}}' placeholder="Ingrese direccion">			
+        </div>
+    </div>
+	<h4>Distribuidoras:</h4>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">
+			Selecciona las distribuidoras que decees. 
+			(manten precionada la tecla contlol <ctrl> para seleccionar mas de una):
+		</label>
+        <div class="col-sm-3">
+			<select multiple='multiple' name='lista' >
+				{% for dist in distribuidoras %}
+					<option id="{{dist.id}}" value="{{dist.id}}">{{dist.nombre|capfirst}}</option>
+				{% endfor %}					
+			</select>			
+        </div>
+    </div>
+	
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-3">
+          <button type="submit" class="btn btn_primary" id="guardar">Enviar Solicitud</button>
+		  <a class="btn btn_primary" href="{% url 'login'%}">Cancelar</a>
+        </div>
+    </div>
+
+</form>
+        
+{% endblock %}
+
+
+{% block js%}
+  
+  <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/javascripts.js' %}"></script> 
+
+
+{% endblock %}

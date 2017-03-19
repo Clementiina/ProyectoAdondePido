@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block contenido %}
+
+<script type="text/javascript">
+
+	function mostrarError(nombre){
+		document.getElementById("e_"+nombre).hidden = '';
+		document.getElementById(nombre).focus();
+		document.getElementById(nombre).style.background='#FF4747';
+	}
+	
+	function borrarError(nombre){
+		document.getElementById("e_"+nombre).hidden = "hidden";
+		document.getElementById(nombre).style.background='#FFFFFF';
+	}
+	
+	function validarCodigo(){
+		var cod = {{solicitud.code}};
+		var cod_r = document.getElementById("n-code").value;
+		if (cod != cod_r) {		  
+		  mostrarError("code");
+		  return false;
+		} else {
+		  borrarError("code");
+		  return true; 
+		}
+	}
+	
+</script>
+
+<form method="post" action="" enctype="multipart/form-data" class="form-horizontal"> 
+    {% csrf_token %}
+	
+	<h3>Datos del Negocio:</h3>
+	
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Localidad:</label>
+        <div class="col-sm-10">
+			<input readonly value='{{solicitud.localidad.nombre}}' type="number " class="form-control" id="localidad" placeholder="Ingrese Localidad">			
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Nombre del Negocio:</label>
+        <div class="col-sm-10">
+			<input readonly value='{{solicitud.nombre}}' type="text" class="form-control" id="n-nombre" placeholder="Ingrese Nombre del Negocio">			
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Descripcion:</label>
+        <div class="col-sm-10">
+			<textarea readonly class="form-control" rows="3" placeholder="Descripcion del Negocio">{{solicitud.descripcion}}</textarea>		
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Direccion:</label>
+        <div class="col-sm-10">
+			<input readonly value='{{solicitud.direccion}}' type="text" class="form-control" id="n-direccion" placeholder="Ingrese direccion">			
+        </div>
+    </div>	
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Codigo de Activacion:</label>
+        <div class="col-sm-10">
+			{%if error%}
+			<div id='e_code'> {{error}} </div>
+			<input type="text" class="form-control" id="code" name="code" onchange="validarCodigo()" value="{{code}}" style="border: 2px solid red;" placeholder="Ingrese codigo de activacion">			
+			{%else%}
+			<input type="text" class="form-control" id="code" name="code" onchange="validarCodigo()" placeholder="Ingrese codigo de activacion">			
+			{%endif%}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default" id="guardar">Activar</button>
+		  <a class="btn btn-default" href="{% url 'solicitudes'%}?dist={{dist}}">Cancelar</a>
+        </div>
+    </div>
+
+</form>
+                
+{% endblock %}
+
+{% block js%}
+  
+  <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/javascriptsolicitud.js' %}"></script> 
+
+
+{% endblock %}

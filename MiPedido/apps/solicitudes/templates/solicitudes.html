@@ -1,0 +1,48 @@
+{% extends 'base_distribuidora.html' %}
+{% block menu%}
+    <a href="#" class="list-group-item">Anuncios</a>
+    <a href="#" class="list-group-item">Socios</a>
+    <a class="list-group-item active">Rutas</a>
+    <a href="#" class="list-group-item">Productos</a>
+{% endblock %}
+{% block contenido %}
+    <h4>Solicitudes Pendientes</h4>   
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Localidad</th>
+                <th>Nombre del Negocio</th>
+                <th>Direccion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in solicitudes %}
+                <tr>
+                    <td>{{s.solicitud.localidad.nombre}}</td>
+                    <td>{{s.solicitud.nombre}}</td>
+                    <td>{{s.solicitud.direccion}}</td>
+                    {%if s.solicitud.estado == 'p'%}
+						<td>
+							<a href="{% url 'activar'%}?dist={{dist}}&user={{s.solicitud.usuario_id}}">
+							<span class="glyphicon glyphicon-check"></span> (Activar)</a>
+						</td>
+					{%else%}
+						<td>
+							<a href="{% url 'asociar'%}?dist={{dist}}&user={{s.solicitud.usuario_id}}&s_id={{s.id}}">
+							<span class="glyphicon glyphicon-resize-small"></span> (Asociar)</a>
+						</td>
+					{%endif%}
+                    <td>    
+                        <a href="{% url 'ignorar'%}?dist={{dist}}&s_id={{s.id}}">
+						<span class="glyphicon glyphicon-remove"></span> (Ignorar)</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+	
+	
+</div>
+{% endblock %}
+{% block aside %}
+{% endblock %}

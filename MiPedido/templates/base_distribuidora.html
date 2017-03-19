@@ -19,7 +19,7 @@
 				</div>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href=""><span class="glyphicon glyphicon-bell"></span></a>
+						<a href="{% url 'solicitudes'%}?dist={{dist.id}}"><span class="glyphicon glyphicon-bell"></span> {{s_cant}} </a>
 					</li>
 					<li>
 						<a href=""><span class="glyphicon glyphicon-user"></span> {{user.username|capfirst}}</a>
@@ -58,7 +58,6 @@
 		<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 		tempor incididunt ut labore et dolore magna aliqua.</p>
 	</footer>
-
 	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 	<script src="{% static 'js/jquery-ui.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>

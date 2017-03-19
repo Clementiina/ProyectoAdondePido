@@ -7,7 +7,7 @@
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Nombre:</label>
         <div class="col-sm-10">
-			{%if ruta.id != 0 %}
+			{%if ruta %}
 				<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre de la Ruta" value='{{ruta.nombre}}'>
 			{%else%}
 				<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese nombre de la Ruta">
@@ -18,7 +18,7 @@
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Recorrido:</label>
         <div class="col-sm-10">
-			{%if ruta.id != 0 %}
+			{%if ruta.id %}
 				<textarea class="form-control"  name="recorrido" rows="3" placeholder="Detalle el recorrido de la Ruta">{{ruta.recorrido}}</textarea>
 			{%else%}
 				<textarea class="form-control"  name="recorrido" rows="3" placeholder="Detalle el recorrido de la Ruta"></textarea>
@@ -48,11 +48,11 @@
 			<div class="col-sm-3">			
 			<select class="form-control" name="estado">
 				{%if ruta.estado %}
-					<option value="True" selected>Activa</option>
-					<option value="False">Desactiva</option>
+					<option value="True" selected>Activada</option>
+					<option value="False">Desactivada</option>
 				{%else%}
-					<option value="True">Activa</option>
-					<option value="False" selected>Desactiva</option>
+					<option value="True">Activada</option>
+					<option value="False" selected>Desactivada</option>
 				{%endif%}
 			</select>					
         </div>
@@ -61,6 +61,7 @@
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
           <button type="submit" class="btn btn-primary" id="guardar">Guardar Ruta</button>
+		  <a class="btn btn-primary" href="{% url 'rutas'%}?dist={{dist}}">Cancelar</a>
         </div>
     </div>
 
