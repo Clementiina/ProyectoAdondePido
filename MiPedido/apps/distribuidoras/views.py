@@ -17,6 +17,7 @@ class VistaDistribuidora(TemplateView):
 		contexto['negocios'] = Usuario_Negocio.objects.filter(usuario = self.request.user.id)
 		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
 		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist']))
+		print (contexto)
 		return render(request, 'distribuidora.html', contexto)
 
 class FormatoFecha():
@@ -24,10 +25,10 @@ class FormatoFecha():
 	def __init__(self):
 		super(FormatoFecha, self).__init__()
 
-    def trasforma(self, a=None):
-        vec = a.split("/")
-        fecha = str(vec[2]) + '-' + str(vec[1]) + '-' + str(vec[0])
-        return fecha
+	def trasforma(self, a=None):
+		vec = a.split("/")
+		fecha = str(vec[2]) + '-' + str(vec[1]) + '-' + str(vec[0])
+		return fecha
 
 class CrearAnuncio(TemplateView):
     template_name = "crear_anuncio.html"
@@ -103,7 +104,7 @@ class VistaAnuncio(ListView):
         dist = request.GET['dist']
         print(dist)
         print(uname)
-        listado = Anuncio.objects.filter(id_distribuidora__persona_cargo__username=uname, id_distribuidora__id=dist, estado=True)
+        listado = Anuncio.objects.filter(id_distribuidora__id=dist, estado=True)
         paginador = Paginator(listado, 5)
         pagina = request.GET['pag']
         try:

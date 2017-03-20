@@ -3,7 +3,6 @@ from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-
 from apps.distribuidoras.models import Usuario_Distribuidora, Distribuidora
 from apps.negocios.models import Usuario_Negocio, Negocio
 from apps.solicitudes.models import Solicitud
@@ -21,22 +20,23 @@ class Index(CtrLogin, TemplateView):
 		contexto = super(Index, self).get_context_data(**kwargs)
 		contexto['distribuidoras'] = Usuario_Distribuidora.objects.filter(usuario = self.request.user.id)
 		contexto['negocios'] = Usuario_Negocio.objects.filter(usuario = self.request.user.id)
+		print(contexto)
 		return contexto
 
 class Login(TemplateView):
+
 	template_name = 'login.html'
 
 	def post(self, request):
 		username = request.POST['username']
 		password = request.POST['password']
-
 		user = authenticate(username=username, password=password)
 		if user is not None:
 			try:
 				s = Solicitud.objects.get(usuario=user.id)
 			except Solicitud.DoesNotExist:
 				s = None
-			if s != None and s.estado == 'p': 
+			if s != None and s.estado == 'p':
 				login(request, user)
 				return HttpResponseRedirect('/sin_activar')
 			login(request, user)
@@ -44,9 +44,11 @@ class Login(TemplateView):
 		else:
 			contexto = {'error': True}
 			return render(request, self.template_name, contexto)
-			
+
 class SinActivar(TemplateView):
+
 	template_name = 'sin_activar.html'
+
 	def get(self, request):
 		s = Solicitud.objects.get(usuario=request.user.id)
 		contexto={}
