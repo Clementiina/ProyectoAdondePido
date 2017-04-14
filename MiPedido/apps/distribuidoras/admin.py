@@ -28,8 +28,9 @@ admin.site.register(Permiso_Distribuidora, Permiso_DistribuidoraAdmin)
 admin.site.register(Distribuidora, DistribuidoraAdmin)
 admin.site.register(Usuario_Distribuidora, Usuario_DistribuidoraAdmin)
 
-from .models import TipoProducto_Distribuidora,Producto_Distribudora, Ruta, Negocio_Distribuidora
-admin.site.register(TipoProducto_Distribuidora)
+from .models import Tipo_Distribuidora,Producto_Distribudora, Ruta, Negocio_Distribuidora, MarcaXSubcategoria_Distribuidora
+admin.site.register(Tipo_Distribuidora)
+admin.site.register(MarcaXSubcategoria_Distribuidora)
 admin.site.register(Producto_Distribudora)
 admin.site.register(Ruta)
 admin.site.register(Negocio_Distribuidora)
