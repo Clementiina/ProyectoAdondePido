@@ -7,6 +7,5 @@ class PresentacionAdmin(admin.ModelAdmin):
 admin.site.register(Presentacion, PresentacionAdmin)
 
 #default
-from .models import Tipo_Producto, Producto
-admin.site.register(Tipo_Producto)
+from .models import Producto
 admin.site.register(Producto)

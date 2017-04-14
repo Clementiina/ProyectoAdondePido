@@ -3,9 +3,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from apps.localidades.models import Localidad
 from apps.productos.models import Producto
-from apps.productos.models import Tipo_Producto
 from apps.negocios.models import Negocio
 from apps.personas.models import Persona
+from apps.categorias.models import Marca_SubCategoria
+
 
 DiasType = (
 	("lu","Lunes" ),
@@ -18,6 +19,12 @@ DiasType = (
 )
 
 
+
+class Tipo_Distribuidora (models.Model):
+	nombre = models.CharField(max_length=50)
+	estado = models.BooleanField(default=True)
+
+	
 class Distribuidora (models.Model):
 	nombre = models.CharField(max_length=50)
 	descripcion = models.TextField(verbose_name=u"Descripcion")
@@ -25,6 +32,12 @@ class Distribuidora (models.Model):
 	localidad = models.ForeignKey(Localidad, verbose_name=u"Localidad")
 	direccion = models.CharField(max_length=50, verbose_name=u"Direccion")
 	persona_cargo = models.ForeignKey(Persona, verbose_name=u"Persona a cargo")
+	estado = models.BooleanField(default=True)
+	
+	
+class Categoria_Distribuidora (models.Model):
+	distribuidora = models.ForeignKey(Distribuidora)
+	tipo_distribuidora = models.ForeignKey(Tipo_Distribuidora)
 	estado = models.BooleanField(default=True)
 
 
@@ -41,14 +54,15 @@ class Usuario_Distribuidora (models.Model):
 	estado = models.BooleanField(default=True)
 
 
-class TipoProducto_Distribuidora (models.Model):
+class MarcaXSubcategoria_Distribuidora (models.Model):
 	distribuidora = models.ForeignKey(Distribuidora)
-	tipoProducto = models.ForeignKey(Tipo_Producto)
+	marcaSubCategoria = models.ForeignKey(Marca_SubCategoria)
 	estado = models.BooleanField(default=True)
 
 
 class Producto_Distribudora (models.Model):
 	distribudora = models.ForeignKey(Distribuidora)
+	marcaXSubcategoriaDistribuidora = models.ForeignKey(MarcaXSubcategoria_Distribuidora)
 	producto = models.ForeignKey(Producto)
 	stock = models.PositiveIntegerField()
 	estado = models.BooleanField(default=True)

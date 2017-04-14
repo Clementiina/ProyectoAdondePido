@@ -1,17 +1,21 @@
-import datetime
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import Solicitud, Distribuidora_Solicitud
 from apps.distribuidoras.models import Distribuidora, Negocio_Distribuidora
-from django.contrib.auth import login
+from django.contrib.auth import authenticate, login
 from apps.negocios.models import Negocio, Usuario_Negocio
 from apps.personas.models import Persona
-import hashlib, random
+from django.views.generic import CreateView
+from . import forms
+import hashlib, random, datetime
 
-class VistaSolicitud(TemplateView):
+class VistaSolicitud(CreateView):
 	template_name = 'solicitud.html'
+	model = User
+	form_class = forms.UserForm
+	form_class2 = forms.SolicitudForm
 	
 	def get(self, request):
 		contexto={}
@@ -22,55 +26,44 @@ class VistaSolicitud(TemplateView):
 		return HttpResponseRedirect('/sin_activar/')
 	
 	def post(self, request):
-		try:
-				nu = User.objects.get(username = request.POST['user'])
-		except User.DoesNotExist:
-				nu = None               
-		if nu is None :
-			u = User()
-			u.username = request.POST['user']
-			u.set_password(request.POST['contraseña'])
-			u.email = request.POST['email']
-			u.last_name = request.POST['apellido']
-			u.first_name = request.POST['nombre']   
+		formU = self.form_class(request.POST)
+		formS = self.form_class2(request.POST)
+		formS.is_valid() #crea cleaned_data
+		formS.cleaned_data['fecha'] = datetime.datetime.now()
+		formS.cleaned_data['usuario'] = 1 #para que acepte
+		formS.cleaned_data['code'] = (str(hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest())[:8])
+		formS.cleaned_data['estado'] = 'p'
+		print ("\n"+str (formU.is_valid()) +"\n" + str( formS.is_valid() ) + "\n")
+		if formU.is_valid() and formS.is_valid():
+			u = User.objects.create_user(formU.cleaned_data["username"],formU.cleaned_data["email"],formU.cleaned_data["password"])
+			u.last_name = formU.cleaned_data["last_name"]
+			u.first_name = formU.cleaned_data["first_name"]
 			u.save()
-			login(request, u) #auto login
+			#login(request, u) #auto login
+			formS.cleaned_data['usuario_id'] = u.id		
+			formS.save()				
 			
-			s = Solicitud()
-			s.fecha = datetime.datetime.now()
-			s.usuario_id = u.id
-			s.code = (str(hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest())[:20])
-			s.dni = request.POST['DNI']
-			s.telefono = request.POST['telefono']
-			s.celular = request.POST['celular']
-			s.id_localidad = 3935 #int(request.POST['localidad']) #ya esta por defecto
-			s.nombre = request.POST['n_nombre']
-			s.descripcion = request.POST['n_descripcion']
-			s.numero_contacto = request.POST['n_contacto']
-			s.direccion = request.POST['n_direccion']
-			s.estado = 'p' #Pendiente
-			s.save()        
 			distribuidoras = request.POST.getlist('lista')        
 			for dist in distribuidoras:
 				ds = Distribuidora_Solicitud()
 				ds.solicitud_id = s.id
 				ds.distribuidora_id = dist
 				ds.save()
-				return HttpResponseRedirect('/sin_activar/')
+			return HttpResponseRedirect('/sin_activar/')
 		contexto = {}
 		contexto['error'] = 'El usuario ya existe'
-		contexto['user'] = request.POST['user']
+		contexto['username'] = request.POST['username']
 		contexto['email'] = request.POST['email']
-		contexto['apellido'] = request.POST['apellido']
-		contexto['nombre'] = request.POST['nombre']
-		contexto['DNI'] = request.POST['DNI']
+		contexto['last_name'] = request.POST['last_name']
+		contexto['first_name'] = request.POST['first_name']
+		contexto['dni'] = request.POST['dni']
 		contexto['telefono'] = request.POST['telefono']
 		contexto['celular'] = request.POST['celular']
 		contexto['localidad'] = request.POST['localidad']
-		contexto['n_nombre'] = request.POST['n_nombre']
-		contexto['n_descripcion'] = request.POST['n_descripcion']
-		contexto['n_contacto'] = request.POST['n_contacto']
-		contexto['n_direccion'] = request.POST['n_direccion']       
+		contexto['nombre'] = request.POST['nombre']
+		contexto['descripcion'] = request.POST['descripcion']
+		contexto['numero_contacto'] = request.POST['numero_contacto']
+		contexto['direccion'] = request.POST['direccion']       
 		contexto['distribuidoras'] = Distribuidora.objects.all()
 		return render(request, self.template_name, contexto)
 

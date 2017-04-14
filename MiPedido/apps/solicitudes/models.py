@@ -11,8 +11,10 @@ EstadoType = (
 
 class Solicitud (models.Model):
 	fecha_creacion = models.DateTimeField(auto_now_add=True)
-	usuario = models.ForeignKey(User)
-	code = models.CharField(max_length=50)
+	usuario = models.CharField(max_length=20)
+	code = models.CharField(max_length=8)
+	nombre = models.CharField(max_length=30)
+	apellido = models.CharField(max_length=30)
 	dni = models.BigIntegerField()
 	telefono = models.BigIntegerField(blank=True)
 	celular = models.BigIntegerField(blank=True)
