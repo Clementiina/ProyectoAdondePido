@@ -12,6 +12,7 @@ EstadoType = (
 class Solicitud (models.Model):
 	fecha_creacion = models.DateTimeField(auto_now_add=True)
 	usuario = models.CharField(max_length=20)
+	email = models.EmailField(max_length=70)
 	code = models.CharField(max_length=8)
 	nombre = models.CharField(max_length=30)
 	apellido = models.CharField(max_length=30)
@@ -19,7 +20,7 @@ class Solicitud (models.Model):
 	telefono = models.BigIntegerField(blank=True)
 	celular = models.BigIntegerField(blank=True)
 	localidad = models.ForeignKey(Localidad, default =3935) #Salta   
-	nombre = models.CharField(max_length=50)
+	n_nombre = models.CharField(max_length=50)
 	descripcion = models.TextField()
 	numero_contacto = models.BigIntegerField()
 	direccion = models.CharField(max_length=50)

@@ -11,59 +11,56 @@ from django.views.generic import CreateView
 from . import forms
 import hashlib, random, datetime
 
+def validar(user):
+	try:
+		u = User.objects.get(username=user)
+		return False
+	except User.DoesNotExist:
+		return True
+
 class VistaSolicitud(CreateView):
 	template_name = 'solicitud.html'
-	model = User
-	form_class = forms.UserForm
-	form_class2 = forms.SolicitudForm
+	model = Solicitud
+	form_class = forms.SolicitudForm
 	
 	def get(self, request):
 		contexto={}
 		contexto['distribuidoras'] = Distribuidora.objects.all()        
 		return render(request, self.template_name, contexto)
 
-	def validar(user):
-		return HttpResponseRedirect('/sin_activar/')
 	
 	def post(self, request):
-		formU = self.form_class(request.POST)
-		formS = self.form_class2(request.POST)
-		formS.is_valid() #crea cleaned_data
-		formS.cleaned_data['fecha'] = datetime.datetime.now()
-		formS.cleaned_data['usuario'] = 1 #para que acepte
-		formS.cleaned_data['code'] = (str(hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest())[:8])
-		formS.cleaned_data['estado'] = 'p'
-		print ("\n"+str (formU.is_valid()) +"\n" + str( formS.is_valid() ) + "\n")
-		if formU.is_valid() and formS.is_valid():
-			u = User.objects.create_user(formU.cleaned_data["username"],formU.cleaned_data["email"],formU.cleaned_data["password"])
-			u.last_name = formU.cleaned_data["last_name"]
-			u.first_name = formU.cleaned_data["first_name"]
+		formS = self.form_class(request.POST)
+		distribuidoras = request.POST.getlist('lista')
+		ok = formS.is_valid()
+		print(str(formS.non_field_errors))
+		contexto = formS.cleaned_data
+		contexto['error'] = []
+		if len(distribuidoras)==0 :
+			contexto['error'].append('d')
+			ok = False
+		if not validar(request.POST["usuario"]):			
+			contexto['error'].append('usuario')
+			#formS.add_error('usuario')
+			ok = False
+		if ok:
+			formS.cleaned_data['fecha'] = datetime.datetime.now()
+			formS.cleaned_data['code'] = (str(hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest())[:8])
+			formS.cleaned_data['estado'] = 'p'
+			formS.save()
+			u = User.objects.create_user(formS.cleaned_data["usuario"],formS.cleaned_data["email"],request.POST["password"])
+			u.last_name = formS.cleaned_data["apellido"]
+			u.first_name = formS.cleaned_data["nombre"]
 			u.save()
-			#login(request, u) #auto login
-			formS.cleaned_data['usuario_id'] = u.id		
-			formS.save()				
-			
-			distribuidoras = request.POST.getlist('lista')        
+			login(request, u) #auto login			      
 			for dist in distribuidoras:
 				ds = Distribuidora_Solicitud()
 				ds.solicitud_id = s.id
 				ds.distribuidora_id = dist
 				ds.save()
-			return HttpResponseRedirect('/sin_activar/')
-		contexto = {}
-		contexto['error'] = 'El usuario ya existe'
-		contexto['username'] = request.POST['username']
-		contexto['email'] = request.POST['email']
-		contexto['last_name'] = request.POST['last_name']
-		contexto['first_name'] = request.POST['first_name']
-		contexto['dni'] = request.POST['dni']
-		contexto['telefono'] = request.POST['telefono']
-		contexto['celular'] = request.POST['celular']
-		contexto['localidad'] = request.POST['localidad']
-		contexto['nombre'] = request.POST['nombre']
-		contexto['descripcion'] = request.POST['descripcion']
-		contexto['numero_contacto'] = request.POST['numero_contacto']
-		contexto['direccion'] = request.POST['direccion']       
+			return HttpResponseRedirect('/sin_activar/') 
+		#reporta errores
+		contexto['form'] = formS
 		contexto['distribuidoras'] = Distribuidora.objects.all()
 		return render(request, self.template_name, contexto)
 

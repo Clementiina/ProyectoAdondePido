@@ -38,38 +38,46 @@
 
 <form method="post" enctype="multipart/form-data" class="form-horizontal"> 
     {% csrf_token %}
-	{{usuarios}}
 	<h3>Datos de Usuario:</h3>
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Usuario:</label>
         <div class="col-sm-3">
-			<div> {{error}} </div>
-			{%if error%}
-				<div  hidden="hidden" id='e_user'> Usuario no puede estar vacio </div>
-				<input type="text" class="form-control" id="id_username" name="username" value='{{username}}' style="border: 2px solid red;" placeholder="Ingrese nombre de usuario">	
-			{%else%}
-				<input type="text" class="form-control" id="id_username" name="username" placeholder="Ingrese nombre de usuario">	
+			{%if form.usuario.errors or 'usuario' in error %}
+			<div class="has-error has-feedback">
+			{%endif%}
+				<input type="text" class="form-control" id="id_usuario" name="usuario" value='{{usuario}}' placeholder="Ingrese nombre de usuario">	
+				<div>{{ form.usuario.errors }}</div>
+			{%if form.usuario.errors or 'usuario' in error %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
 			{%endif%}
         </div>
     </div>
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Contraseña:</label>
         <div class="col-sm-3">
-			<div  hidden="hidden" id='e_password'> Las contaseñas no coinciden </div>
 			<input type="password" class="form-control" id="id_password" name="password" onchange="validarContaseña()" placeholder="Ingrese contraseña">	
         </div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Repita Contraseña:</label>
         <div class="col-sm-3">
-			<input type="password" class="form-control" id="r_password" onchange="validarContaseña()" placeholder="Repita contraseña">			
+			<input type="password" class="form-control" id="r_password" onchange="validarContaseña()" placeholder="Repita contraseña">	
+			<div  hidden="hidden" id='e_password'> <li> Las contaseñas no coinciden </li> </div>
         </div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Email:</label>
-        <div class="col-sm-3">
-			<div  hidden="hidden" id='e_email'> Email incorrecto </div>
-			<input type="email" class="form-control" id="email" name="email" value='{{email}}' placeholder="Ingrese correo electronico">			
+		<div class="col-sm-3">
+        {%if form.email.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="email" class="form-control" id="email" name="email" value='{{email}}' placeholder="Ingrese correo electronico">
+				<div>{{ form.email.errors }}</div>
+		{%if form.email.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
         </div>
     </div>
 	<h3>Datos del Negocio:</h3>
@@ -77,72 +85,143 @@
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Apellido:</label>
         <div class="col-sm-3">
-			<div  hidden="hidden" id='e_apellido'> Apellido incorrecto </div>
-			<input type="text" class="form-control" id="id_last_name" name="last_name" value='{{last_name}}' placeholder="Ingrese Apellido">			
-        </div>
+		{%if form.apellido.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="text" class="form-control" id="id_apellido" name="apellido" value='{{apellido}}' placeholder="Ingrese Apellido">		
+				<div>{{ form.apellido.errors }}</div>
+        {%if form.apellido.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Nombre:</label>
-        <div class="col-sm-3">
-			<div  hidden="hidden" id='e_nombre'> Nombre incorrecto </div>
-			<input type="text" class="form-control" id="id_first_name" name="first_name" value='{{first_name}}' placeholder="Ingrese Nombre">			
-        </div>
+		<div class="col-sm-3">
+		{%if form.nombre.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="text" class="form-control" id="id_nombre" name="nombre" value='{{nombre}}' placeholder="Ingrese Nombre">
+				<div>{{ form.nombre.errors }}</div>
+		{%if form.nombre.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}	
+		</div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">DNI:</label> 
         <div class="col-sm-3">
-			<div  hidden="hidden" id='e_DNI'> DNI incorrecto </div>
-			<input type="number" class="form-control" id="id_dni" name="dni" value='{{dni}}' placeholder="Ingrese numero DNI">			
-        </div>
+		{%if form.dni.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="number" class="form-control" id="id_dni" name="dni" value='{{dni}}' placeholder="Ingrese numero DNI">
+				<div>{{ form.dni.errors }}</div>
+        {%if form.dni.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}	
+		</div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Telefono:</label>
         <div class="col-sm-3">
-			<div  hidden="hidden" id='e_telefono'> Telefono incorrecto </div>
-			<input type="number" class="form-control" id="id_telefono" name="telefono" value='{{telefono}}' placeholder="Ingrese numero de Telefono">			
-        </div>
+		{%if form.telefono.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="number" class="form-control" id="id_telefono" name="telefono" value='{{telefono}}' placeholder="Ingrese numero de Telefono">
+				<div>{{ form.telefono.errors }}</div>
+		{%if form.telefono.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+	</div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Celular:</label>
         <div class="col-sm-3">
-			<div  hidden="hidden" id='e_celular'> Celular incorrecto </div>
-			<input type="number" class="form-control" id="id_celular" name="celular" value='{{celular}}' placeholder="Ingrese numero de celular">			
-        </div>
+		{%if form.celular.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="number" class="form-control" id="id_celular" name="celular" value='{{celular}}' placeholder="Ingrese numero de celular">
+				<div>{{ form.celular.errors }}</div>
+        {%if form.celular.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
     </div>
 	<h4>Datos del Negocio:</h4>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Localidad:</label>
         <div class="col-sm-3">
-			<input readonly value='3935' type="number " class="form-control" id="id_localidad" name="localidad" value='{{localidad}}' placeholder="Ingrese Localidad">			
-        </div>
+		{%if form.localidad.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input readonly value='3935' type="number " class="form-control" id="id_localidad" name="localidad" value='{{localidad}}' placeholder="Ingrese Localidad">			
+				<div>{{ form.localidad.errors }}</div>
+        {%if form.localidad.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Nombre del Negocio:</label>
         <div class="col-sm-3">
-			<div  hidden="hidden" id='e_n_nombre'> Nombre del Negocio incorrecto </div>
-			<input type="text" class="form-control" id="id_nombre" name="nombre" value='{{nombre}}' placeholder="Ingrese Nombre del Negocio">			
-        </div>
+		{%if form.n_nombre.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="text" class="form-control" id="id_n_nombre" name="n_nombre" value='{{nombre}}' placeholder="Ingrese Nombre del Negocio">
+				<div>{{ form.n_nombre.errors }}</div>
+        {%if form.n_nombre.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Descripcion:</label>
         <div class="col-sm-3">
-			<div  hidden="hidden" id='e_n_descripcion'> Descripcion incorrecta </div>
+		{%if form.descripcion.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
 			<textarea class="form-control"  id="id_descripcion" name="descripcion" rows="3" placeholder="Descripcion del Negocio">{{descripcion}}</textarea>		
-        </div>
+			{{ form.descripcion.errors }}
+		{%if form.descripcion.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Numero de contacto:</label>
         <div class="col-sm-3">
-			<div  hidden="hidden" id='e_n_contacto'> Numero de contacto incorrecto </div>			
-			<input type="number" class="form-control" id="id_numero_contacto" name="numero_contacto" value='{{numero_contacto}}' placeholder="Ingrese numero de contacto">		
-        </div>
+		{%if form.numero_contacto.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="number" class="form-control" id="id_numero_contacto" name="numero_contacto" value='{{numero_contacto}}' placeholder="Ingrese numero de contacto">		
+				{{ form.numero_contacto.errors }}
+		{%if form.numero_contacto.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Direccion:</label>
         <div class="col-sm-3">
-			<div  hidden="hidden" id='e_n_direccion'> Direccion incorrecta </div>			
-			<input type="text" class="form-control" id="id_direccion" name="direccion" value='{{direccion}}' placeholder="Ingrese direccion">			
-        </div>
+		{%if form.direccion.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="text" class="form-control" id="id_direccion" name="direccion" value='{{direccion}}' placeholder="Ingrese direccion">			
+				{{ form.direccion.errors }}
+		{%if form.direccion.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
     </div>
 	<h4>Distribuidoras:</h4>
 	<div class="form-group">
@@ -150,12 +229,20 @@
 			Selecciona las distribuidoras que decees. 
 			(manten precionada la tecla contlol <ctrl> para seleccionar mas de una):
 		</label>
-        <div class="col-sm-3">
-			<select multiple='multiple' name='lista' >
-				{% for dist in distribuidoras %}
-					<option id="{{dist.id}}" value="{{dist.id}}">{{dist.nombre|capfirst}}</option>
-				{% endfor %}					
-			</select>			
+        <div class="col-sm-3">	
+			{% if 'd' in error %}
+			<div class="has-error has-feedback">
+			{%endif%}
+				<select multiple='multiple' name='lista' >
+					{% for dist in distribuidoras %}
+						<option id="{{dist.id}}" value="{{dist.id}}">{{dist.nombre|capfirst}}</option>
+					{% endfor %}					
+				</select>	
+			{% if 'd' in error %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+				<div> <li> Debes seleccionar al menos una  </li> </div>	
+			</div>
+			{%endif%}				
         </div>
     </div>
 	

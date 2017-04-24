@@ -104,7 +104,7 @@ class VistaAnuncio(ListView):
         dist = request.GET['dist']
         print(dist)
         print(uname)
-        listado = Anuncio.objects.filter(id_distribuidora__id=dist, estado=True)
+        listado = Anuncio.objects.filter(distribuidora__id=dist, estado=True)
         paginador = Paginator(listado, 5)
         pagina = request.GET['pag']
         try:
@@ -160,7 +160,7 @@ class VistaRuta(ListView):
     def get(self, request):
         contexto = {}
         contexto['dist'] = request.GET['dist']
-        contexto['rutas'] = Ruta.objects.filter(id_distribuidora__id=request.GET['dist'])
+        contexto['rutas'] = Ruta.objects.filter(distribuidora__id=request.GET['dist'])
         return render(request, 'rutas.html', contexto)
 
 
@@ -175,7 +175,7 @@ class EliminaRuta(ListView):
         r.save()
         contexto['dist'] = request.GET['dist']
         contexto['ruta'] = request.GET['ruta']
-        contexto['rutas'] = Ruta.objects.filter(id_distribuidora__id=request.GET['dist'])
+        contexto['rutas'] = Ruta.objects.filter(distribuidora__id=request.GET['dist'])
         return HttpResponseRedirect('/distribuidoras/rutas/?dist='+request.GET['dist'])
 
 
