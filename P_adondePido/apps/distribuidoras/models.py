@@ -92,7 +92,7 @@ class Anuncio (models.Model):
 		ruta = "imagenesAunicios/%s/%s" %(self.id_distribuidora.nombre,str(nombreArchivo))
 		return ruta
 
-	id_distribuidora = models.ForeignKey(Distribuidora)
+	distribuidora = models.ForeignKey(Distribuidora)
 	imagen = models.ImageField(upload_to=url, blank=True, null=True)
 	titulo = models.CharField(max_length=50)
 	descripcion = models.TextField()

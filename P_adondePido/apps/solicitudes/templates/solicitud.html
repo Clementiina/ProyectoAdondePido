@@ -9,12 +9,12 @@
 	function mostrarError(nombre){
 		document.getElementById("e_"+nombre).hidden = '';
 		document.getElementById("id_"+nombre).focus();
-		document.getElementById("id_"+nombre).style.background='#FF4747';
+		document.getElementById("id_"+nombre).style.borderColor='#a94442';
 	}
 	
 	function borrarError(nombre){
 		document.getElementById("e_"+nombre).hidden = "hidden";
-		document.getElementById("id_"+nombre).style.background='#FFFFFF';
+		document.getElementById("id_"+nombre).style.borderColor='#FFFFFF';
 	}
 	
 	function validarContaseña(){
@@ -24,11 +24,11 @@
 		if (((a1 != "") && (a2 != "")) && (a1 != a2) ){
 		  
 		  mostrarError("password");
-		  document.getElementById("r_password").style.background='#FF4747';
+		  document.getElementById("r_password").style.borderColor='#a94442';
 		  return false;
 		} else {
 		  borrarError("password");
-		  document.getElementById("r_password").style.background='#FFFFFF';
+		  document.getElementById("r_password").style.borderColor='#FFFFFF';
 		  return true; 
 		}
 	}
@@ -56,14 +56,30 @@
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Contraseña:</label>
         <div class="col-sm-3">
-			<input type="password" class="form-control" id="id_password" name="password" onchange="validarContaseña()" placeholder="Ingrese contraseña">	
-        </div>
+			{%if 'password' in error %}
+			<div class="has-error has-feedback">
+			{%endif%}
+				<input type="password" class="form-control" id="id_password" name="password" onchange="validarContaseña()" placeholder="Ingrese contraseña">	
+			{%if 'password' in error %}
+				<li> Este campo es obligatorio. </li>
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+			{%endif%}
+		</div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Repita Contraseña:</label>
         <div class="col-sm-3">
-			<input type="password" class="form-control" id="r_password" onchange="validarContaseña()" placeholder="Repita contraseña">	
-			<div  hidden="hidden" id='e_password'> <li> Las contaseñas no coinciden </li> </div>
+			{%if 'password' in error %}
+			<div class="has-error has-feedback">
+			{%endif%}
+				<input type="password" class="form-control" id="r_password" onchange="validarContaseña()" placeholder="Repita contraseña">	
+				<div  hidden="hidden" id='e_password'> <li> Las contaseñas no coinciden. </li> </div>
+			{%if 'password' in error %}
+					<div> <li> Este campo es obligatorio. </li> </div>
+					<span class="glyphicon glyphicon-remove form-control-feedback"></span>	
+			</div>
+			{%endif%}
         </div>
     </div>
 	<div class="form-group">
@@ -231,9 +247,9 @@
 		</label>
         <div class="col-sm-3">	
 			{% if 'd' in error %}
-			<div class="has-error has-feedback">
+			<div class="has-error has-feedback"  >
 			{%endif%}
-				<select multiple='multiple' name='lista' >
+				<select multiple='multiple' name='lista' {% if 'd' in error %} style="border: 1px solid #a94442;" {% endif %} >
 					{% for dist in distribuidoras %}
 						<option id="{{dist.id}}" value="{{dist.id}}">{{dist.nombre|capfirst}}</option>
 					{% endfor %}					

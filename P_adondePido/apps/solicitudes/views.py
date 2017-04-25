@@ -33,7 +33,6 @@ class VistaSolicitud(CreateView):
 		formS = self.form_class(request.POST)
 		distribuidoras = request.POST.getlist('lista')
 		ok = formS.is_valid()
-		print(str(formS.non_field_errors))
 		contexto = formS.cleaned_data
 		contexto['error'] = []
 		if len(distribuidoras)==0 :
@@ -43,6 +42,9 @@ class VistaSolicitud(CreateView):
 			contexto['error'].append('usuario')
 			#formS.add_error('usuario')
 			ok = False
+		if len(request.POST["password"])==0 :
+			contexto['error'].append('password')
+			ok = False		
 		if ok:
 			formS.cleaned_data['fecha'] = datetime.datetime.now()
 			formS.cleaned_data['code'] = (str(hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest())[:8])
