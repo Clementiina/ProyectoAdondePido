@@ -15,5 +15,6 @@ admin.site.register(Marca, MarcaAdmin)
 admin.site.register(Categoria, CategoriaAdmin)
 
 #default
-from .models import Marca_SubCategoria
+from .models import Marca_SubCategoria, SubCategoria
 admin.site.register(Marca_SubCategoria)
+admin.site.register(SubCategoria)
