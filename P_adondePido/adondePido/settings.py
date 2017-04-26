@@ -83,26 +83,23 @@ WSGI_APPLICATION = 'adondePido.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.sqlite3',
-		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-	}
-}
-
 # DATABASES = {
-   # 'default': {
-	   # 'ENGINE': 'sql_server.pyodbc',
-	   # 'NAME': 'temp',
-	   # 'USER': 'sa',
-	   # 'PASSWORD': 'n4t6z3r5!',
-	   # 'HOST': '198.50.153.52',
-	   # 'PORT': '',
-	   # 'OPTIONS': {
-		   # 'driver': 'SQL Server Native Client 10.0',
-		   # }
-   # },
+	# 'default': {
+		# 'ENGINE': 'django.db.backends.sqlite3',
+		# 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+	# }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'adondepido',
+        'USER': 'adondepido',
+        'PASSWORD': '9ue7Uh|@34',
+        'HOST': '200.58.106.148',			 # 200.58.106.148 ; localhost
+        'PORT': '',                      # Set to empty string for default.
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
