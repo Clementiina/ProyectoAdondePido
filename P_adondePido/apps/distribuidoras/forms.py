@@ -10,5 +10,6 @@ class RutaForm(forms.ModelForm):
 		fields = [
 			"nombre",
 			"recorrido",
-			"dia"
+			"dia",
+			"estado"
 		]

@@ -32,15 +32,10 @@ class Login(TemplateView):
 		password = request.POST['password']
 		user = authenticate(username=username, password=password)
 		if user is not None:
-			try:
-				s = Solicitud.objects.get(usuario=user.id)
-			except Solicitud.DoesNotExist:
-				s = None
-			if s != None and s.estado == 'p':
-				login(request, user)
-				return HttpResponseRedirect('/sin_activar')
 			login(request, user)
-			return HttpResponseRedirect('/')
+			if user.is_active:
+				return HttpResponseRedirect('/')
+			return HttpResponseRedirect('/sin_activar')			
 		else:
 			contexto = {'error': True}
 			return render(request, self.template_name, contexto)
@@ -50,7 +45,8 @@ class SinActivar(TemplateView):
 	template_name = 'sin_activar.html'
 
 	def get(self, request):
-		s = Solicitud.objects.get(usuario=request.user.id)
+		print(request)
+		s = Solicitud.objects.get(user=self.request.user.id)
 		contexto={}
 		contexto['codigo']= s.code
 		return render(request, self.template_name, contexto)

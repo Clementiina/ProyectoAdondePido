@@ -2,8 +2,8 @@
 {% load staticfiles %}
 
 {% block contenido %}
-<<<<<<< HEAD
-<form method="post" action="" enctype="multipart/form-data" class="form-horizontal">
+
+<form enctype="multipart/form-data" class="form-horizontal">
 
     {% csrf_token %}
     <div class="form-group">
@@ -26,7 +26,6 @@
         </div>
 		<a class="btn btn-primary" href="{% url 'rutas'%}?dist={{dist}}">Volver</a>
     </div>
-
 
 </form>
 

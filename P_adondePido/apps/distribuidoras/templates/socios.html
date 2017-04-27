@@ -1,0 +1,35 @@
+{% extends 'base_distribuidora.html' %}
+{% block menu%}
+    <a href="{% url 'anuncios'%}?dist={{dist}}&pag=1" class="list-group-item">Anuncios</a>
+    <a class="list-group-item active">Socios</a>
+    <a href="{% url 'rutas'%}?dist={{dist}}" class="list-group-item">Rutas</a>
+    <a href="#" class="list-group-item">Productos</a>
+{% endblock %}
+{% block contenido %}
+    <h4>Listado de Socios</h4>   
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre del Negocio</th>
+                <th>Descripcion</th>
+                <th>Localidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in socios %}
+                <tr>
+                    <td>{{s.negocio.nombre}}</td>
+                    <td>{{s.negocio.descripcion | truncatechars:100}}</td>
+                    <td>{{s.negocio.localidad.nombre}}</td>
+                    <td>    
+                        <a href="{% url 'detalle_socio'%}?dist={{dist}}&s_id={{s.id}}"><span class="acciones glyphicon glyphicon-search"></span></a>
+                        <a href="{% url 'desasociar'%}?dist={{dist}}&s_id={{s.id}}"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block aside %}
+{% endblock %}

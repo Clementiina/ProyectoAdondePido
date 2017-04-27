@@ -42,24 +42,28 @@ class VistaSolicitud(CreateView):
 			contexto['error'].append('usuario')
 			#formS.add_error('usuario')
 			ok = False
-		if len(request.POST["password"])==0 :
+		if len(request.POST["password"])==0 or len(request.POST["r_password"])==0 :
 			contexto['error'].append('password')
 			ok = False		
 		if ok:
-			formS.cleaned_data['fecha'] = datetime.datetime.now()
-			formS.cleaned_data['code'] = (str(hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest())[:8])
-			formS.cleaned_data['estado'] = 'p'
-			formS.save()
+			s = formS.save(commit=False)
+			s.fecha = datetime.datetime.now()
+			s.code = (str(hashlib.sha256(str(random.random()).encode('utf-8')).hexdigest())[:8])
 			u = User.objects.create_user(formS.cleaned_data["usuario"],formS.cleaned_data["email"],request.POST["password"])
 			u.last_name = formS.cleaned_data["apellido"]
 			u.first_name = formS.cleaned_data["nombre"]
+			u.is_active = False
 			u.save()
-			login(request, u) #auto login			      
+			s.user_id=u.id
+			s.save()
 			for dist in distribuidoras:
 				ds = Distribuidora_Solicitud()
 				ds.solicitud_id = s.id
 				ds.distribuidora_id = dist
 				ds.save()
+			#auto login		
+			u = authenticate(username=u.username, password=request.POST["password"])
+			login(request, u)
 			return HttpResponseRedirect('/sin_activar/') 
 		#reporta errores
 		contexto['form'] = formS
@@ -82,16 +86,17 @@ class VistaActivar(TemplateView):
 	
 	def get(self, request):
 		contexto={}
-		s = Solicitud.objects.get(usuario_id=request.GET['user'] )
+		s = Solicitud.objects.get(user=request.GET['user'] )
 		contexto['dist'] = request.GET['dist']
 		contexto['solicitud'] = s
 		return render(request, self.template_name, contexto)
 		
 	def post(self, request):
-		s = Solicitud.objects.get(usuario_id=request.GET['user'] )
+		s = Solicitud.objects.get(user_id=request.GET['user'] )
 		if (request.POST['code'] == s.code ):
-			s.estado = 'a'
-			s.save()
+			u = User.objects.get(id=request.GET['user'] )
+			u.is_active = True
+			u.save()
 			p = Persona()
 			p.usuario_id = request.GET['user']
 			p.dni = s.dni

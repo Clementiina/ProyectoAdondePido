@@ -73,7 +73,7 @@
 			{%if 'password' in error %}
 			<div class="has-error has-feedback">
 			{%endif%}
-				<input type="password" class="form-control" id="r_password" onchange="validarContaseña()" placeholder="Repita contraseña">	
+				<input type="password" class="form-control" id="r_password" name="r_password" onchange="validarContaseña()" placeholder="Repita contraseña">	
 				<div  hidden="hidden" id='e_password'> <li> Las contaseñas no coinciden. </li> </div>
 			{%if 'password' in error %}
 					<div> <li> Este campo es obligatorio. </li> </div>

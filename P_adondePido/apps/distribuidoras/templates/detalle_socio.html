@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block contenido %}
+
+<form enctype="multipart/form-data" class="form-horizontal">
+
+    {% csrf_token %}
+    
+	<h4>Datos del Negocio:</h4>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Localidad:</label>
+        <div class="col-sm-3">
+			<input readonly type="text" class="form-control" value='{{socio.localidad.nombre}}'>			
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Nombre del Negocio:</label>
+        <div class="col-sm-3">
+			<input readonly type="text" class="form-control" value='{{socio.nombre}}'>
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Descripcion:</label>
+        <div class="col-sm-3">
+			<textarea readonly class="form-control" rows="3">{{socio.descripcion}}</textarea>		
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Numero de contacto:</label>
+        <div class="col-sm-3">
+			<input readonly type="number" class="form-control" value='{{socio.numero_contacto}}'>		
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Direccion:</label>
+        <div class="col-sm-3">
+			<input readonly type="text" class="form-control" value='{{socio.direccion}}'>			
+		</div>
+		<a class="btn btn-primary" href="{% url 'socios'%}?dist={{dist}}">Volver</a>
+    </div>	
+
+</form>
+
+{% endblock %}
+
+{% block js%}
+
+  <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/javascripts.js' %}"></script>
+
+
+{% endblock %}

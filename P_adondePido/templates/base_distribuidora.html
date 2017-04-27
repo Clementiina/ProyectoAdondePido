@@ -20,7 +20,7 @@
 				</div>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href=""><span class="glyphicon glyphicon-bell"></span> {{s_cant}} </a>
+						<a href="{% url 'solicitudes'%}?dist={{dist}}"><span class="glyphicon glyphicon-bell"></span> {{s_cant}} </a>
 					</li>
 					<li>
 						<a href=""><span class="glyphicon glyphicon-user"></span> {{user.username|capfirst}}</a>

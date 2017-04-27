@@ -3,7 +3,7 @@
 {% load static from staticfiles  %}
 {% block menu%}
 	<a href="{% url 'anuncios'%}?dist={{dist.id}}&pag=1" class="list-group-item">Anuncios</a>
-	<a href="#" class="list-group-item">Socios</a>
+	<a href="{% url 'socios'%}?dist={{dist.id}}" class="list-group-item">Socios</a>
 	<a href="{% url 'rutas'%}?dist={{dist.id}}" class="list-group-item">Rutas</a>
 	<a href="#" class="list-group-item">Productos</a>
 	<!-- Paginacion -->

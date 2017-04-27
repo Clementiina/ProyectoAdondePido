@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^$', Index.as_view(), name='index'),
     url(r'^distribuidoras/', include('apps.distribuidoras.urls')),
 	url(r'^solicitudes/', include('apps.solicitudes.urls')),
+	url(r'^sin_activar/', SinActivar.as_view(), name='sin_activar'),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT, }), # Es el servidor de medios,
        #sirve para que las imegenes de muestren. Cogote ... no lo borres :-(
 ]

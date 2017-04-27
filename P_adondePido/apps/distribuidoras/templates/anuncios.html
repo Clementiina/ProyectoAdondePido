@@ -1,8 +1,8 @@
 {% extends 'base_distribuidora.html' %}
 {% block menu%}
 	<a class="list-group-item active">Anuncios</a>
-	<a href="#" class="list-group-item">Socios</a>
-	<a href="#" class="list-group-item">Rutas</a>
+	<a href="{% url 'socios'%}?dist={{dist}}" class="list-group-item">Socios</a>
+	<a href="{% url 'rutas'%}?dist={{dist}}" class="list-group-item">Rutas</a>
 	<a href="#" class="list-group-item">Productos</a>
 {% endblock %}
 {% block contenido %}
