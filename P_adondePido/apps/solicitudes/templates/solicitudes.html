@@ -19,7 +19,7 @@
             {% for s in solicitudes %}
                 <tr>
                     <td>{{s.solicitud.localidad.nombre}}</td>
-                    <td>{{s.solicitud.nombre}}</td>
+                    <td>{{s.solicitud.n_nombre}}</td>
                     <td>{{s.solicitud.direccion}}</td>
                     {%if s.solicitud.user.is_active == False %}
 						<td>

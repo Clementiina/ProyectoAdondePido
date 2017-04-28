@@ -3,7 +3,7 @@
 
 {% block contenido %}
 
-<form method="post" action="" enctype="multipart/form-data" class="form-horizontal"> 
+<form enctype="multipart/form-data" class="form-horizontal"> 
     {% csrf_token %}
 	
 	<h3>Datos del Negocio:</h3>
@@ -11,25 +11,25 @@
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Localidad:</label>
         <div class="col-sm-10">
-			<input readonly value='{{solicitud.localidad.nombre}}' type="number " class="form-control" id="localidad" placeholder="Ingrese Localidad">			
+			<input readonly value='{{solicitud.localidad.nombre}}' type="number " class="form-control">			
         </div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Nombre del Negocio:</label>
         <div class="col-sm-10">
-			<input readonly value='{{solicitud.nombre}}' type="text" class="form-control" id="n-nombre" placeholder="Ingrese Nombre del Negocio">			
+			<input readonly value='{{solicitud.n_nombre}}' type="text" class="form-control">			
         </div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Descripcion:</label>
         <div class="col-sm-10">
-			<textarea readonly class="form-control" rows="3" placeholder="Descripcion del Negocio">{{solicitud.descripcion}}</textarea>		
+			<textarea readonly class="form-control">{{solicitud.descripcion}}</textarea>		
         </div>
     </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Direccion:</label>
         <div class="col-sm-10">
-			<input readonly value='{{solicitud.direccion}}' type="text" class="form-control" id="n-direccion" placeholder="Ingrese direccion">			
+			<input readonly value='{{solicitud.direccion}}' type="text" class="form-control">			
         </div>
     </div>	
 	<div class="form-group">
