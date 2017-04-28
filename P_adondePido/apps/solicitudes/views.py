@@ -107,7 +107,7 @@ class VistaActivar(TemplateView):
 			p.estado = True
 			p.save()
 			n = Negocio()
-			n.nombre = s.nombre
+			n.nombre = s.n_nombre
 			n.descripcion = s.descripcion
 			n.numero_contacto = s.numero_contacto
 			n.localidad_id = s.localidad_id
