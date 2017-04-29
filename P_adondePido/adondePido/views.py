@@ -45,7 +45,6 @@ class SinActivar(TemplateView):
 	template_name = 'sin_activar.html'
 
 	def get(self, request):
-		print(request)
 		s = Solicitud.objects.get(user=self.request.user.id)
 		contexto={}
 		contexto['codigo']= s.code
