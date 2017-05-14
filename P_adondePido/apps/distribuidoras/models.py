@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from apps.localidades.models import Localidad
-from apps.productos.models import Producto
+from apps.productos.models import Producto, Presentacion
 from apps.negocios.models import Negocio
 from apps.personas.models import Persona
 from apps.categorias.models import Marca_SubCategoria
@@ -64,6 +64,8 @@ class Producto_Distribudora (models.Model):
 	distribudora = models.ForeignKey(Distribuidora)
 	marcaXSubcategoriaDistribuidora = models.ForeignKey(MarcaXSubcategoria_Distribuidora)
 	producto = models.ForeignKey(Producto)
+	presentacion = models.ForeignKey(Presentacion)
+	precio_unitario = models.FloatField()
 	stock = models.PositiveIntegerField()
 	estado = models.BooleanField(default=True)
 

@@ -21,7 +21,6 @@ class Producto (models.Model):
 class Producto_Presentacion(models.Model):
 	producto = models.ForeignKey(Producto)
 	presentacion = models.ForeignKey(Presentacion)
-	precio_unitario = models.FloatField()
 	estado = models.BooleanField(default=True)
 
 	class Meta:
