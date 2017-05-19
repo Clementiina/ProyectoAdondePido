@@ -29,3 +29,4 @@ class Producto_Presentacion(models.Model):
 
 	def __str__(self):
 		return '%s en una presentacion de: %s ' % (self.producto, self.presentacion)
+
