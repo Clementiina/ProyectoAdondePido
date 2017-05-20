@@ -7,13 +7,12 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('distribuidoras', '0002_auto_20170414_1902'),
+        ('categorias', '0001_initial'),
     ]
 
     operations = [
-        migrations.RenameField(
-            model_name='anuncio',
-            old_name='id_distribuidora',
-            new_name='distribuidora',
+        migrations.AlterUniqueTogether(
+            name='marca_subcategoria',
+            unique_together=set([('subCategoria', 'marca')]),
         ),
     ]

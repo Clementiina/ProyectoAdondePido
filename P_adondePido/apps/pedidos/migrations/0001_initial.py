@@ -7,8 +7,8 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('distribuidoras', '0001_initial'),
         ('productos', '0001_initial'),
+        ('distribuidoras', '0001_initial'),
     ]
 
     operations = [
@@ -22,19 +22,12 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Estado_Pedido',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nombre', models.CharField(max_length=10)),
-                ('estado', models.BooleanField(default=True)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Pedido',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('fecha_envio', models.DateTimeField()),
                 ('fecha_recepcion', models.DateTimeField()),
+                ('estado_p', models.CharField(max_length=1, choices=[('e', 'Enviado'), ('p', 'En Proseso'), ('r', 'Recivido')])),
                 ('estado', models.BooleanField(default=True)),
                 ('socio', models.ForeignKey(to='distribuidoras.Negocio_Distribuidora')),
             ],

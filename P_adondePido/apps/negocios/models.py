@@ -9,6 +9,9 @@ class Permiso_Negocio (models.Model):
 	descripcion = models.TextField()
 	estado = models.BooleanField(default=True)
 
+	def __str__(self):
+		return self.nombre
+
 
 class Negocio (models.Model):
 	nombre = models.CharField(max_length=50,blank=True)
@@ -19,10 +22,18 @@ class Negocio (models.Model):
 	persona_cargo = models.ForeignKey(Persona)
 	estado = models.BooleanField(default=True)
 
+	def __str__(self):
+		return self.nombre
+
 
 class Usuario_Negocio (models.Model):
 	negocio = models.ForeignKey(Negocio)
 	usuario = models.ForeignKey(User)
 	permiso = models.ForeignKey(Permiso_Negocio, blank=True) #por ahora no se manejan permisos
 	estado = models.BooleanField(default=True)
+
+	class Meta:
+		unique_together = ("negocio", "usuario", "permiso")
+	def __str__(self):
+		return self.nombre
 

@@ -2,16 +2,17 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import apps.distribuidoras.models
 from django.conf import settings
+import apps.distribuidoras.models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
         ('personas', '0001_initial'),
-        ('productos', '0001_initial'),
         ('negocios', '0001_initial'),
+        ('productos', '0001_initial'),
+        ('categorias', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('localidades', '0001_initial'),
     ]
@@ -31,6 +32,13 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='Categoria_Distribuidora',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('estado', models.BooleanField(default=True)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Distribuidora',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -39,8 +47,17 @@ class Migration(migrations.Migration):
                 ('numero_contacto', models.PositiveIntegerField(verbose_name='Numero de contacto')),
                 ('direccion', models.CharField(max_length=50, verbose_name='Direccion')),
                 ('estado', models.BooleanField(default=True)),
-                ('localidad', models.ForeignKey(verbose_name='Localidad', to='localidades.Localidad')),
-                ('persona_cargo', models.ForeignKey(verbose_name='Persona a cargo', to='personas.Persona')),
+                ('localidad', models.ForeignKey(to='localidades.Localidad', verbose_name='Localidad')),
+                ('persona_cargo', models.ForeignKey(to='personas.Persona', verbose_name='Persona a cargo')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='MarcaXSubcategoria_Distribuidora',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('estado', models.BooleanField(default=True)),
+                ('distribuidora', models.ForeignKey(to='distribuidoras.Distribuidora')),
+                ('marcaSubCategoria', models.ForeignKey(to='categorias.Marca_SubCategoria')),
             ],
         ),
         migrations.CreateModel(
@@ -67,9 +84,12 @@ class Migration(migrations.Migration):
             name='Producto_Distribudora',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('precio_unitario', models.FloatField()),
                 ('stock', models.PositiveIntegerField()),
                 ('estado', models.BooleanField(default=True)),
                 ('distribudora', models.ForeignKey(to='distribuidoras.Distribuidora')),
+                ('marcaXSubcategoriaDistribuidora', models.ForeignKey(to='distribuidoras.MarcaXSubcategoria_Distribuidora')),
+                ('presentacion', models.ForeignKey(to='productos.Presentacion')),
                 ('producto', models.ForeignKey(to='productos.Producto')),
             ],
         ),
@@ -85,12 +105,11 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='TipoProducto_Distribuidora',
+            name='Tipo_Distribuidora',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('nombre', models.CharField(max_length=50)),
                 ('estado', models.BooleanField(default=True)),
-                ('distribuidora', models.ForeignKey(to='distribuidoras.Distribuidora')),
-                ('tipoProducto', models.ForeignKey(to='productos.Tipo_Producto')),
             ],
         ),
         migrations.CreateModel(
@@ -98,9 +117,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('estado', models.BooleanField(default=True)),
-                ('distribuidora', models.ForeignKey(verbose_name='Distribuidora', to='distribuidoras.Distribuidora')),
-                ('permiso', models.ForeignKey(verbose_name='Permiso', blank=True, to='distribuidoras.Permiso_Distribuidora')),
-                ('usuario', models.ForeignKey(verbose_name='Usuario', to=settings.AUTH_USER_MODEL)),
+                ('distribuidora', models.ForeignKey(to='distribuidoras.Distribuidora', verbose_name='Distribuidora')),
+                ('permiso', models.ForeignKey(blank=True, to='distribuidoras.Permiso_Distribuidora', verbose_name='Permiso')),
+                ('usuario', models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='Usuario')),
             ],
         ),
         migrations.AddField(
@@ -109,8 +128,18 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(blank=True, null=True, to='distribuidoras.Ruta'),
         ),
         migrations.AddField(
+            model_name='categoria_distribuidora',
+            name='distribuidora',
+            field=models.ForeignKey(to='distribuidoras.Distribuidora'),
+        ),
+        migrations.AddField(
+            model_name='categoria_distribuidora',
+            name='tipo_distribuidora',
+            field=models.ForeignKey(to='distribuidoras.Tipo_Distribuidora'),
+        ),
+        migrations.AddField(
             model_name='anuncio',
-            name='id_distribuidora',
+            name='distribuidora',
             field=models.ForeignKey(to='distribuidoras.Distribuidora'),
         ),
         migrations.AlterUniqueTogether(

@@ -40,6 +40,13 @@ class Categoria_Distribuidora (models.Model):
 	tipo_distribuidora = models.ForeignKey(Tipo_Distribuidora)
 	estado = models.BooleanField(default=True)
 
+	class Meta:
+
+		unique_together = ('distribuidora', 'tipo_distribuidora')
+
+	def __str__(self):
+		return "Distribuidora: %s Tipo %s " %(self.distribuidora, self.tipo_distribuidora)
+
 
 class Permiso_Distribuidora (models.Model):
 	nombre = models.CharField(max_length=50)
@@ -53,21 +60,44 @@ class Usuario_Distribuidora (models.Model):
 	permiso = models.ForeignKey(Permiso_Distribuidora, verbose_name=u"Permiso", blank=True) #por ahora no se manejan permisos
 	estado = models.BooleanField(default=True)
 
+	class Meta:
+
+		unique_together = ("distribuidora", "usuario", "permiso")
+					
+	def __str__(self):
+		return "%s %s con permiso de %s" %(self.distribuidora, self.usuario, self.permiso)
+
+
 
 class MarcaXSubcategoria_Distribuidora (models.Model):
 	distribuidora = models.ForeignKey(Distribuidora)
 	marcaSubCategoria = models.ForeignKey(Marca_SubCategoria)
 	estado = models.BooleanField(default=True)
 
+	class Meta:
+
+		unique_together = ("distribuidora", "marcaSubCategoria")
+
+	def __str__(self):
+		return "%s %s" %(self.distribuidora, self.marcaSubCategoria)
+
 
 class Producto_Distribudora (models.Model):
-	distribudora = models.ForeignKey(Distribuidora)
+	distribuidora = models.ForeignKey(Distribuidora)
 	marcaXSubcategoriaDistribuidora = models.ForeignKey(MarcaXSubcategoria_Distribuidora)
 	producto = models.ForeignKey(Producto)
 	presentacion = models.ForeignKey(Presentacion)
 	precio_unitario = models.FloatField()
 	stock = models.PositiveIntegerField()
 	estado = models.BooleanField(default=True)
+
+	class Meta:
+
+		unique_together = ('distribuidora', 'marcaXSubcategoriaDistribuidora', 'producto', 'presentacion')
+
+	def __str__(self):
+
+		return "Producto %s - presentacion: %s" %(self.producto, self.presentacion)
 
 
 class Ruta (models.Model):
@@ -85,6 +115,7 @@ class Negocio_Distribuidora (models.Model):  # Socio
 	alias_distribuidora = models.CharField(max_length=50, blank=True)
 	alias_negocio = models.CharField(max_length=50, blank=True)
 	estado = models.BooleanField(default=True)
+	
 	class Meta:
 		unique_together = ("negocio", "distribuidora")
 
@@ -104,4 +135,4 @@ class Anuncio (models.Model):
 	estado = models.BooleanField(default=True)
 
 	def __str__(self):
-		return self.titulo
+		return "%s" %(self.titulo)

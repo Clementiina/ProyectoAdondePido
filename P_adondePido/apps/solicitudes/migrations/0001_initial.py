@@ -9,8 +9,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('distribuidoras', '0001_initial'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('localidades', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -26,17 +26,20 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('fecha_creacion', models.DateTimeField(auto_now_add=True)),
-                ('code', models.CharField(max_length=50)),
+                ('usuario', models.CharField(max_length=20)),
+                ('email', models.EmailField(max_length=70)),
+                ('code', models.CharField(max_length=8)),
+                ('nombre', models.CharField(max_length=30)),
+                ('apellido', models.CharField(max_length=30)),
                 ('dni', models.BigIntegerField()),
                 ('telefono', models.BigIntegerField(blank=True)),
                 ('celular', models.BigIntegerField(blank=True)),
-                ('nombre', models.CharField(max_length=50)),
+                ('n_nombre', models.CharField(max_length=50)),
                 ('descripcion', models.TextField()),
                 ('numero_contacto', models.BigIntegerField()),
                 ('direccion', models.CharField(max_length=50)),
-                ('estado', models.CharField(max_length=1, choices=[('p', 'Pendiente'), ('a', 'Activo')])),
-                ('localidad', models.ForeignKey(default=3935, to='localidades.Localidad')),
-                ('usuario', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('localidad', models.ForeignKey(to='localidades.Localidad', default=3935)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(

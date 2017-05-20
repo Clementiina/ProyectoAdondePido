@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('nombre', models.CharField(max_length=50)),
                 ('codigo_postal', models.CharField(max_length=10, verbose_name='Codigo postal')),
                 ('estado', models.BooleanField(default=True)),
-                ('departamento', models.ForeignKey(verbose_name='Departamento', to='localidades.Departamento')),
+                ('departamento', models.ForeignKey(to='localidades.Departamento', verbose_name='Departamento')),
             ],
         ),
         migrations.CreateModel(
@@ -39,6 +39,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='departamento',
             name='provincia',
-            field=models.ForeignKey(verbose_name='Provincia', to='localidades.Provincia'),
+            field=models.ForeignKey(to='localidades.Provincia', verbose_name='Provincia'),
         ),
     ]

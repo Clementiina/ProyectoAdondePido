@@ -20,6 +20,15 @@ class Solicitud (models.Model):
 	numero_contacto = models.BigIntegerField()
 	direccion = models.CharField(max_length=50)
 
+	def __str__(self):
+		return "Solicitud Nro: %s" %(self.id)
+
+
 class Distribuidora_Solicitud (models.Model):
 	solicitud = models.ForeignKey(Solicitud)
 	distribuidora = models.ForeignKey(Distribuidora)
+
+	def __str__(self):
+		return "%s -- %s" %(self.solicitud, self.distribuidora)
+
+	unique_together = ("solicitud", "distribuidora")
