@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import url
-from . import views, viewAnuncio, viewRuta, viewSocio
+from . import views, viewAnuncio, viewRuta, viewSocio, viewProducto
 
 urlpatterns = [
     url(r'^$', views.VistaDistribuidora.as_view(), name='distribuidora'),
@@ -16,4 +16,7 @@ urlpatterns = [
 	url(r'^socios/$', viewSocio.Socios.as_view(), name='socios'),
 	url(r'^socios/detalle_socio/$', viewSocio.verSocio.as_view(), name='detalle_socio'),
 	url(r'^socios_desasociar/$', viewSocio.Desasociar.as_view(), name='desasociar'),	
+	#Productos
+	url(r'^productos/$', viewProducto.VistaProducto.as_view(), name='productos'),
+	#
 ]

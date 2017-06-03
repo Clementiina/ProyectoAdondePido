@@ -18,6 +18,7 @@ class Index(CtrLogin, TemplateView):
 
 	def get_context_data(self, **kwargs):
 		contexto = super(Index, self).get_context_data(**kwargs)
+		print(contexto)
 		contexto['distribuidoras'] = Usuario_Distribuidora.objects.filter(usuario = self.request.user.id)
 		contexto['negocios'] = Usuario_Negocio.objects.filter(usuario = self.request.user.id)
 		print(contexto)

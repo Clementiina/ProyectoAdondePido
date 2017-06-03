@@ -5,7 +5,7 @@ class Categoria (models.Model):
 	estado = models.BooleanField(default=True)
 
 	def __str__(self):
-		return "Marca: %s" %(self.marca)
+		return "Marca: %s" %(self.nombre)
 
 class SubCategoria (models.Model):
 	nombre = models.CharField(max_length=50)
@@ -13,14 +13,14 @@ class SubCategoria (models.Model):
 	estado = models.BooleanField(default=True)
 
 	def __str__(self):
-		return "SubCategoria: %s" %(self.subCategoria)
+		return "SubCategoria: %s" %(self.nombre)
 
 class Marca (models.Model):
 	nombre = models.CharField(max_length=50)
 	estado = models.BooleanField(default=True)
 
 	def __str__(self):
-		return "Marca: %s" %(self.marca)
+		return "Marca: %s" %(self.nombre)
 
 
 class Marca_SubCategoria (models.Model):

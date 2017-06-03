@@ -11,3 +11,6 @@ class Persona (models.Model):
 	localidad = models.ForeignKey(Localidad)
 	direccion = models.CharField(max_length=50)
 	estado = models.BooleanField(default=True)
+
+	def __str__(self):
+		return "%s, %s" %(self.usuario.last_name, self.usuario.first_name)

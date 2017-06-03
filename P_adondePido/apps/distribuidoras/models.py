@@ -6,6 +6,7 @@ from apps.productos.models import Producto, Presentacion
 from apps.negocios.models import Negocio
 from apps.personas.models import Persona
 from apps.categorias.models import Marca_SubCategoria
+from multiselectfield import MultiSelectField
 
 
 DiasType = (
@@ -24,6 +25,9 @@ class Tipo_Distribuidora (models.Model):
 	nombre = models.CharField(max_length=50)
 	estado = models.BooleanField(default=True)
 
+	def __str__(self):
+		return self.nombre
+
 	
 class Distribuidora (models.Model):
 	nombre = models.CharField(max_length=50)
@@ -33,6 +37,9 @@ class Distribuidora (models.Model):
 	direccion = models.CharField(max_length=50, verbose_name=u"Direccion")
 	persona_cargo = models.ForeignKey(Persona, verbose_name=u"Persona a cargo")
 	estado = models.BooleanField(default=True)
+
+	def __str__(self):
+		return self.nombre
 	
 	
 class Categoria_Distribuidora (models.Model):
@@ -52,6 +59,9 @@ class Permiso_Distribuidora (models.Model):
 	nombre = models.CharField(max_length=50)
 	descripcion = models.TextField()
 	estado = models.BooleanField(default=True)
+
+	def __str__(self):
+		return self.nombre
 
 
 class Usuario_Distribuidora (models.Model):
@@ -104,8 +114,11 @@ class Ruta (models.Model):
 	distribuidora = models.ForeignKey(Distribuidora)
 	nombre = models.CharField(max_length=50)
 	recorrido = models.TextField()
-	dia = models.CharField(max_length=2, choices=(DiasType))
+	dia = MultiSelectField(choices=DiasType)
 	estado = models.BooleanField(default=True)
+
+	def __str__(self):
+		return "%s  --  %s" %(self.nombre, self.distribuidora)
 
 
 class Negocio_Distribuidora (models.Model):  # Socio

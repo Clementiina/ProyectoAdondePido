@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-	#'django_admin_bootstrapped',
+	'django_admin_bootstrapped', #pip install django_admin_bootstrapped
+	'multiselectfield', #pip install django-multiselectfield
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',

@@ -13,7 +13,63 @@
 
 	
 {% block contenido %}	
-		
+<div class="row">
+	<div class="col-md-2">
+			<select class="form-control" id="m_x_s_d">
+				<option></option>
+				{% for i in m_x_s_d %}
+					<option>{{i.marcaSubCategoria.marca.nombre}}</option>
+				{% endfor %}
+			</select>
+			<select class="form-control" id="m_s">
+				<option></option>
+				{% for i in m_s %}
+					<option></option>
+				{% endfor %}
+			</select>
+	</div>
+	<div class="col-md-5">
+		<table class="table">
+		<thead>
+			<tr>
+				<th>Título</th>
+				<th>Descripción</th>
+				<th>Creado</th>
+				<th>Inicio</th>
+				<th>Fin</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+				<tr>
+					<td>{anuncio.titulo}}</td>
+					<td>{anuncio.descripcion | truncatechars:70}}</td>
+					<td>{anuncio.fecha_creacion}}</td>
+					<td>{anuncio.fecha_inicio}}</td>
+					<td>{anuncio.fecha_fin}}</td>
+					<td>
+						<a href=""><span class="acciones glyphicon glyphicon-search"></span></a>
+						<a href=""><span class="glyphicon glyphicon-remove"></span></a>
+					</td>
+				</tr>
+		</tbody>
+	</table>
+
+
+
+					</div>
+			</div>
+
+
+
+	<div class="text-center">
+			<a href="?dist={{dist}}&pag={{anuncios.previous_page_number}}" class="tbn btn-default">Anterior</a>
+		<strong>
+			Página {anuncios.number}} de {anuncios.paginator.num_pages}}
+		</strong>
+			<a href="?dist={{dist}}&pag={{anuncios.next_page_number}}" class="tbn btn-default">Siguiente</a>
+	</div>
+
 {% endblock %}
 {% block js %}
 {% endblock %}
