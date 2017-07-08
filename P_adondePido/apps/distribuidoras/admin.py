@@ -23,6 +23,9 @@ class Usuario_DistribuidoraAdmin(admin.ModelAdmin):
 	search_fields = ['usuario', 'distribuidora']
 	raw_fields = ['distribuidora', 'usuario']
 
+class Producto_DistribudoraAdmin(admin.ModelAdmin):
+	list_display = ["id", "producto"]
+
 admin.site.register(Anuncio, AnuncioAdmin)
 admin.site.register(Permiso_Distribuidora, Permiso_DistribuidoraAdmin)
 admin.site.register(Distribuidora, DistribuidoraAdmin)
@@ -31,7 +34,7 @@ admin.site.register(Usuario_Distribuidora, Usuario_DistribuidoraAdmin)
 from .models import Tipo_Distribuidora,Producto_Distribudora, Ruta, Negocio_Distribuidora, MarcaXSubcategoria_Distribuidora, Categoria_Distribuidora
 admin.site.register(Tipo_Distribuidora)
 admin.site.register(MarcaXSubcategoria_Distribuidora)
-admin.site.register(Producto_Distribudora)
+admin.site.register(Producto_Distribudora, Producto_DistribudoraAdmin)
 admin.site.register(Ruta)
 admin.site.register(Negocio_Distribuidora)
 admin.site.register(Categoria_Distribuidora)

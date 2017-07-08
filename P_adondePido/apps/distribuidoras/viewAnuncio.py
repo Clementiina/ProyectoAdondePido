@@ -85,6 +85,7 @@ class VistaAnuncio(ListView):
 	def get(self, request):
 		uname = request.user.username
 		dist = request.GET['dist']
+		print(dist)
 		listado = Anuncio.objects.filter(distribuidora__id=dist, estado=True)
 		paginador = Paginator(listado, 5)
 		pagina = request.GET['pag']

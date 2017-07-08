@@ -1,0 +1,99 @@
+{% extends 'base_distribuidora.html' %}
+{% load staticfiles %}
+
+{% block contenido %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading">
+                 <h5>Producto: <strong>{{producto}}</strong></h5> 
+            </div>
+
+			<div class="table table-bordered" id="datos" style="overflow:scroll;height:450px;">
+			<div class="row">
+			    <div class="col-md-12">
+			        <table id="tabla" class="display text-center" cellspacing="0" width="100%">
+			            <thead>
+			                <tr>
+			                        <th class="text-center">Presentación</th>
+			                        <th class="text-center">Precio Unitario</th>
+			                        <th class="text-center">Stock</th>
+			                        <th class="text-center">Estado</th>
+			                        <th class="text-center">Acciones</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                {% for p in p_d %}
+				                <tr>
+				                    <td>{{ p.presentacion }}</td>
+				                    <td>${{ p.precio_unitario }}</td>
+				                    <td>{{ p.stock }}</td>
+				                    {% if p.estado %}
+					                    <td>Activo</td>
+					                {% else %}
+					                	<td>Inactivo</td>
+									{% endif %}			                    
+									<td>
+										<a onclick="return abrir_modal('{% url 'actualizar_producto' p.pk %}')" class="btn">
+		                            <span class="glyphicon glyphicon-edit"></span>
+		                        </a>
+									</td>
+				                </tr>
+			                {% endfor %}
+			            </tbody>
+			        </table>
+			    </div>
+			</div>
+			</div>            
+    	</div>
+	</div>
+</div>
+<div id="popup" class="modal fade" role="dialog"></div>
+
+{% endblock %}
+
+
+{% block js%}
+<script type="text/javascript">  
+
+function abrir_modal(url)
+{
+        $('#popup').load(url, function()
+        {
+                $(this).modal('show');
+        });
+        return false;
+}
+
+function cerrar_modal()
+{
+        $('#popup').modal('hide');
+        return false;
+}
+
+  $(document).ready(function() 
+{   
+    var table = $('#tabla').DataTable( {
+        "language": {
+            url: "/static/localizacion/es_ES.json"
+        }
+    } );
+ 
+    $('#tabla tbody').on( 'click', 'tr', function() 
+    {
+        if ($(this).hasClass('selected') ) 
+        {           
+            $(this).removeClass('selected');
+             
+        }
+        else 
+        {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');                      
+        }
+    });   
+     
+});
+</script>
+{% endblock %}

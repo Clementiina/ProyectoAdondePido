@@ -18,5 +18,11 @@ urlpatterns = [
 	url(r'^socios_desasociar/$', viewSocio.Desasociar.as_view(), name='desasociar'),	
 	#Productos
 	url(r'^productos/$', viewProducto.VistaProducto.as_view(), name='productos'),
-	#
+	url(r'^lista_productos/$', viewProducto.Lista_Productos.as_view(), name='lista_productos'),
+	url(r'^actualizar_producto/(?P<pk>.+)/$', viewProducto.Actualizar_Producto.as_view(), name='actualizar_producto'),
+	#Productos con consulta ajax
+	url(r'^select_SubCategoria_Ajax/$', viewProducto.Select_SubCategoria_Ajax.as_view()),
+	url(r'^select_Marca_SubCategoria_Ajax/$', viewProducto.Select_Marca_SubCategoria_Ajax.as_view()),
+	url(r'^select_Marca_SubCategoria_Dist_Ajax/$', viewProducto.Select_Marca_SubCategoria_Dist_Ajax.as_view()),
+	
 ]
