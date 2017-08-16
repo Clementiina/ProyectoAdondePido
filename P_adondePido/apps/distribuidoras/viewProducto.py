@@ -170,11 +170,7 @@ class Crear_Producto_Nuevo(TemplateView):
 		tipo_presentacion = int(request.POST["tipo_presentacion"])
 		presentacion = int(request.POST["presentacion"])
 		subCategoria = SubCategoria.objects.get(id=id[0])
-
 		m_x_sc_d = MarcaXSubcategoria_Distribuidora()
-		
-		
-		
 
 		try:
 			marca = Marca.objects.get(nombre__contains=marca)
