@@ -1,0 +1,71 @@
+{% extends "baseModal.html" %}
+{% load staticfiles %}
+
+{% block contenido %}	
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <form role="form" action="{% url 'crear_producto_nuevo'%}?dist={{dist}}" method="post">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h3>Agregar Producto</h3>
+            </div>
+            <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="rows">
+                                <div class="col-md-6">
+                                    {{form.marca.label_tag}} {{form.marca}}
+ 								</div>
+
+ 								<div class="col-md-6">
+                                    {{form.categoria.label_tag}} {{form.categoria}}
+ 								</div>
+
+ 								<div class="col-md-6">
+                                    {{form.subCategoria.label_tag}}	{{form.subCategoria}}
+ 								</div>
+
+ 								<div class="col-md-6">
+                                   {{ form.nombre_producto.label_tag }} {{form.nombre_producto}} 
+ 								</div>
+									
+ 								<div class="col-md-6">
+                                   {{form.descripcion.label_tag}}{{form.descripcion}}
+ 								</div>
+ 								   
+ 								<div class="col-md-6">
+									{{form.tipo_presentacion.label_tag}}{{form.tipo_presentacion}}
+ 								</div>
+ 								<div class="col-md-6">
+                                   {{form.presentacion.label_tag}} {{form.presentacion}} 
+ 								</div>
+ 								<div class="col-md-6">
+	                               {{form.precio.label_tag}} {{form.precio}}  
+ 								</div>
+
+ 								<div class="col-md-6">
+	                               {{form.stock.label_tag}} {{form.stock}}
+ 								</div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                    <div class="col-lg-12 text-right">
+                            <input type="submit" class="btn btn-primary" name="submit" value="Guardar" id="btn_guardar_producto_nuevo">
+                            <button type="button" class="btn btn-default" onclick="return cerrar_modal()">
+                                    Cancelar
+                            </button>
+                    </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+ <script type="text/javascript" src="{% static 'js/productos.js' %}"></script> 
+ 
+{% endblock %}
+		

@@ -1,3 +1,4 @@
+{% block contenido %}   
 <div class="modal-dialog modal-lg">
         <div class="modal-content">
                 <form role="form" action="{% url 'actualizar_producto' object.pk %}" method="post">
@@ -24,3 +25,4 @@
                 </form>
         </div>
 </div>
+{% endblock %}

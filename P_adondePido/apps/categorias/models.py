@@ -10,6 +10,7 @@ class Categoria (models.Model):
 class SubCategoria (models.Model):
 	nombre = models.CharField(max_length=50)
 	categoria = models.ForeignKey(Categoria)
+	tipo_presentacion = models.ForeignKey("productos.Tipo_Presentacion", blank=True)
 	estado = models.BooleanField(default=True)
 
 	def __str__(self):
@@ -28,10 +29,7 @@ class Marca_SubCategoria (models.Model):
 	marca = models.ForeignKey(Marca)
 	estado = models.BooleanField(default=True)
 
-	class Meta:
-
-		unique_together = ('subCategoria', 'marca')
-
+	
 	def __str__(self):
 
 		return "SubCategoria: %s Marca: %s" %(self.subCategoria, self.marca)

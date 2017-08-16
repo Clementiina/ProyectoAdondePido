@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Categoria',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('nombre', models.CharField(max_length=50)),
                 ('estado', models.BooleanField(default=True)),
             ],
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Marca',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('nombre', models.CharField(max_length=50)),
                 ('estado', models.BooleanField(default=True)),
             ],
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Marca_SubCategoria',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('estado', models.BooleanField(default=True)),
                 ('marca', models.ForeignKey(to='categorias.Marca')),
             ],
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='SubCategoria',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('nombre', models.CharField(max_length=50)),
                 ('estado', models.BooleanField(default=True)),
                 ('categoria', models.ForeignKey(to='categorias.Categoria')),
@@ -47,5 +47,9 @@ class Migration(migrations.Migration):
             model_name='marca_subcategoria',
             name='subCategoria',
             field=models.ForeignKey(to='categorias.SubCategoria'),
+        ),
+        migrations.AlterUniqueTogether(
+            name='marca_subcategoria',
+            unique_together=set([('subCategoria', 'marca')]),
         ),
     ]

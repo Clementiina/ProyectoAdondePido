@@ -5,8 +5,8 @@ header {
 footer {
 	width: 100%;
 	background: #e0e0e0;
-	padding-top: 30px;
-	padding-bottom: 30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	position: absolute;
 	bottom: 0;
 }

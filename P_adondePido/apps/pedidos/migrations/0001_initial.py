@@ -7,15 +7,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('productos', '0001_initial'),
         ('distribuidoras', '0001_initial'),
+        ('productos', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='Detalle_Pedido',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('precio_unitario', models.FloatField()),
                 ('cantidad', models.PositiveIntegerField()),
                 ('estado', models.BooleanField(default=True)),
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Pedido',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('fecha_envio', models.DateTimeField()),
                 ('fecha_recepcion', models.DateTimeField()),
                 ('estado_p', models.CharField(max_length=1, choices=[('e', 'Enviado'), ('p', 'En Proseso'), ('r', 'Recivido')])),
@@ -41,5 +41,9 @@ class Migration(migrations.Migration):
             model_name='detalle_pedido',
             name='producto',
             field=models.ForeignKey(to='productos.Producto'),
+        ),
+        migrations.AlterUniqueTogether(
+            name='detalle_pedido',
+            unique_together=set([('pedido', 'producto')]),
         ),
     ]

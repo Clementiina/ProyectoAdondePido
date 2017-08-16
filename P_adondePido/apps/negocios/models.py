@@ -34,6 +34,4 @@ class Usuario_Negocio (models.Model):
 
 	class Meta:
 		unique_together = ("negocio", "usuario", "permiso")
-	def __str__(self):
-		return self.nombre
-
+	

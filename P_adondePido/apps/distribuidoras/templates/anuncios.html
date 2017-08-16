@@ -6,17 +6,13 @@
 	<a href="#" class="list-group-item">Productos</a>
 {% endblock %}
 {% block contenido %}
-<button class='btn btn-primary'>crear</button>
 
 <div class="row">
 					<div class="col-md-4">
 							<h4>Listado de Anuncios</h4>
 					</div>
 					<div class="col-md-0">
-
-							<a href="{% url 'crear_anuncio'%}?dist={{dist}}" class="btn btn-primary pull-right" >Crear Anuncio</a>
-
-
+						<a href="{% url 'crear_anuncio'%}?dist={{dist}}" class="btn btn-primary pull-right" >Crear Anuncio</a>
 					</div>
 			</div>
 	<table class="table">

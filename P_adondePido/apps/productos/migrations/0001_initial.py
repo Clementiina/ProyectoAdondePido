@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Presentacion',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('capacidad', models.CharField(max_length=50)),
                 ('estado', models.BooleanField(default=True)),
             ],
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Producto',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('nombre', models.CharField(max_length=50)),
                 ('descripcion', models.TextField()),
                 ('estado', models.BooleanField(default=True)),
@@ -30,16 +30,21 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Producto_Presentacion',
+            name='Tipo_Presentacion',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
+                ('nombre', models.CharField(max_length=50)),
                 ('estado', models.BooleanField(default=True)),
-                ('presentacion', models.ForeignKey(to='productos.Presentacion')),
-                ('producto', models.ForeignKey(to='productos.Producto')),
             ],
         ),
-        migrations.AlterUniqueTogether(
-            name='producto_presentacion',
-            unique_together=set([('producto', 'presentacion')]),
+        migrations.AddField(
+            model_name='producto',
+            name='tipo_presentacion',
+            field=models.ForeignKey(blank=True, to='productos.Tipo_Presentacion'),
+        ),
+        migrations.AddField(
+            model_name='presentacion',
+            name='tipo_presentacion',
+            field=models.ForeignKey(blank=True, to='productos.Tipo_Presentacion'),
         ),
     ]

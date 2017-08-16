@@ -8,8 +8,8 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('personas', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('personas', '0001_initial'),
         ('localidades', '0001_initial'),
     ]
 
@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Negocio',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('nombre', models.CharField(max_length=50, blank=True)),
                 ('descripcion', models.TextField(blank=True)),
                 ('numero_contacto', models.PositiveIntegerField(blank=True)),
@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Permiso_Negocio',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('nombre', models.CharField(max_length=50)),
                 ('descripcion', models.TextField()),
                 ('estado', models.BooleanField(default=True)),
@@ -39,11 +39,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Usuario_Negocio',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('estado', models.BooleanField(default=True)),
                 ('negocio', models.ForeignKey(to='negocios.Negocio')),
                 ('permiso', models.ForeignKey(blank=True, to='negocios.Permiso_Negocio')),
                 ('usuario', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
+        ),
+        migrations.AlterUniqueTogether(
+            name='usuario_negocio',
+            unique_together=set([('negocio', 'usuario', 'permiso')]),
         ),
     ]

@@ -4,18 +4,21 @@
 	<a href="{% url 'anuncios'%}?dist={{dist}}&pag=1" class="list-group-item">Anuncios</a>
 	<a href="#" class="list-group-item">Socios</a>
 	<a href="{% url 'rutas'%}?dist={{dist}}" class="list-group-item">Rutas</a>
-	<a href="{% url 'productos'%}?dist={{dist}}" class="list-group-item">Productos</a>
+	<a href="{% url 'productos'%}?dist={{dist}}" class="list-group-item active">Productos</a>
 	<!-- Paginacion -->
 {% endblock %}
+
 {% block aside %}
+	
+<a onclick="return abrir_modal('{% url 'crear_producto_nuevo'%}?dist={{dist}}')" class="btn btn-primary">Agregar Nuevo Producto</a>
+
+
 {% endblock %}
 
-	
 {% block contenido %}	
 
-<!--<input class='btn btn-primary btn-xs' type='text' id='btnActualizar' value='Actualizar'>-->
-<div class="row">
-	<div class="col-md-3">
+<div class="col-md-12">
+<div class="col-md-4">
 			<label>Seleccione una Categorias</label>
 			<select class="form-control" id="categorias">
 				<option></option>
@@ -23,29 +26,49 @@
 					<option value="{{i.id}}&{{dist}}" >{{i.nombre}}</option>
 				{% endfor %}
 			</select>
-
+	</div>
+<div class="col-md-4">
 			<label>Seleccione una Sub Categorias</label>
 			<select class="form-control" id="subCategorias">#</select>
-			
+</div>
+<div class="col-md-4">
 			<label>Seleccione una Marca:</label>
 			<select class="form-control" id="m_x_sc_d">#</select>
-			
-		
+</div>
+</div>
+<div class="col-md-12">
+	<div class="col-md-12">
+		<div id="tabla"> </div>
 	</div>
-	<div class="col-md-9" id="tabla">
-  <div class='container'><div class='list-group col-md-9'>
-  </div></div>
-		
-	</div>
-	<dir id="enlace">
-		
-	</dir>
-</div>	
+</div>
+<div id="popup" class="modal fade" role="dialog"></div>
+
+	
+
 {% endblock %}
 {% block js %}
   <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/productos.js' %}"></script>
+
+  <script type="text/javascript">  
+
+function abrir_modal(url)
+{
+        $('#popup').load(url, function()
+        {
+                $(this).modal('show');
+        });
+        return false;
+}
+
+function cerrar_modal()
+{
+        $('#popup').modal('hide');
+        return false;
+}
+
+</script>
 
   
 {% endblock %}

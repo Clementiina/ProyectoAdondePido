@@ -1,11 +1,13 @@
 from django.contrib import admin
-from .models import Presentacion
+from .models import Producto, Presentacion, Tipo_Presentacion
 
 class PresentacionAdmin(admin.ModelAdmin):
 	list_display = ("capacidad", )
 
-admin.site.register(Presentacion, PresentacionAdmin)
+class Tipo_PresentacionAdmin(admin.ModelAdmin):
+	list_display = ("id", "nombre",)
 
-#default
-from .models import Producto
+
 admin.site.register(Producto)
+admin.site.register(Tipo_Presentacion, Tipo_PresentacionAdmin)
+admin.site.register(Presentacion, PresentacionAdmin)

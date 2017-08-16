@@ -8,23 +8,23 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('distribuidoras', '0001_initial'),
         ('localidades', '0001_initial'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
             name='Distribuidora_Solicitud',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('distribuidora', models.ForeignKey(to='distribuidoras.Distribuidora')),
             ],
         ),
         migrations.CreateModel(
             name='Solicitud',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('fecha_creacion', models.DateTimeField(auto_now_add=True)),
                 ('usuario', models.CharField(max_length=20)),
                 ('email', models.EmailField(max_length=70)),
@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('descripcion', models.TextField()),
                 ('numero_contacto', models.BigIntegerField()),
                 ('direccion', models.CharField(max_length=50)),
-                ('localidad', models.ForeignKey(to='localidades.Localidad', default=3935)),
+                ('localidad', models.ForeignKey(default=3935, to='localidades.Localidad')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
