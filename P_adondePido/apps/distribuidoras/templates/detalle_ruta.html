@@ -1,11 +1,18 @@
-{% extends "base.html" %}
+{% extends "baseModal.html" %}
 {% load staticfiles %}
 
 {% block contenido %}
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
 
 <form enctype="multipart/form-data" class="form-horizontal">
-
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">x</button>
+</div>
+<div class="modal-body">
     {% csrf_token %}
+    <div class="panel panel-default">
+        <div class="panel-body">
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">Nombre:</label>
         <div class="col-sm-10">
@@ -24,18 +31,25 @@
         <div class="col-sm-3">
 			       <input readonly type="text" class="form-control" id="dia" name="dia" value='{{ruta.get_dia_display}}'>
         </div>
-		<a class="btn btn-primary" href="{% url 'rutas'%}?dist={{dist}}">Volver</a>
+</div></div></div>
+
+
+    <div class="modal-footer">
+            <div class="col-lg-12 text-right">
+                    
+                    <button type="button" class="btn btn-default" onclick="return cerrar_modal()">
+                            Volver
+                    </button>
+            </div>
+    </div>
+
+
+		
     </div>
 
 </form>
-
+    </div>    </div>
 {% endblock %}
 
 {% block js%}
-
-  <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/javascripts.js' %}"></script>
-
-
 {% endblock %}

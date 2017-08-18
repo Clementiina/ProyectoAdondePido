@@ -29,7 +29,6 @@ class CrearRuta(CreateView):
 		contexto['form'] = formR
 		contexto['dist'] = request.GET['dist']
 		contexto['DiasType'] = DiasType
-		print(contexto)
 		return render(request, self.template_name, contexto)
 		
 class DetalleRuta(DetailView):
@@ -61,6 +60,7 @@ class EliminaRuta(ListView):
 	model = Ruta
 	template_name = 'rutas.html'
 	context_object_name = 'rutas'
+	
 	def get(self, request):
 		contexto = {}
 		r = Ruta.objects.get(id=request.GET['ruta'])
@@ -85,10 +85,12 @@ class ActualizarRuta(TemplateView):
 		contexto['nombre'] = r.nombre
 		contexto['recorrido'] = r.recorrido
 		contexto['dia'] = r.dia
-		contexto['estado'] = r.estado		
+		contexto['estado'] = r.estado
+		contexto["ruta"] = request.GET["ruta"]
 		return render(request, 'adm_ruta.html', contexto)
 
 	def post(self, request):
+		print(request.GET)
 		r = Ruta.objects.get(id=request.GET['ruta'])
 		formR = self.form_class(request.POST, instance=r)
 		ok = formR.is_valid()

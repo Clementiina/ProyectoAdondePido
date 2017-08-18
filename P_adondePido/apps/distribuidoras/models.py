@@ -114,7 +114,7 @@ class Ruta (models.Model):
 	distribuidora = models.ForeignKey(Distribuidora)
 	nombre = models.CharField(max_length=50)
 	recorrido = models.TextField()
-	dia = MultiSelectField(choices=DiasType)
+	dia = MultiSelectField(choices=DiasType, max_choices=7)
 	estado = models.BooleanField(default=True)
 
 	def __str__(self):

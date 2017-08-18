@@ -5,22 +5,25 @@
 	<a href="{% url 'rutas'%}?dist={{dist}}" class="list-group-item">Rutas</a>
 	<a href="#" class="list-group-item">Productos</a>
 {% endblock %}
+
+{% block aside %}
+			<a href="{% url 'crear_anuncio'%}?dist={{dist}}" class="btn btn-primary btn-sm" >Crear Anuncio</a>
+{% endblock %}
+
 {% block contenido %}
 
 <div class="row">
 					<div class="col-md-4">
 							<h4>Listado de Anuncios</h4>
 					</div>
-					<div class="col-md-0">
-						<a href="{% url 'crear_anuncio'%}?dist={{dist}}" class="btn btn-primary pull-right" >Crear Anuncio</a>
-					</div>
+					
 			</div>
 	<table class="table">
 		<thead>
 			<tr>
 				<th>Título</th>
 				<th>Descripción</th>
-				<th>Creado</th>
+				
 				<th>Inicio</th>
 				<th>Fin</th>
 				<th>Acciones</th>
@@ -31,7 +34,7 @@
 				<tr>
 					<td>{{anuncio.titulo}}</td>
 					<td>{{anuncio.descripcion | truncatechars:70}}</td>
-					<td>{{anuncio.fecha_creacion}}</td>
+					
 					<td>{{anuncio.fecha_inicio}}</td>
 					<td>{{anuncio.fecha_fin}}</td>
 					<td>
@@ -55,6 +58,4 @@
 		{% endif %}
 	</div>
 	{%endif%}
-{% endblock %}
-{% block aside %}
 {% endblock %}
