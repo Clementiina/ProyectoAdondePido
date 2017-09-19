@@ -13,7 +13,7 @@ class Socios(ListView):
 	def get(self, request):
 		contexto = {}
 		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
-		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist']))
 		contexto['socios'] = Negocio_Distribuidora.objects.filter(distribuidora__id=request.GET['dist'])
 		return render(request, 'socios.html', contexto)
 
@@ -25,7 +25,7 @@ class verSocio(DetailView):
 		contexto = {}
 		s = Negocio_Distribuidora.objects.get(id=request.GET['s_id'] ).negocio
 		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
-		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist']))
 		contexto['socio'] = s
 		return render(request, 'detalle_socio.html', contexto)
 
@@ -37,5 +37,5 @@ class Desasociar(TemplateView):
 		n.delete()
 		contexto = {}
 		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
-		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist']))
 		return HttpResponseRedirect('/distribuidoras/socios/?dist='+request.GET['dist'])

@@ -12,7 +12,7 @@ class VistaDistribuidora(TemplateView):
 		contexto['distribuidoras'] = Usuario_Distribuidora.objects.filter(usuario = self.request.user.id)
 		contexto['negocios'] = Usuario_Negocio.objects.filter(usuario = self.request.user.id)
 		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
-		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist']))
 		return render(request, 'distribuidora.html', contexto)
 
 from . import viewAnuncio, viewRuta
