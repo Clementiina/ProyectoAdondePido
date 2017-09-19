@@ -1,0 +1,284 @@
+{% extends "base_solicitud.html" %}
+{% load staticfiles %}
+
+{% block contenido %}
+{{users}}
+
+<script type="text/javascript">
+	
+	function mostrarError(nombre){
+		document.getElementById("e_"+nombre).hidden = '';
+		document.getElementById("id_"+nombre).focus();
+		document.getElementById("id_"+nombre).style.borderColor='#a94442';
+	}
+	
+	function borrarError(nombre){
+		document.getElementById("e_"+nombre).hidden = "hidden";
+		document.getElementById("id_"+nombre).style.borderColor='#FFFFFF';
+	}
+	
+	function validarContaseña(){
+		var a1 = document.getElementById("id_password").value;
+		var a2 = document.getElementById("r_password").value;
+		
+		if (((a1 != "") && (a2 != "")) && (a1 != a2) ){
+		  
+		  mostrarError("password");
+		  document.getElementById("r_password").style.borderColor='#a94442';
+		  return false;
+		} else {
+		  borrarError("password");
+		  document.getElementById("r_password").style.borderColor='#FFFFFF';
+		  return true; 
+		}
+	}
+	
+	
+</script>
+
+<form method="post" enctype="multipart/form-data" class="form-horizontal"> 
+    {% csrf_token %}
+	<h3>Datos de Usuario:</h3>
+    <div class="form-group">
+        <label for="" class="col-sm-2 control-label">Usuario:</label>
+        <div class="col-sm-3">
+			{%if form.usuario.errors or 'usuario' in error %}
+			<div class="has-error has-feedback">
+			{%endif%}
+				<input type="text" class="form-control" id="id_usuario" name="usuario" value='{{usuario}}' placeholder="Ingrese nombre de usuario">	
+				<div>{{ form.usuario.errors }}</div>
+			{%if form.usuario.errors or 'usuario' in error %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+			{%endif%}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-2 control-label">Contraseña:</label>
+        <div class="col-sm-3">
+			{%if 'password' in error %}
+			<div class="has-error has-feedback">
+			{%endif%}
+				<input type="password" class="form-control" id="id_password" name="password" onchange="validarContaseña()" placeholder="Ingrese contraseña">	
+			{%if 'password' in error %}
+				<li> Este campo es obligatorio. </li>
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+			{%endif%}
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Repita Contraseña:</label>
+        <div class="col-sm-3">
+			{%if 'password' in error %}
+			<div class="has-error has-feedback">
+			{%endif%}
+				<input type="password" class="form-control" id="r_password" name="r_password" onchange="validarContaseña()" placeholder="Repita contraseña">	
+				<div  hidden="hidden" id='e_password'> <li> Las contaseñas no coinciden. </li> </div>
+			{%if 'password' in error %}
+					<div> <li> Este campo es obligatorio. </li> </div>
+					<span class="glyphicon glyphicon-remove form-control-feedback"></span>	
+			</div>
+			{%endif%}
+        </div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Email:</label>
+		<div class="col-sm-3">
+        {%if form.email.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="email" class="form-control" id="email" name="email" value='{{email}}' placeholder="Ingrese correo electronico">
+				<div>{{ form.email.errors }}</div>
+		{%if form.email.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+        </div>
+    </div>
+	<h3>Datos del Negocio:</h3>
+	<h4>Persona a cargo:</h4>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Apellido:</label>
+        <div class="col-sm-3">
+		{%if form.apellido.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="text" class="form-control" id="id_apellido" name="apellido" value='{{apellido}}' placeholder="Ingrese Apellido">		
+				<div>{{ form.apellido.errors }}</div>
+        {%if form.apellido.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Nombre:</label>
+		<div class="col-sm-3">
+		{%if form.nombre.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="text" class="form-control" id="id_nombre" name="nombre" value='{{nombre}}' placeholder="Ingrese Nombre">
+				<div>{{ form.nombre.errors }}</div>
+		{%if form.nombre.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}	
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">DNI:</label> 
+        <div class="col-sm-3">
+		{%if form.dni.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="number" class="form-control" id="id_dni" name="dni" value='{{dni}}' placeholder="Ingrese numero DNI">
+				<div>{{ form.dni.errors }}</div>
+        {%if form.dni.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}	
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Telefono:</label>
+        <div class="col-sm-3">
+		{%if form.telefono.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="number" class="form-control" id="id_telefono" name="telefono" value='{{telefono}}' placeholder="Ingrese numero de Telefono">
+				<div>{{ form.telefono.errors }}</div>
+		{%if form.telefono.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+	</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Celular:</label>
+        <div class="col-sm-3">
+		{%if form.celular.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="number" class="form-control" id="id_celular" name="celular" value='{{celular}}' placeholder="Ingrese numero de celular">
+				<div>{{ form.celular.errors }}</div>
+        {%if form.celular.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
+    </div>
+	<h4>Datos del Negocio:</h4>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Localidad:</label>
+        <div class="col-sm-3">
+		{%if form.localidad.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input readonly value='3935' type="number " class="form-control" id="id_localidad" name="localidad" value='{{localidad}}' placeholder="Ingrese Localidad">			
+				<div>{{ form.localidad.errors }}</div>
+        {%if form.localidad.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Nombre del Negocio:</label>
+        <div class="col-sm-3">
+		{%if form.n_nombre.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="text" class="form-control" id="id_n_nombre" name="n_nombre" value='{{nombre}}' placeholder="Ingrese Nombre del Negocio">
+				<div>{{ form.n_nombre.errors }}</div>
+        {%if form.n_nombre.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Descripcion:</label>
+        <div class="col-sm-3">
+		{%if form.descripcion.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+			<textarea class="form-control"  id="id_descripcion" name="descripcion" rows="3" placeholder="Descripcion del Negocio">{{descripcion}}</textarea>		
+			{{ form.descripcion.errors }}
+		{%if form.descripcion.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Numero de contacto:</label>
+        <div class="col-sm-3">
+		{%if form.numero_contacto.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="number" class="form-control" id="id_numero_contacto" name="numero_contacto" value='{{numero_contacto}}' placeholder="Ingrese numero de contacto">		
+				{{ form.numero_contacto.errors }}
+		{%if form.numero_contacto.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
+    </div>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">Direccion:</label>
+        <div class="col-sm-3">
+		{%if form.direccion.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="text" class="form-control" id="id_direccion" name="direccion" value='{{direccion}}' placeholder="Ingrese direccion">			
+				{{ form.direccion.errors }}
+		{%if form.direccion.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+		</div>
+    </div>
+	<h4>Distribuidoras:</h4>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">
+			Selecciona las distribuidoras que decees. 
+			(manten precionada la tecla contlol <ctrl> para seleccionar mas de una):
+		</label>
+        <div class="col-sm-3">	
+			{% if 'd' in error %}
+			<div class="has-error has-feedback"  >
+			{%endif%}
+				<select multiple='multiple' name='lista' {% if 'd' in error %} style="border: 1px solid #a94442;" {% endif %} >
+					{% for dist in distribuidoras %}
+						<option id="{{dist.id}}" value="{{dist.id}}">{{dist.nombre|capfirst}}</option>
+					{% endfor %}					
+				</select>	
+			{% if 'd' in error %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+				<div> <li> Debes seleccionar al menos una  </li> </div>	
+			</div>
+			{%endif%}				
+        </div>
+    </div>
+	
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-3">
+          <button type="submit" class="btn btn_primary" id="guardar">Enviar Solicitud</button>
+		  <a class="btn btn_primary" href="{% url 'index'%}">Cancelar</a>
+        </div>
+    </div>
+
+</form>
+        
+{% endblock %}
+
+
+{% block js%}
+  
+  <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/javascripts.js' %}"></script> 
+
+
+{% endblock %}

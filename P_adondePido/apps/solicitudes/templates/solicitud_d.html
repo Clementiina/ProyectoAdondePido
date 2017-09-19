@@ -168,7 +168,21 @@
 		{%endif%}
 		</div>
     </div>
-	<h4>Datos del Negocio:</h4>
+	<h4>Datos de la Distribuidora:</h4>
+	<div class="form-group">
+        <label for="" class="col-sm-2 control-label">CUIT:</label>
+        <div class="col-sm-3">
+		{%if form.cuit.errors %}
+			<div class="has-error has-feedback">
+		{%endif%}
+				<input type="number" class="form-control" id="cuit" name="cuit" value='{{cuit}}' placeholder="Ingrese numero de CUIT">
+				<div>{{ form.cuit.errors }}</div>
+		{%if form.cuit.errors %}
+				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			</div>
+		{%endif%}
+	</div>
+    </div>
 	<div class="form-group">
         <label for="" class="col-sm-2 control-label">Localidad:</label>
         <div class="col-sm-3">
@@ -184,7 +198,7 @@
 		</div>
     </div>
 	<div class="form-group">
-        <label for="" class="col-sm-2 control-label">Nombre del Negocio:</label>
+        <label for="" class="col-sm-2 control-label">Razon Social:</label>
         <div class="col-sm-3">
 		{%if form.n_nombre.errors %}
 			<div class="has-error has-feedback">
@@ -238,34 +252,11 @@
 			</div>
 		{%endif%}
 		</div>
-    </div>
-	<h4>Distribuidoras:</h4>
-	<div class="form-group">
-        <label for="" class="col-sm-2 control-label">
-			Selecciona las distribuidoras que decees. 
-			(manten precionada la tecla contlol <ctrl> para seleccionar mas de una):
-		</label>
-        <div class="col-sm-3">	
-			{% if 'd' in error %}
-			<div class="has-error has-feedback"  >
-			{%endif%}
-				<select multiple='multiple' name='lista' {% if 'd' in error %} style="border: 1px solid #a94442;" {% endif %} >
-					{% for dist in distribuidoras %}
-						<option id="{{dist.id}}" value="{{dist.id}}">{{dist.nombre|capfirst}}</option>
-					{% endfor %}					
-				</select>	
-			{% if 'd' in error %}
-				<span class="glyphicon glyphicon-remove form-control-feedback"></span>
-				<div> <li> Debes seleccionar al menos una  </li> </div>	
-			</div>
-			{%endif%}				
-        </div>
-    </div>
-	
+    </div>	
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-3">
           <button type="submit" class="btn btn_primary" id="guardar">Enviar Solicitud</button>
-		  <a class="btn btn_primary" href="{% url 'login'%}">Cancelar</a>
+		  <a class="btn btn_primary" href="{% url 'index'%}">Cancelar</a>
         </div>
     </div>
 

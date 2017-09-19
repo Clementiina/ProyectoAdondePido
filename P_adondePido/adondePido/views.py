@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from apps.distribuidoras.models import Usuario_Distribuidora, Distribuidora
+from apps.solicitudes.models import Distribuidora_Solicitud
 from apps.negocios.models import Usuario_Negocio, Negocio
 from apps.solicitudes.models import Solicitud
 
@@ -18,10 +19,10 @@ class Index(CtrLogin, TemplateView):
 
 	def get_context_data(self, **kwargs):
 		contexto = super(Index, self).get_context_data(**kwargs)
-		print(contexto)
 		contexto['distribuidoras'] = Usuario_Distribuidora.objects.filter(usuario = self.request.user.id)
 		contexto['negocios'] = Usuario_Negocio.objects.filter(usuario = self.request.user.id)
-		print(contexto)
+		contexto['sds'] = Solicitud.objects.filter(es_distribuidora=True)
+		contexto['sd_cant'] = len(contexto['sds'])
 		return contexto
 
 class Login(TemplateView):
@@ -48,7 +49,7 @@ class SinActivar(TemplateView):
 	def get(self, request):
 		s = Solicitud.objects.get(user=self.request.user.id)
 		contexto={}
-		contexto['codigo']= s.code
+		contexto['s']= s
 		return render(request, self.template_name, contexto)
 
 class Salir(CtrLogin, TemplateView):
@@ -56,7 +57,6 @@ class Salir(CtrLogin, TemplateView):
 	def get(self, request):
 		logout(request)
 		return HttpResponseRedirect('/logout/')
-
 
 class Logout(TemplateView):
 	template_name = 'logout.html'

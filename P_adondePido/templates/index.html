@@ -49,5 +49,37 @@
 				</tbody>
 			</table>
 		{% endif %}
+		
+		{% if user.is_staff and sds	%}
+			<h3>Distribuidoras pendientes de Activacion ({{ sd_cant }})</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>CUIT</th>
+						<th>Razon Social</th>
+						<th>Activar</th>
+						<th>Rechazar</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for s in sds %}
+						<tr>
+							<td>{{ s.id }}</td>
+							<td>{{ s.cuit }}</td>
+							<td>{{ s.n_nombre }}</td>
+							<td>
+								<a href="{% url 'activar_d'%}?user={{s.user.id}}">
+								<span class="glyphicon glyphicon-check"></span></a>
+							</td>
+							<td>    
+								<a href="{% url 'ignorar_d'%}?s_id={{s.id}}">
+								<span class="glyphicon glyphicon-remove"></span></a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
 	</div>
 {% endblock %}

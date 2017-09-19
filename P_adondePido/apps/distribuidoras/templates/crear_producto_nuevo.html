@@ -4,7 +4,7 @@
 {% block contenido %}	
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
-        <form role="form" action="{% url 'crear_producto_nuevo'%}?dist={{dist}}" method="post">
+        <form role="form" action="{% url 'crear_producto_nuevo'%}?dist={{dist.id}}" method="post">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">x</button>
                 <h3>Agregar Producto</h3>

@@ -30,14 +30,14 @@ class Tipo_Distribuidora (models.Model):
 
 	
 class Distribuidora (models.Model):
+	cuit = models.BigIntegerField()
 	nombre = models.CharField(max_length=50)
 	descripcion = models.TextField(verbose_name=u"Descripcion")
 	numero_contacto = models.PositiveIntegerField(verbose_name=u"Numero de contacto")
 	localidad = models.ForeignKey(Localidad, verbose_name=u"Localidad")
 	direccion = models.CharField(max_length=50, verbose_name=u"Direccion")
 	persona_cargo = models.ForeignKey(Persona, verbose_name=u"Persona a cargo")
-	estado = models.BooleanField(default=True)
-
+	estado = models.BooleanField(default=True)	
 	def __str__(self):
 		return self.nombre
 	
@@ -131,6 +131,9 @@ class Negocio_Distribuidora (models.Model):  # Socio
 	
 	class Meta:
 		unique_together = ("negocio", "distribuidora")
+		
+	def __str__(self):
+		return "%s - %s" %(self.distribuidora.nombre, self.negocio.nombre)
 
 class Anuncio (models.Model):
 

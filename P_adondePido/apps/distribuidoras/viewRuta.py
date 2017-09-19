@@ -3,6 +3,7 @@ from django.views.generic import CreateView, ListView, TemplateView
 from django.views.generic.detail import DetailView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from apps.solicitudes.models import Distribuidora, Distribuidora_Solicitud
 from . import forms
 
 class CrearRuta(CreateView):
@@ -12,7 +13,8 @@ class CrearRuta(CreateView):
 	
 	def get(self, request ):
 		contexto = {}
-		contexto['dist'] = request.GET['dist']
+		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		contexto['DiasType'] = DiasType
 		return render(request, 'adm_ruta.html', contexto)
 
@@ -27,7 +29,8 @@ class CrearRuta(CreateView):
 			r.save()
 			return HttpResponseRedirect('/distribuidoras/rutas?dist='+request.GET['dist'] )
 		contexto['form'] = formR
-		contexto['dist'] = request.GET['dist']
+		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		contexto['DiasType'] = DiasType
 		return render(request, self.template_name, contexto)
 		
@@ -38,7 +41,8 @@ class DetalleRuta(DetailView):
 	def get(self, request):
 		contexto = {}
 		r = Ruta.objects.get(id=request.GET['ruta'] )
-		contexto['dist'] = request.GET['dist']
+		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		contexto['ruta'] = r
 		for x,y in DiasType:
 			if x == r.dia:
@@ -52,7 +56,8 @@ class VistaRuta(ListView):
 	context_object_name = 'rutas'
 	def get(self, request):
 		contexto = {}
-		contexto['dist'] = request.GET['dist']
+		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		contexto['rutas'] = Ruta.objects.filter(distribuidora__id=request.GET['dist'])
 		return render(request, 'rutas.html', contexto)
 
@@ -66,7 +71,8 @@ class EliminaRuta(ListView):
 		r = Ruta.objects.get(id=request.GET['ruta'])
 		r.estado = False
 		r.save()
-		contexto['dist'] = request.GET['dist']
+		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		contexto['ruta'] = request.GET['ruta']
 		contexto['rutas'] = Ruta.objects.filter(distribuidora__id=request.GET['dist'])
 		return HttpResponseRedirect('/distribuidoras/rutas/?dist='+request.GET['dist'])
@@ -79,7 +85,8 @@ class ActualizarRuta(TemplateView):
 	def get(self, request ):
 		contexto = {}
 		contexto['DiasType'] = DiasType
-		contexto['dist'] = request.GET['dist']
+		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		contexto['edit'] = True
 		r = Ruta.objects.get(id=request.GET['ruta'])		
 		contexto['nombre'] = r.nombre
@@ -101,5 +108,6 @@ class ActualizarRuta(TemplateView):
 		contexto['edit'] = True
 		contexto['form'] = formR
 		contexto['DiasType'] = DiasType
-		contexto['dist'] = request.GET['dist']		
+		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		return render(request, self.template_name, contexto)

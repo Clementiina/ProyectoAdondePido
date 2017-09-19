@@ -1,9 +1,10 @@
-from .models import Distribuidora, Anuncio
+from .models import Anuncio
 import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView, ListView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from apps.solicitudes.models import Distribuidora, Distribuidora_Solicitud
 
 class FormatoFecha():
 
@@ -45,7 +46,8 @@ class ActualizarAnuncio(TemplateView):
 
 	def get(self, request):
 		contexto = {}
-		contexto["dist"] = request.GET["dist"]
+		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		anuncio = Anuncio.objects.get(id=request.GET["anuncio"])
 		ctx = {"dist":request.GET["dist"],"anuncio":anuncio}
 		return render(request,self.template_name, ctx)
@@ -67,7 +69,8 @@ class EliminarAnuncio(TemplateView):
 	template_name = "eliminar_anuncio.html"
 	def get(self, request):
 		contexto = {}
-		contexto["dist"] = request.GET["dist"]
+		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		anuncio = Anuncio.objects.get(id=request.GET["anuncio"])
 		ctx = {"dist":request.GET["dist"],"anuncio":anuncio}
 		return render(request,self.template_name, ctx)
@@ -98,5 +101,6 @@ class VistaAnuncio(ListView):
 
 		contexto = {}
 		contexto['anuncios'] = anuncios
-		contexto['dist'] = dist
+		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		return render(request, 'anuncios.html', contexto)

@@ -9,6 +9,7 @@ from .formsProducto import Producto_DistribudoraForm, NuevoProductoForm
 from django.views.generic import ListView, UpdateView, CreateView
 from django.db.utils import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
+from apps.solicitudes.models import Distribuidora, Distribuidora_Solicitud
 
 
 class  VistaProducto(TemplateView):
@@ -22,7 +23,8 @@ class  VistaProducto(TemplateView):
 		s = set()
 		for i in p:
 			s.add(i.marcaSubCategoria.subCategoria.categoria)
-		context["dist"] = id
+		context['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		context['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		context["categorias"] = list(s)
 		return render(request, self.template_name, context)
 
@@ -158,7 +160,8 @@ class Crear_Producto_Nuevo(TemplateView):
 	def get(self, request):
 		context={}
 		context["form"] = NuevoProductoForm()
-		context["dist"] = request.GET["dist"]
+		context['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		context['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		return render(request, self.template_name, context)
 
 	def post(self, request):

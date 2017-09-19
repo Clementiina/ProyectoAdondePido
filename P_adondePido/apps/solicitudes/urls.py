@@ -3,9 +3,15 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-	url(r'^$', views.VistaSolicitudes.as_view(), name='solicitudes'),
-	url(r'^solicitud/$', views.VistaSolicitud.as_view(), name='solicitud'),	
-	url(r'^solicitud/activar/$', views.VistaActivar.as_view(), name='activar'),
-	url(r'^solicitud/asociar/$', views.VistaAsociar.as_view(), name='asociar'),
-	url(r'^solicitud/ignorar/$', views.VistaIgnorar.as_view(), name='ignorar'),
+	url(r'^n$', views.VistaSolicitudesN.as_view(), name='solicitudes_n'),
+	url(r'^solicitud_n/$', views.VistaSolicitudN.as_view(), name='solicitud_n'),	
+	url(r'^solicitud_n/activar_n/$', views.VistaActivarN.as_view(), name='activar_n'),
+	url(r'^solicitud_n/asociar_n/$', views.VistaAsociarN.as_view(), name='asociar_n'),
+	url(r'^solicitud_n/ignorar_n/$', views.VistaIgnorarN.as_view(), name='ignorar_n'),
+	
+	url(r'^d$', views.VistaSolicitudesD.as_view(), name='solicitudes_d'),
+	url(r'^solicitud_d/$', views.VistaSolicitudD.as_view(), name='solicitud_d'),	
+	url(r'^solicitud_d/activar_d/$', views.VistaActivarD.as_view(), name='activar_d'),
+	url(r'^solicitud_d/ignorar_d/$', views.VistaIgnorarD.as_view(), name='ignorar_d'),
+	
 ]

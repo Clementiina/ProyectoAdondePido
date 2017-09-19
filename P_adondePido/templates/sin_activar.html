@@ -32,14 +32,21 @@
 	</header>
 
 	{% block contenido %}
-	
-		<h1 class="text-center"> <br><br>
-			Por el momento, tu cuenta no esta activada. <br>
-			Necesitas que un representante de la distribuidora te active<br>
-			Te solisitara tu codigo de activacion <br><br> 
-			<b>{{codigo}}</b>
-		</h1>
-
+		{%if s.es_distribuidora %}
+			<h1 class="text-center"> <br><br>
+				Por el momento, tu cuenta no esta activada. <br>
+				Pronto un administrador te activara<br>
+				Lo mantendremos informado <br><br> 
+				<b>iMango Lab</b>
+			</h1>
+		{%else%}
+			<h1 class="text-center"> <br><br>
+				Por el momento, tu cuenta no esta activada. <br>
+				Necesitas que un representante de la distribuidora te active<br>
+				Te solisitara tu codigo de activacion <br><br> 
+				<b>{{s.code}}</b>
+			</h1>
+		{%endif%}
 	{% endblock %}
 
 	<footer>

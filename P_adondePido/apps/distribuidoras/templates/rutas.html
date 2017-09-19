@@ -1,10 +1,10 @@
 {% extends "base_distribuidora.html" %}
 {% load staticfiles %}
 {% block menu%}
-    <a href="{% url 'anuncios'%}?dist={{dist}}&pag=1" class="list-group-item">Anuncios</a>
-    <a href="{% url 'socios'%}?dist={{dist}}" class="list-group-item">Socios</a>
+    <a href="{% url 'anuncios'%}?dist={{dist.id}}&pag=1" class="list-group-item">Anuncios</a>
+    <a href="{% url 'socios'%}?dist={{dist.id}}" class="list-group-item">Socios</a>
     <a class="list-group-item active">Rutas</a>
-    <a href="{% url 'productos'%}?dist={{dist}}" class="list-group-item">Productos</a>
+    <a href="{% url 'productos'%}?dist={{dist.id}}" class="list-group-item">Productos</a>
 {% endblock %}
 {% block contenido %}
     
@@ -32,11 +32,11 @@
 					{%endif%}
                     <td>    
                         
-                        <a onclick="return abrir_modal('{% url 'detalle_ruta'%}?dist={{dist}}&ruta={{ruta.id}}')"><span class="acciones glyphicon glyphicon-search"></span></a>
+                        <a onclick="return abrir_modal('{% url 'detalle_ruta'%}?dist={{dist.id}}&ruta={{ruta.id}}')"><span class="acciones glyphicon glyphicon-search"></span></a>
 
-                        <a onclick="return abrir_modal('{% url 'actualizar_ruta'%}?ruta={{ruta.id}}&dist={{dist}}')"><span class="acciones glyphicon glyphicon-edit"></span></a> 
+                        <a onclick="return abrir_modal('{% url 'actualizar_ruta'%}?ruta={{ruta.id}}&dist={{dist.id}}')"><span class="acciones glyphicon glyphicon-edit"></span></a> 
 
-                        <a href="{% url 'eliminar_ruta'%}?dist={{dist}}&ruta={{ruta.id}}"><span class="glyphicon glyphicon-remove"></span></a>
+                        <a href="{% url 'eliminar_ruta'%}?dist={{dist.id}}&ruta={{ruta.id}}"><span class="glyphicon glyphicon-remove"></span></a>
                         
                     </td>
                 </tr>
@@ -48,7 +48,7 @@
 {% endblock %}
 
 {% block aside %}
-        <a onclick="return abrir_modal('{% url 'crear_ruta'%}?dist={{dist}}')" class="btn btn-primary btn-sm">Crear Ruta</a>
+        <a onclick="return abrir_modal('{% url 'crear_ruta'%}?dist={{dist.id}}')" class="btn btn-primary btn-sm">Crear Ruta</a>
 {% endblock %}
 
 

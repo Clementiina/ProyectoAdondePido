@@ -6,9 +6,9 @@
     <div class="modal-content">
 
 {% if not edit %}
-	<form role="form" action='{% url 'crear_ruta'%}?dist={{dist}}' method="post">
+	<form role="form" action='{% url crear_ruta%}?dist={{dist.id}}' method="post">
 {% else %}
-	<form role="form" action='{% url 'actualizar_ruta'%}?ruta={{ruta}}&dist={{dist}}' method="post">
+	<form role="form" action='{% url actualizar_ruta%}?ruta={{ruta}}&dist={{dist.id}}' method="post">
 {% endif %}
 
 <div class="modal-header">
