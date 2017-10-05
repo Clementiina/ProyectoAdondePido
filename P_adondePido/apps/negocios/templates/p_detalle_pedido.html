@@ -1,0 +1,68 @@
+{% extends "baseModal.html" %}
+{% load staticfiles %}
+
+{% block contenido %}	
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <form role="form" action='#' method="post">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h4>{{pedido.socio}} </h4>
+                <label style="float: right;">{{pedido.fecha_creacion|date:"j / M / Y"}}</label>
+            </div>
+            <div class="modal-body">
+
+                    {% csrf_token %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="rows">
+                                <div class="col-md-12">
+                                <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Presentación</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    
+                                </thead>
+                                <tbody>
+                                {% for i in detalle_pedido %}
+                                    <tr>
+                                        <td>
+                                          {{i.producto.producto_distribuidora.producto}}  
+                                        </td>
+                                        <td>{{i.producto.producto_distribuidora.presentacion }}</td>
+                                        <td>{{i.producto.cantidad}}</td>
+                                        <td>${{i.producto.precio_unitario}}</td>
+                                        <td>{{i.suma}}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                    
+                                </table>
+                                <label style="float: right;"> Monto Total del Pedido es: ${{total}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                    <div class="col-lg-12 text-right">
+                            <button type="button" class="btn btn-primary" onclick="return cerrar_modal()">
+                                    Cerrar
+                            </button>
+                            {% if pedido.estado_p == "n" %}
+                            <a href="{% url 'negocio:eliminar_pedido' pedido.id %}" class="btn btn-danger">Eliminar Pedido</a>
+                            {% endif %}
+                    </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+

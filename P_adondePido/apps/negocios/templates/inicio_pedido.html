@@ -1,0 +1,147 @@
+{% extends "base_negocio.html" %}
+{% load staticfiles %}
+{% block menu%}
+  
+{% endblock %}
+
+{% block aside %}
+{% endblock %}
+
+{% block contenido %}	
+
+
+<div class="row">
+    <div class="col-md-8">
+    <h4>{{socio}}</h4>
+    {% if opc %}
+    <label>Hubo un error acaba de seleccionar 2 veces el mismo producto, por favor edite el producto si quiere</label>
+    {%endif%}
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="">Categoria</th>
+                <th class="">Marca</th>
+                <th class="">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in ms_d %}
+                <tr>
+                    <td>{{i.marcaSubCategoria.subCategoria.nombre}}</td>
+                    <td>{{i.marcaSubCategoria.marca.nombre}}</td>
+                    <td>
+                        <a onclick="return abrir_modal('{% url 'negocio:lista_productos' %}?ms_d={{i.id}}&n_d={{socio.id}}&p={{nro_pedido}}')" class="glyphicon glyphicon-plus" data-toggle="tooltip" title="Agregar Producto"></a>
+                    </td>                
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>    
+
+        
+
+        
+    </div>
+    <div class="col-md-4">
+
+        <label>Pedidos Sin Enviar</label>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="">Fecha</th>
+                    <th class="">Acción</th>
+                    <th class=""></th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td>{{pedido_no_enviado.fecha_creacion.date}} </td>
+                    <td>
+                        
+                        <a onclick="return abrir_modal('{% url 'negocio:detalle_pedido' %}?p={{nro_pedido}}')" class="glyphicon glyphicon-search" data-toggle="tooltip" title="Agregar Producto"></a>
+
+                        <a onclick="return abrir_modal('{% url 'negocio:actualizar_pedido' %}?p={{nro_pedido}}')" class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Agregar Producto"></a>
+
+
+                        <a href="{% url 'negocio:eliminar_pedido' nro_pedido%}">
+                            <span class="iconos glyphicon glyphicon-remove" data-toggle="tooltip" title="Eliminar Pedido"></span>
+                        </a> 
+                    </td> 
+                    <td>
+                        <a href="{% url 'negocio:enviar_pedido' nro_pedido%}" >
+                                <span class=" iconos glyphicon glyphicon-send" data-toggle="tooltip" title="Enviar Pedido"></span>
+                        </a>
+                    </td>               
+                </tr>
+            </tbody>
+        </table>
+        <label></label>       
+    <label>Pedidos Enviados</label>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nro</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Ver</th>
+        </tr>
+        </thead>
+        {% for i in pedido_enviado %}
+        <tbody>
+            
+            <td>{{i.id}}</td>
+            <td>{{i.fecha_creacion|date:"j / M"}}</td>
+            <td>{{i.get_estado_p_display}}</td>
+            <td>
+                <a onclick="return abrir_modal('{% url 'negocio:detalle_pedido' %}?p={{i.id}}')" class="glyphicon glyphicon-search" data-toggle="tooltip" title="Agregar Producto"></a>
+            </td>
+            
+        </tbody>
+        {% endfor %}
+    </table>
+    
+            
+        
+
+</div>
+
+<div id="popup" class="modal fade" role="dialog"></div> 
+
+
+
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.</p>
+     </footer>
+{% endblock %}
+
+
+{% block js %}
+ 
+
+  <script type="text/javascript">  
+
+function abrir_modal(url)
+{
+        $('#popup').load(url, function()
+        {
+                $(this).modal('show');
+        });
+        return false;
+}
+
+function cerrar_modal()
+{
+        $('#popup').modal('hide');
+        return false;
+}
+
+</script>
+
+
+  
+{% endblock %}
+		

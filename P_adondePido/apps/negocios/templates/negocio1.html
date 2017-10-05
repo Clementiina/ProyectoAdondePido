@@ -1,0 +1,49 @@
+{% extends "base_negocio.html" %}
+{% load staticfiles %}
+
+{% block menu%}
+{% endblock %}
+
+{% block aside %}
+{% endblock %}
+
+
+{% block contenido %}	
+<div class="container">
+<div class="row">
+  
+
+  {% for j in matriz %}
+    <div class="col col-md-4"></div>
+
+    {% for i in j %}
+     <div id="wrapper">
+      <div id="columns">
+
+
+      <div class="pin">
+    <a href="{% url 'negocio:inicio_pedido' %}?n_d={{i.id}}">
+      <img src="/media/{{i.distribuidora.imagen}}" width=10px heigth=10px>
+      <p>
+        Leo cogote Leo cogoteLeo cogoteLeo cogoteLeo cogoteLeo cogoteLeo cogoteLeo cogote ac blandit dui. Duis rutrum porta tortor ut convallis.
+        Duis rutrum porta tortor ut convallis.
+      </p>
+      </a>
+      
+    </div>
+        </div>  
+        </div>  
+    {% endfor %}
+
+  {% endfor %}
+</div>
+</div>
+    
+
+  
+  
+{% endblock %}
+{% block js %}
+  
+{% endblock %}
+		

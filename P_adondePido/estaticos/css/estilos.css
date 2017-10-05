@@ -1,3 +1,9 @@
+body {
+// background: url(http://subtlepatterns.com/patterns/scribble_light.png) ;
+ background: url(../img/fondooo.png);
+
+}
+
 header {
 	background: #e0e0e0;
 }
@@ -11,6 +17,80 @@ footer {
 	bottom: 0;
 }
 
+h3, h4 {
+  color: #337ab7;
+}
+
 .acciones {
 	margin-right: 15px;
+}
+.iconos{
+ margin-right: 2%; 
+}
+
+.contenedor{
+  width: 90%;
+  margin: 15px auto;
+}
+.elemento{
+  width: 220px;
+  background: #fff;
+  float: left;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22); 
+}
+
+.elemento p{
+  padding: 10px;
+  font-size: 13px;
+}
+
+.elemento img{
+  width: 100%;
+}
+
+.grid {
+  background: #EEE;
+  max-width: 1200px;
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+
+}
+
+/* ---- grid-item ---- */
+
+.grid-item {
+  width: 158px;
+  height: 300px;
+  float: left;
+  background: #D26;
+  border: 2px solid #333;
+  border-color: hsla(0, 0%, 0%, 0.5);
+  border-radius: 5px;
+  margin: 1px;
+}
+
+.grid-item--width2 { width: 318px; margin: 1px;}
+.grid-item--width3 { width: 478px; margin: 1px;}
+.grid-item--width4 { width: 638px; margin: 1px;}
+
+.grid-item--height2 { height: 200px; }
+.grid-item--height3 { height: 260px; }
+.grid-item--height4 { height: 360px; }
+
+.grid-item p{
+  padding: 10px;
+  font-size: 13px;
+}
+
+
+.grid-item img{
+  width: 80%; 
+  margin-left: 10%;
+  margin-right: 10%;
 }
