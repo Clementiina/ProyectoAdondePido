@@ -35,7 +35,7 @@ class Distribuidora (models.Model):
 		ruta = "imagenesDistribuidoras/%s/%s" %(self.nombre,str(nombreArchivo))
 		return ruta
 
-	cuit = models.BigIntegerField()
+	cuit = models.PositiveIntegerField()
 	nombre = models.CharField(max_length=50)
 	descripcion = models.TextField(verbose_name=u"Descripcion")
 	numero_contacto = models.PositiveIntegerField(verbose_name=u"Numero de contacto")

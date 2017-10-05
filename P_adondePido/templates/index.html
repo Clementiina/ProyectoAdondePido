@@ -43,7 +43,7 @@
 						<tr>
 							<td>{{ n.negocio.nombre|capfirst }}</td>
 							<td>{{ n.negocio.direccion|capfirst }}</td>
-							<td><a href="" class="btn btn-default">Seleccionar</a></td>
+							<td><a href="{% url 'negocio:negocio' %}?dist={{n.negocio.id}}" class="btn btn-default">Seleccionar</a></td>
 						</tr>
 					{% endfor %}
 				</tbody>

@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^logout/', Logout.as_view(), name='logout'),
     url(r'^$', Index.as_view(), name='index'),
     url(r'^distribuidoras/', include('apps.distribuidoras.urls')),
+	url(r'^negocios/', include('apps.negocios.urls', namespace='negocio')),
     url(r'^productos/', include('apps.productos.urls')),
 	url(r'^solicitudes/', include('apps.solicitudes.urls')),
 	url(r'^sin_activar/', SinActivar.as_view(), name='sin_activar'),
