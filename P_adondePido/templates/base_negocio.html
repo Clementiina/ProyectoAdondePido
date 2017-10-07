@@ -24,9 +24,6 @@
 		    	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		      		<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="{% url 'solicitudes'%}?dist={{dist}}"><span class="glyphicon glyphicon-bell"></span> {{s_cant}} </a>
-						</li>
-						<li>
 							<a href=""><span class="glyphicon glyphicon-user"></span> {{user.username|capfirst}}</a>
 						</li>
 						<li>
@@ -42,7 +39,7 @@
 		<div class="row">
 			<section class="col-md-2">
 				<div class="panel panel-default">
-					<div class="panel-heading"><label>Menú</label></div>
+					<div class="panel-heading"><label>Menu</label></div>
 					<div class="list-group">
 						{% block menu%}
 						{% endblock%}
