@@ -155,7 +155,7 @@ class Negocio_Distribuidora (models.Model):  # Socio
 class Anuncio (models.Model):
 
 	def url(self,nombreArchivo):
-		ruta = "imagenesAunicios/%s/%s" %(self.id_distribuidora.nombre,str(nombreArchivo))
+		ruta = "imagenesAunicios/%s/%s" %(self.distribuidora.nombre,str(nombreArchivo))
 		return ruta
 
 	distribuidora = models.ForeignKey(Distribuidora)
