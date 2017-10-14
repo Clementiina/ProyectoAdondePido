@@ -32,7 +32,7 @@ class Tipo_Distribuidora (models.Model):
 class Distribuidora (models.Model):
 
 	def url(self,nombreArchivo):
-		ruta = "imagenesDistribuidoras/%s/%s" %(self.nombre,str(nombreArchivo))
+		ruta = "estaticos/img/imagenesDistribuidoras/%s/%s" %(self.nombre,str(nombreArchivo))
 		return ruta
 
 	cuit = models.PositiveIntegerField()
@@ -155,7 +155,7 @@ class Negocio_Distribuidora (models.Model):  # Socio
 class Anuncio (models.Model):
 
 	def url(self,nombreArchivo):
-		ruta = "imagenesAunicios/%s/%s" %(self.distribuidora.nombre,str(nombreArchivo))
+		ruta = "estaticos/img/imagenesAunicios/%s" %(str(nombreArchivo))
 		return ruta
 
 	distribuidora = models.ForeignKey(Distribuidora)

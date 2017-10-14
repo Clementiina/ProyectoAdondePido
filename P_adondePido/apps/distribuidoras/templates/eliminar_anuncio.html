@@ -13,7 +13,7 @@
 
 
 
-          <input type="hidden" value="{{dist.id}}" name="distribuidora" readonly="True">
+          <input type="hidden" value="{{dist}}" name="distribuidora" readonly="True">
           <input type="hidden" name="id" value="{{anuncio.id}}" readonly="True">
 
 
@@ -62,7 +62,7 @@
     <div class="form-group">
         <div class="pull-right col-md-0">
           <input type="submit" value="Eliminar Anuncio" class="btn btn-primary"/>
-          <a href="{%url 'anuncios' %}?dist={{dist.id}}&pag=1" class="btn btn-default">Cancelar</a>
+          <a href="{%url 'anuncios' %}?dist={{dist}}&pag=1" class="btn btn-default">Cancelar</a>
         </div>
     </div>
 

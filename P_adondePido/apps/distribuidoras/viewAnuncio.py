@@ -45,11 +45,12 @@ class ActualizarAnuncio(TemplateView):
 	template_name = "actualizar_anuncio.html"
 
 	def get(self, request):
-		contexto = {}
-		contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
-		contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
+		#contexto = {}
+		#contexto['dist'] = Distribuidora.objects.get(id=request.GET['dist'])
+		#contexto['s_cant'] = len(Distribuidora_Solicitud.objects.filter(distribuidora=request.GET['dist'],solicitud__es_distribuidora=False))
 		anuncio = Anuncio.objects.get(id=request.GET["anuncio"])
 		ctx = {"dist":request.GET["dist"],"anuncio":anuncio}
+		print(ctx)
 		return render(request,self.template_name, ctx)
 
 	def post(self, request, *args, **kwargs):
@@ -86,10 +87,12 @@ class VistaAnuncio(ListView):
 	template_name = 'anuncios.html'
 	context_object_name = "anuncios"
 	def get(self, request):
+		print(request.GET)
 		uname = request.user.username
 		dist = request.GET['dist']
 		print(dist)
 		listado = Anuncio.objects.filter(distribuidora__id=dist, estado=True)
+		print(listado)
 		paginador = Paginator(listado, 5)
 		pagina = request.GET['pag']
 		try:

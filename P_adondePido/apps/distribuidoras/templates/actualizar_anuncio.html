@@ -12,10 +12,11 @@
               <input type="button" value="Activa Edición" class="btn btn-default" id="btn_activa_guardar"/>
               </div>
       </div>
-      <input type="hidden" value="{{dist.id}}" name="distribuidora" readonly="True">
+      <input type="hidden" value="{{dist}}" name="distribuidora" readonly="True">
       <input type="hidden" name="id" value="{{anuncio.id}}" readonly="True">
 
     <div class="form-group">
+
         <label for="" class="col-sm-2 control-label">Título:</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="id_titulo" name="titulo" value="{{anuncio.titulo}}" disabled="True">
@@ -60,7 +61,7 @@
     <div class="form-group">
         <div class="pull-right col-md-0">
           <input type="submit" value="Guardar Anuncio" class="btn btn-primary" id="btn_guardar_anuncio" disabled="true" />
-          <a href="{%url 'anuncios' %}?dist={{dist.id}}&pag=1" class="btn btn-default">Cancelar</a>
+          <a href="{%url 'anuncios' %}?dist={{dist}}&pag=1" class="btn btn-default">Cancelar</a>
         </div>
     </div>
 </form>

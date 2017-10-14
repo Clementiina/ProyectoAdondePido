@@ -15,7 +15,6 @@ class Inicio_Pedido(TemplateView):
 	template_name = 'inicio_pedido.html'
 
 	def get (self, request, *args, **kwargs):
-		print("LEO COGOTE")
 		aux = request.GET["n_d"]
 		if "$" in aux:
 			nro_pedido="000"

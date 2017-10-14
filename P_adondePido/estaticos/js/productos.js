@@ -4,6 +4,7 @@ $(document).ready(function(){
    $('#categorias').on("change",get_subcategoria);
     function get_subcategoria(){
         var categoria_dist = $("#categorias").val();
+        console.log(categoria_dist);
         $("#subCategorias").html("");
         $.ajax({
             url:"/distribuidoras/select_SubCategoria_Ajax/",
@@ -21,6 +22,7 @@ $(document).ready(function(){
     $('#subCategorias').on("change",get_marca_subcategoria);
     function get_marca_subcategoria(){
         var subCategorias_dist = $("#subCategorias").val();
+        console.log(subCategorias_dist)
         $("#m_x_sc_d").html("");
         $.ajax({
             url:"/distribuidoras/select_Marca_SubCategoria_Ajax/",
@@ -38,6 +40,7 @@ $(document).ready(function(){
     $('#m_x_sc_d').on("change",get_marca_subcategoria_distribuidora);
     function get_marca_subcategoria_distribuidora(){
         var m_x_sc_d = $("#m_x_sc_d").val();
+        console.log(m_x_sc_d);
         $.ajax({
             url:"/distribuidoras/select_Marca_SubCategoria_Dist_Ajax/",
             type:"get",

@@ -15,28 +15,29 @@
 	<script src="{% static 'js/jquery-ui.min.js' %}"></script>
 	<script src="{% static 'js/masonry.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-	
+
 	{% block css %}
 	{% endblock %}
-	
+
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-inverse">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		    	<a class="navbar-brand" href="#">Adonde Pido</a>
-		    </div>
-		    	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      		<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href=""><span class="glyphicon glyphicon-user"></span> {{user.username|capfirst}}</a>
-						</li>
-						<li>
-							<a href="{% url 'salir' %}"><span class="glyphicon glyphicon-log-out"></span> Salir</a>
-						</li>
-					</ul>
-		    	</div>
+		<nav class="navbar navbar-inverse" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<a href="{% url 'index' %}" class='navbar-brand adondeLink'>Adonde Pido</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="{% url 'solicitudes_n'%}?dist={{dist.id}}"><span class="glyphicon glyphicon-bell"></span> {{s_cant}} </a>
+					</li>
+					<li>
+						<a href=""><span class="glyphicon glyphicon-user"></span> {{user.username|capfirst}}</a>
+					</li>
+					<li>
+						<a href="{% url 'salir' %}"><span class="glyphicon glyphicon-log-out"></span> Salir</a>
+					</li>
+				</ul>
 			</div>
 		</nav>
 	</header>
@@ -47,41 +48,53 @@
 				<div class="panel panel-default">
 					<div class="panel-heading"><label>Menú</label></div>
 					<div class="list-group">
-						{% block menu%}
-						{% endblock%}
+						<a href="#" class="list-group-item">Pedidos</a>
+						<a href="#" class="list-group-item">Buscar Socio</a>
 					</div>
 				</div>
 			</section>
 
-			<section class="col-md-10" >
+			<section class="col-md-6" >
+			<h4>¡Tus Socios!</h4>
 				<div class="grid">
-				{% for i in n_d %}
-
+					{% for i in n_d %}
 					 <div class="{{i.css}}">
 						<a href="{% url 'negocio:inicio_pedido' %}?n_d={{i.n_d.id}}">
-      						<img src="/media/{{i.n_d.distribuidora.imagen}}" width=150px heigth=80px>
+      						<img src="/media/{{i.n_d.distribuidora.imagen}}">
       					</a>
 					    <p>
 					        Leo cogote Leo cogoteLeo cogoteLeo cogoteLeo cogoteLeo cogoteLeo cogoteLeo cogote ac blandit dui. Duis rutrum porta tortor ut convallis.
-					        Duis rutrum porta tortor ut convallis.
-					    </p>	
+					        Dui
+					    </p>
 					</div>
-				{% endfor %}
-
+					{% endfor %}
 				</div>
 			</section>
-			
+
+			<section class="col-md-4" >
+				<h4>Tus Anuncios Destacados</h4>
+				<div class="grid">
+					{% for i in anuncio %}
+					 <div class="grid-item grid-item--width4">
+						<a href="{% url 'negocio:inicio_pedido' %}?n_d={{i.n_d.id}}">
+							<img src="/media/{{i.anuncio.imagen}}" style="width:50%; margin-left:25%" />
+      					</a>
+						<p>
+							{{i.anuncio.descripcion}}</li>{{i.anuncio.descripcion}} <br>
+							Valido desde {{i.anuncio.fecha_inicio}} hasta {{i.anuncio.fecha_fin}}
+						</p>
+					</div>
+					{% endfor %}
+				</div>
+			</section>
 		</div>
 	</div>
-	
+
 	<script type="text/javascript">
-	
-	$('.grid').masonry({
-  itemSelector: '.grid-item',
-  columnWidth: 160
-});
-
+		$('.grid').masonry({
+			itemSelector: '.grid-item',
+			columnWidth: 5
+		});
 	</script>
-
 </body>
 </html>

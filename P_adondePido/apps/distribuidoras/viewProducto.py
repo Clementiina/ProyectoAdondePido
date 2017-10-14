@@ -33,35 +33,41 @@ class Select_SubCategoria_Ajax(TemplateView):
 
 	def get(self, request):
 		codigo = str(request.GET["categoria_dist"]).split("&")
-		categoria = codigo[0]
-		dist = codigo[1]
+		categoria = codigo[1]
+		dist = codigo[0]
 		s_c = SubCategoria.objects.filter(categoria_id=categoria)
-
+		print('kikin oeog')
 		lista = []
 		for i in s_c:
 			ctx = {}
-			codigo = str(i.id) + "&" + dist
+			codigo = dist + "&" + str(i.id)
 			ctx["id"] = codigo
 			ctx["nombre"] = i.nombre
 			lista.append(ctx)
 		data = json.dumps(lista)
+		print(data)
 		return HttpResponse(data, content_type='application/json')
 
 class Select_Marca_SubCategoria_Ajax(TemplateView):
 
 	def get(self, request):
+		print(request.GET)
 		codigo = str(request.GET["subCategorias_dist"]).split("&")
-		subCategoria = codigo[0]
-		dist = codigo[1]
+		subCategoria = codigo[1]
+		dist = codigo[0]
+		print (subCategoria)
+		print(dist)
 		lista = []
 		m_x_sc = MarcaXSubcategoria_Distribuidora.objects.filter( distribuidora__id=dist,
 																  marcaSubCategoria__subCategoria__id=subCategoria
 																)
+		print(m_x_sc)
 		for i in m_x_sc:
-			codigo = str(i.id) + "&" + dist
+			codigo = dist + "&" + str(i.id)
 			ctx = {}
 			ctx["id"] = codigo
 			ctx["nombre"] = i.marcaSubCategoria.marca.nombre
+			print(ctx)
 			lista.append(ctx)
 		data = json.dumps(lista)
 		return HttpResponse(data, content_type='application/json')
@@ -70,11 +76,14 @@ class Select_Marca_SubCategoria_Ajax(TemplateView):
 class Select_Marca_SubCategoria_Dist_Ajax(TemplateView):
 	
 	def get(self, request):
+		print(request.GET)
 		codigo = str(request.GET["m_x_sc_d"]).split("&")
-		m_x_sc_d_id = codigo[0]
-		dist = codigo[1]
+		print(codigo)
+		m_x_sc_d_id = codigo[1]
+		dist = codigo[0]
 		p_d = Producto_Distribudora.objects.filter(distribuidora__id=dist,
 													marcaXSubcategoriaDistribuidora_id=m_x_sc_d_id)
+		print(p_d)
 		s = set()
 		for i in p_d:
 			s.add(i.producto)

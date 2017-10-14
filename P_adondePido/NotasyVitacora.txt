@@ -1,0 +1,4 @@
+notas y vitacora.
+
+14/10/2017 [Martín]
+Hacer un instructivos para subir imagenes o un modulo que las manupule para que su tamaño sea el adecuado para lucir bien en la template.

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -7,12 +7,14 @@ from apps.distribuidoras.models import Usuario_Distribuidora, Distribuidora
 from apps.solicitudes.models import Distribuidora_Solicitud
 from apps.negocios.models import Usuario_Negocio, Negocio
 from apps.solicitudes.models import Solicitud
+from adondePido.forms import UserForm  
+
 
 class CtrLogin(object):
 	@classmethod
 	def as_view(cls, **initkwargs):
 		view = super(CtrLogin, cls).as_view(**initkwargs)
-		return login_required(view, login_url="/login/")
+		return login_required(view, login_url="/")
 
 class Index(CtrLogin, TemplateView):
 	template_name = 'index.html'
@@ -24,23 +26,6 @@ class Index(CtrLogin, TemplateView):
 		contexto['sds'] = Solicitud.objects.filter(es_distribuidora=True)
 		contexto['sd_cant'] = len(contexto['sds'])
 		return contexto
-
-class Login(TemplateView):
-
-	template_name = 'login.html'
-
-	def post(self, request):
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(username=username, password=password)
-		if user is not None:
-			login(request, user)
-			if user.is_active:
-				return HttpResponseRedirect('/')
-			return HttpResponseRedirect('/sin_activar')			
-		else:
-			contexto = {'error': True}
-			return render(request, self.template_name, contexto)
 
 class SinActivar(TemplateView):
 
@@ -56,7 +41,35 @@ class Salir(CtrLogin, TemplateView):
 
 	def get(self, request):
 		logout(request)
-		return HttpResponseRedirect('/logout/')
+		return HttpResponseRedirect('/')
 
-class Logout(TemplateView):
-	template_name = 'logout.html'
+class Principal(TemplateView):
+	template_name="principal.html"
+ 
+
+class Login(TemplateView):
+    template_name = 'login.html'
+    form_class = UserForm	
+
+    def get_context_data(self, **kwargs):
+    	ctx = super(Login, self).get_context_data(**kwargs)
+    	ctx["form"] = UserForm() #self.form_class()
+    	return ctx
+
+    def post(self, request):
+    	formulario = self.form_class(request.POST)
+    	if formulario.is_valid():
+    		usuario = formulario.cleaned_data["usuario"]
+    		clave = formulario.cleaned_data["clave"]
+    		user = authenticate(username=usuario, password=clave)
+    		if user is not None:
+    			if user.is_active:
+    				login(request,user)
+    				return HttpResponseRedirect("/index")
+    			else:
+    				return HttpResponseRedirect('/sin_activar')			
+    		else:
+    			contexto = {'error': True}
+    			return render(request, self.template_name, contexto)
+    	else:
+    		return HttpResponseRedirect("/principal")

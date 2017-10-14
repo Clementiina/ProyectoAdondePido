@@ -49,7 +49,7 @@
                 <tr>
                     <th class="">Fecha</th>
                     <th class="">Acción</th>
-                    <th class=""></th>
+                    <th class="">Enviar</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,9 +68,11 @@
                         </a> 
                     </td> 
                     <td>
+                        {% if nro_pedido != "00" %}
                         <a href="{% url 'negocio:enviar_pedido' nro_pedido%}" >
                                 <span class=" iconos glyphicon glyphicon-send" data-toggle="tooltip" title="Enviar Pedido"></span>
                         </a>
+                        {% endif %}
                     </td>               
                 </tr>
             </tbody>

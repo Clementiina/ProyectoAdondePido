@@ -1,5 +1,4 @@
 {% load staticfiles %}
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -47,13 +46,34 @@
     </div>
 	</header>
 
-	{% block contenido %}
-	{% endblock %}
+	<div id="popup" class="modal fade" role="dialog"></div>
 
 	<footer>
 		<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 		tempor incididunt ut labore et dolore magna aliqua.</p>
 	</footer>
 
-	</body>
+	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script type="text/javascript">  
+
+function abrir_modal(url)
+{
+        $('#popup').load(url, function()
+        {
+                $(this).modal('show');
+        });
+        return false;
+}
+
+function cerrar_modal()
+{
+        $('#popup').modal('hide');
+        return false;
+}
+
+</script>
+
+	
+</body>
 </html>

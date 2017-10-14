@@ -14,7 +14,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from .views import Index, Login, Salir, Logout, SinActivar
+from .views import Index, Login, Salir, SinActivar, Principal
 from apps.distribuidoras import views
 from django.conf import settings
 
@@ -23,8 +23,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', Login.as_view(), name='login'),
     url(r'^salir/', Salir.as_view(), name='salir'),
-    url(r'^logout/', Logout.as_view(), name='logout'),
-    url(r'^$', Index.as_view(), name='index'),
+    url(r'^$', Principal.as_view(), name='principal'),
+    url(r'^index/$', Index.as_view(), name='index'),
     url(r'^distribuidoras/', include('apps.distribuidoras.urls')),
 	url(r'^negocios/', include('apps.negocios.urls', namespace='negocio')),
     url(r'^productos/', include('apps.productos.urls')),
