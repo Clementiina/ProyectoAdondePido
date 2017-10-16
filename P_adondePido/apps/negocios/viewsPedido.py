@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.db import IntegrityError
 from django.views.generic import TemplateView, CreateView,ListView, UpdateView
 from apps.negocios.models import Usuario_Negocio
-from apps.distribuidoras.models import Negocio_Distribuidora, MarcaXSubcategoria_Distribuidora, Producto_Distribudora
+from apps.distribuidoras.models import Negocio_Distribuidora, MarcaXSubcategoria_Distribuidora, Producto_Distribudora, Anuncio
 from apps.pedidos.models import Pedido, Detalle_Pedido
 from django.http import HttpResponseRedirect
 from django.db.models import Q
@@ -17,8 +17,8 @@ class Inicio_Pedido(TemplateView):
 	def get (self, request, *args, **kwargs):
 		aux = request.GET["n_d"]
 		if "$" in aux:
-			nro_pedido="000"
-			id = aux[:len(aux)-1]
+			nro_pedido="000" # Cuando se selecciono mas de una ves el mismo producto, se envia una marca $ la cual indica que ya fue seleccionado.
+			id = aux[:len(aux)-1] # se quita esa marca dejando solamente la ID del pedido.
 			opc=True
 		else:
 			id = aux
@@ -48,6 +48,7 @@ class Inicio_Pedido(TemplateView):
 		ctx["pedido_enviado"] = pedido_enviado
 		ctx["nro_pedido"] = nro_pedido
 		ctx["opc"] = opc
+		print(ctx)
 		return render(request, self.template_name, ctx)
 
 
@@ -209,3 +210,22 @@ class Enviar_Pedido(TemplateView):
 		p.save()
 		return HttpResponseRedirect("/negocios/inicio_pedido/?n_d="+str(p.socio.id))
 		
+# AQUI VIENE VIENE CLASES QUE SE UTILLIZARAN PARA EL PROCESO QUE MANIPULE LOS ANUNCIOS
+
+class Ver_Anuncio(TemplateView):
+
+	template_name = "p_ver_anuncio.html"
+
+	def get(self, request):
+		# El request recibe el id  del anuncio y el id del modelo Negocio_Distribuidora
+		ctx = {}
+		img= request.GET["img"]
+
+		n_d = request.GET["n_d"]
+		print(n_d)
+		ctx["anuncio"] = Anuncio.objects.get(id=img)
+
+		ctx["n_d"] = n_d
+		print(ctx)
+		return render(request, self.template_name, ctx)
+

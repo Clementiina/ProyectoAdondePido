@@ -8,3 +8,11 @@ Hacer un instructivos para subir imagenes o un modulo que las manupule para que 
 link perdido en el grupo para leer y tener en cuenta:
 
 http://dizballanze.com/en/django-project-optimization-part-1/
+
+
+-- DICCIONARIO -- (ponele)
+
+n_d : negocio_distribuidora
+codigo : suelen ser dos claves primaria enviadas como un solo parametro y separadas por un &
+m_x_sc_d = Marca X Sub Categoria Distribuidora 
+p_d : Producto Distribuidora

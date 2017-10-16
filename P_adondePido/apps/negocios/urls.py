@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^p_actualizar_pedido/$', viewsPedido.Actualizar_Pedido.as_view(), name='actualizar_pedido'),
     url(r'^p_eliminar_pedido/(?P<pk>.+)/$', viewsPedido.Eliminar_Pedido.as_view(), name='eliminar_pedido'),
     url(r'^p_enviar_pedido/(?P<pk>.+)/$', viewsPedido.Enviar_Pedido.as_view(), name='enviar_pedido'),
-    #url(r'^actualizar_producto/(?P<pk>.+)/$', viewProducto.Actualizar_Producto.as_view(), name='actualizar_producto'),
+    # ANUNCIO
+    url(r'^p_ver_anuncio/$', viewsPedido.Ver_Anuncio.as_view(), name='ver_anuncio'),
 	
 ]

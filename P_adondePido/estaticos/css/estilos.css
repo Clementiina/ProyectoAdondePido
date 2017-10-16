@@ -51,7 +51,7 @@ a, p, label, b{
   width: 150px;
   height: 300px;
   float: left;
-  background:  #f7f9f9;
+  background:  #fff;
   border-radius: 10px;
   box-shadow: 0 1px 1px 1px rgba(0,0,0,0.22);
   margin: 4px;
@@ -67,9 +67,9 @@ a, p, label, b{
 }
 
 .grid-item img{
-  width: 90%;
-  border-radius: 10px;
-  margin-left: 5%;
-  margin-right: 15%;
-  margin-top: 2%;
+  width: 95%;
+  border-radius: 15px;
+  margin-left: 2%;
+  //margin-right: 15%;
+  margin-top: 1%;
 }

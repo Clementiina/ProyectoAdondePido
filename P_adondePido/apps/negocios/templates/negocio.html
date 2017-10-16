@@ -59,13 +59,14 @@
 				<div class="grid">
 					{% for i in n_d %}
 					 <div class="{{i.css}}">
-						<a href="{% url 'negocio:inicio_pedido' %}?n_d={{i.n_d.id}}">
+						<a href="{% url 'negocio:inicio_pedido' %}?n_d={{i.n_d.id}}" data-toggle="tooltip" title="¡Click Para empezar tu Pedido!">
       						<img src="/media/{{i.n_d.distribuidora.imagen}}">
       					</a>
-					    <p>
-					        Leo cogote Leo cogoteLeo cogoteLeo cogoteLeo cogoteLeo cogoteLeo cogoteLeo cogote ac blandit dui. Duis rutrum porta tortor ut convallis.
-					        Dui
-					    </p>
+					    <label >
+					        {{i.n_d.alias_distribuidora}}
+					    </label>
+					    <p>{{i.n_d}}</p>
+					    <p>{{i.n_d.distribuidora.numero_contacto}}</p>
 					</div>
 					{% endfor %}
 				</div>
@@ -75,14 +76,13 @@
 				<h4>Tus Anuncios Destacados</h4>
 				<div class="grid">
 					{% for i in anuncio %}
-					 <div class="grid-item grid-item--width4">
-						<a href="{% url 'negocio:inicio_pedido' %}?n_d={{i.n_d.id}}">
-							<img src="/media/{{i.anuncio.imagen}}" style="width:50%; margin-left:25%" />
+					 <div class="thumbnail">
+      					<a onclick="return abrir_modal('{% url 'negocio:ver_anuncio' %}{{i.codigo}}')" data-toggle="tooltip" title="¡Ver Anuncio!">
+      						<img src="/media/{{i.imagen}}" class="img-rounded" alt="Cinque Terre" width="60%"> 
       					</a>
-						<p>
-							{{i.anuncio.descripcion}}</li>{{i.anuncio.descripcion}} <br>
-							Valido desde {{i.anuncio.fecha_inicio}} hasta {{i.anuncio.fecha_fin}}
-						</p>
+      					<div class="caption">
+						<p>{{i.descripcion}}</p>
+						</div>	
 					</div>
 					{% endfor %}
 				</div>
@@ -90,11 +90,31 @@
 		</div>
 	</div>
 
+	<div id="popup" class="modal fade" role="dialog"></div> 
+
 	<script type="text/javascript">
 		$('.grid').masonry({
 			itemSelector: '.grid-item',
 			columnWidth: 5
 		});
+	</script>
+
+	<script>
+	
+function abrir_modal(url)
+{
+        $('#popup').load(url, function()
+        {
+                $(this).modal('show');
+        });
+        return false;
+}
+
+function cerrar_modal()
+{
+        $('#popup').modal('hide');
+        return false;
+}	
 	</script>
 </body>
 </html>
